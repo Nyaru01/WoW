@@ -4,9 +4,9 @@ Une expérience web interactive et cinématique en français autour des grandes 
 
 ## Fonctionnalités
 
-- Chronologie interactive et navigable au clavier
+- Chronologie interactive avec six illustrations panoramiques distinctes
 - Fiches narratives de quatre figures majeures
-- Quiz de cinq questions avec meilleur score local
+- Banque de 65 questions, avec 50 questions aléatoires par partie et meilleur score local
 - Interface responsive, animations adaptées aux préférences système et navigation accessible
 - Serveur Node sans dépendance avec en-têtes de sécurité et cache statique
 
