@@ -16,10 +16,21 @@ http.createServer((request,response)=>{
   }
   fs.stat(filePath,(error,stats)=>{
     if(error||!stats.isFile()){
-      response.writeHead(404,{'Content-Type':'text/plain; charset=utf-8'}).end('Not found');
+      response.writeHead(404,securityHeaders({'Content-Type':'text/plain; charset=utf-8'})).end('Not found');
       return;
     }
-    response.writeHead(200,{'Content-Type':types[path.extname(filePath).toLowerCase()]||'application/octet-stream','Cache-Control':'public, max-age=3600'});
+    const cache=path.extname(filePath)==='.html'?'public, max-age=0, must-revalidate':'public, max-age=604800';
+    response.writeHead(200,securityHeaders({'Content-Type':types[path.extname(filePath).toLowerCase()]||'application/octet-stream','Cache-Control':cache}));
     fs.createReadStream(filePath).pipe(response);
   });
 }).listen(port,'0.0.0.0',()=>console.log(`Chroniques d’Azeroth écoute sur le port ${port}`));
+
+function securityHeaders(headers){
+  return {
+    ...headers,
+    'Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+    'Referrer-Policy':'strict-origin-when-cross-origin',
+    'X-Content-Type-Options':'nosniff',
+    'X-Frame-Options':'DENY'
+  };
+}

@@ -8,10 +8,10 @@ const eras=[
 ];
 
 const figures=[
-  {sigil:'A',name:'Arthas Menethil',role:'Prince de Lordaeron · Roi-liche',body:'Convaincu que toute limite morale pouvait être franchie pour sauver son royaume, Arthas devient précisément la menace qu’il combattait. Sa chute est une tragédie de l’obsession et du libre arbitre.',note:'Héritage : la destruction de Lordaeron et l’ascension du Fléau.'},
-  {sigil:'T',name:'Thrall',role:'Chef de guerre · Chaman',body:'Né esclave, Thrall libère les orcs des camps, redonne à la Horde une identité qui ne repose plus sur le sang démoniaque et conduit son peuple vers Kalimdor.',note:'Héritage : une nouvelle Horde fondée sur la survie, l’honneur et des alliances fragiles.'},
-  {sigil:'J',name:'Jaina Portvaillant',role:'Archimage · Dirigeante de Kul Tiras',body:'Idéaliste puis profondément marquée par Theramore, Jaina incarne le coût humain des guerres répétées entre factions. Son rapport à la paix évolue sans jamais devenir simple.',note:'Héritage : un pont difficile entre diplomatie, mémoire et puissance.'},
-  {sigil:'S',name:'Sylvanas Coursevent',role:'Reine banshee · Réprouvée',body:'Tuée puis relevée par Arthas, Sylvanas construit sa liberté autour du refus de toute domination. Cette quête la conduit pourtant à imposer aux autres des choix aussi radicaux que ceux qu’elle a subis.',note:'Héritage : l’émancipation des Réprouvés, puis une fracture majeure au sein de la Horde.'}
+  {sigil:'A',color:'#77bce5',name:'Arthas Menethil',role:'Prince de Lordaeron · Roi-liche',body:'Convaincu que toute limite morale pouvait être franchie pour sauver son royaume, Arthas devient précisément la menace qu’il combattait. Sa chute est une tragédie de l’obsession et du libre arbitre.',note:'Héritage : la destruction de Lordaeron et l’ascension du Fléau.'},
+  {sigil:'T',color:'#d87848',name:'Thrall',role:'Chef de guerre · Chaman',body:'Né esclave, Thrall libère les orcs des camps, redonne à la Horde une identité qui ne repose plus sur le sang démoniaque et conduit son peuple vers Kalimdor.',note:'Héritage : une nouvelle Horde fondée sur la survie, l’honneur et des alliances fragiles.'},
+  {sigil:'J',color:'#7bd8ef',name:'Jaina Portvaillant',role:'Archimage · Dirigeante de Kul Tiras',body:'Idéaliste puis profondément marquée par Theramore, Jaina incarne le coût humain des guerres répétées entre factions. Son rapport à la paix évolue sans jamais devenir simple.',note:'Héritage : un pont difficile entre diplomatie, mémoire et puissance.'},
+  {sigil:'S',color:'#b58ad9',name:'Sylvanas Coursevent',role:'Reine banshee · Réprouvée',body:'Tuée puis relevée par Arthas, Sylvanas construit sa liberté autour du refus de toute domination. Cette quête la conduit pourtant à imposer aux autres des choix aussi radicaux que ceux qu’elle a subis.',note:'Héritage : l’émancipation des Réprouvés, puis une fracture majeure au sein de la Horde.'}
 ];
 
 const quiz=[
@@ -23,6 +23,8 @@ const quiz=[
 ];
 
 let era=0,qIndex=0,score=0,locked=false;
+let bestScore=Number(localStorage.getItem('azeroth-best-score'))||0;
+document.querySelector('#best-score').textContent=bestScore?`${bestScore}/5`:'—';
 const controls=document.querySelector('.era-controls');
 const stage=document.querySelector('.era-stage');
 
@@ -30,7 +32,15 @@ eras.forEach((item,index)=>{
   const button=document.createElement('button');
   button.textContent=item.tab;
   button.role='tab';
+  button.tabIndex=index===0?0:-1;
   button.onclick=()=>renderEra(index);
+  button.onkeydown=event=>{
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();
+    const target=event.key==='Home'?0:event.key==='End'?eras.length-1:(index+(event.key==='ArrowRight'?1:-1)+eras.length)%eras.length;
+    renderEra(target);
+    controls.children[target].focus();
+  };
   controls.appendChild(button);
 });
 
@@ -40,6 +50,7 @@ function renderEra(index){
   [...controls.children].forEach((button,buttonIndex)=>{
     button.classList.toggle('active',buttonIndex===index);
     button.setAttribute('aria-selected',buttonIndex===index);
+    button.tabIndex=buttonIndex===index?0:-1;
   });
   stage.classList.remove('fade');
   void stage.offsetWidth;
@@ -52,6 +63,8 @@ function renderEra(index){
   stage.querySelector('h3').textContent=item.title;
   stage.querySelector('.era-text').textContent=item.text;
   stage.querySelector('.keyfacts').innerHTML=item.facts.map(fact=>`<div><strong>${fact[0]}</strong><span>${fact[1]}</span></div>`).join('');
+  stage.querySelector('.era-progress-count').textContent=`${String(index+1).padStart(2,'0')} / ${String(eras.length).padStart(2,'0')}`;
+  stage.querySelector('.era-progress b').style.width=`${(index+1)/eras.length*100}%`;
 }
 
 stage.querySelector('.next-era').onclick=()=>renderEra((era+1)%eras.length);
@@ -62,12 +75,15 @@ const dialog=document.querySelector('#lore-dialog');
 figures.forEach(figure=>{
   const button=document.createElement('button');
   button.className='card';
+  button.style.setProperty('--card-accent',figure.color);
   button.innerHTML=`<span class="sigil">${figure.sigil}</span><h3>${figure.name}</h3><p>${figure.role}</p><span class="open">Lire le destin →</span>`;
   button.onclick=()=>{
     dialog.querySelector('h2').textContent=figure.name;
     dialog.querySelector('.modal-role').textContent=figure.role;
     dialog.querySelector('.modal-body').textContent=figure.body;
     dialog.querySelector('.modal-note').textContent=figure.note;
+    dialog.querySelector('.modal-sigil').textContent=figure.sigil;
+    dialog.querySelector('.modal-accent').style.backgroundImage=`linear-gradient(180deg,${figure.color}33,rgba(5,8,16,.55)),url('assets/citadelle-glace.png')`;
     dialog.showModal();
   };
   cardWrap.appendChild(button);
@@ -79,16 +95,19 @@ const qbox=document.querySelector('.question');
 const next=document.querySelector('.quiz-next');
 function renderQ(){
   locked=false;
+  qbox.classList.remove('result-copy');
   const item=quiz[qIndex];
   qbox.querySelector('.count').textContent=`Question ${qIndex+1} sur ${quiz.length}`;
   qbox.querySelector('h3').textContent=item.q;
   qbox.querySelector('.feedback').textContent='';
+  qbox.querySelector('.feedback').classList.remove('visible');
   next.classList.remove('show');
   const answers=qbox.querySelector('.answers');
   answers.innerHTML='';
   item.a.forEach((label,index)=>{
     const button=document.createElement('button');
     button.className='answer';
+    button.dataset.letter=String.fromCharCode(65+index);
     button.textContent=label;
     button.onclick=()=>answer(index);
     answers.appendChild(button);
@@ -107,16 +126,22 @@ function answer(index){
   if(index===item.ok){score++;document.querySelector('#score').textContent=score;}
   else buttons[index].classList.add('wrong');
   qbox.querySelector('.feedback').textContent=(index===item.ok?'Juste. ':'Pas tout à fait. ')+item.why;
+  qbox.querySelector('.feedback').classList.add('visible');
   next.textContent=qIndex===quiz.length-1?'Voir mon résultat':'Question suivante';
   next.classList.add('show');
   document.querySelector('.progress i').style.width=`${(qIndex+1)/quiz.length*100}%`;
 }
 function advanceQuiz(){
   if(qIndex<quiz.length-1){qIndex++;renderQ();return;}
+  bestScore=Math.max(bestScore,score);
+  localStorage.setItem('azeroth-best-score',String(bestScore));
+  document.querySelector('#best-score').textContent=`${bestScore}/5`;
+  qbox.classList.add('result-copy');
   qbox.querySelector('.count').textContent='Chronique terminée';
-  qbox.querySelector('h3').textContent=score>=4?'Vous connaissez les grandes lignes d’Azeroth.':score>=2?'Vos archives méritent encore quelques lectures.':'Les chroniques ne demandent qu’à être rouvertes.';
-  qbox.querySelector('.answers').innerHTML='';
-  qbox.querySelector('.feedback').textContent=`Résultat final : ${score}/5.`;
+  qbox.querySelector('h3').textContent=score===5?'Gardien des chroniques':score>=4?'Érudit d’Azeroth':score>=2?'Apprenti chroniqueur':'Voyageur nouvellement arrivé';
+  qbox.querySelector('.answers').innerHTML=`<div class="result-medal"><span>${score}/5</span></div>`;
+  qbox.querySelector('.feedback').textContent=score>=4?'Votre mémoire rivalise avec celle des plus grands archivistes.':score>=2?'Les fondations sont solides. Quelques archives restent à explorer.':'Azeroth est vaste : chaque nouvelle lecture révèle un autre fragment de son histoire.';
+  qbox.querySelector('.feedback').classList.add('visible');
   next.textContent='Recommencer';
   next.onclick=()=>{
     qIndex=0;score=0;document.querySelector('#score').textContent=0;
@@ -129,6 +154,22 @@ renderQ();
 
 document.querySelectorAll('[data-go]').forEach(button=>button.onclick=()=>document.querySelector('#'+button.dataset.go).scrollIntoView({behavior:'smooth'}));
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-  if(entry.isIntersecting){document.querySelectorAll('nav button').forEach(button=>button.classList.toggle('active',button.dataset.go===entry.target.id));}
+  if(entry.isIntersecting){document.querySelectorAll('nav button').forEach(button=>{const active=button.dataset.go===entry.target.id;button.classList.toggle('active',active);button.setAttribute('aria-current',active?'true':'false');});}
 }),{rootMargin:'-35% 0px -55%'});
 ['chronologie','figures','quiz'].forEach(id=>observer.observe(document.getElementById(id)));
+
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target);}
+}),{threshold:.12});
+document.querySelectorAll('.section-head,.era-stage,.card,.ice-break blockquote,.quiz-wrap').forEach((element,index)=>{
+  element.classList.add('reveal');
+  element.style.transitionDelay=`${Math.min(index%4,3)*70}ms`;
+  revealObserver.observe(element);
+});
+
+const updateScrollProgress=()=>{
+  const max=document.documentElement.scrollHeight-innerHeight;
+  document.querySelector('.scroll-progress i').style.width=`${max?scrollY/max*100:0}%`;
+};
+addEventListener('scroll',updateScrollProgress,{passive:true});
+updateScrollProgress();

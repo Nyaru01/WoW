@@ -1,6 +1,14 @@
 # Chroniques d’Azeroth
 
-Une expérience web interactive en français autour des grandes périodes du lore de World of Warcraft, avec chronologie, portraits de personnages et quiz.
+Une expérience web interactive et cinématique en français autour des grandes périodes du lore de World of Warcraft, avec chronologie, portraits de personnages et quiz à progression sauvegardée.
+
+## Fonctionnalités
+
+- Chronologie interactive et navigable au clavier
+- Fiches narratives de quatre figures majeures
+- Quiz de cinq questions avec meilleur score local
+- Interface responsive, animations adaptées aux préférences système et navigation accessible
+- Serveur Node sans dépendance avec en-têtes de sécurité et cache statique
 
 ## Lancer localement
 
