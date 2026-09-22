@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explorez les grandes ères du lore de World of Warcraft et testez vos connaissances.">
+  <title>Chroniques d’Azeroth — Lore interactif</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23070b13' stroke='%23d9a441' stroke-width='3'/%3E%3Cpath d='M32 10 43 30 32 54 21 30Z' fill='%231d6f91' stroke='%23f2d083' stroke-width='2'/%3E%3Ccircle cx='32' cy='31' r='7' fill='%23f2d083'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell">
+      <div class="brand"><i class="brand-mark" aria-hidden="true"></i><span>Chroniques d’Azeroth</span></div>
+      <nav aria-label="Navigation principale">
+        <button data-go="chronologie" class="active">Chronologie</button>
+        <button data-go="figures">Figures</button>
+        <button data-go="quiz">Quiz</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell">
+        <div class="eyebrow">Archives interactives · Volume I</div>
+        <h1 id="hero-title">Azeroth <span>une histoire forgée par les conflits</span></h1>
+        <p>Du réveil des puissances cosmiques à la chute du prince Arthas, parcourez les événements qui ont façonné le monde — puis éprouvez votre mémoire.</p>
+        <div class="actions">
+          <button class="btn" data-go="chronologie">Ouvrir les chroniques</button>
+          <button class="btn secondary" data-go="quiz">Tester mes connaissances</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="chronologie">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">La grande chronologie</div><h2>Six âges, un monde</h2></div>
+          <p>Choisissez une époque. Chaque chapitre relie un événement fondateur à ses conséquences sur les peuples d’Azeroth.</p>
+        </div>
+        <div class="era-controls" role="tablist" aria-label="Choisir une époque"></div>
+        <article class="era-stage fade" aria-live="polite">
+          <div class="era-visual"><span class="era-number">01</span><img alt="" src="assets/azeroth-cosmique.png"></div>
+          <div class="era-copy">
+            <div class="eyebrow era-kicker"></div>
+            <h3></h3>
+            <p class="era-text"></p>
+            <div class="keyfacts"></div>
+            <button class="next-era">Époque suivante →</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cast" id="figures">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Destins croisés</div><h2>Figures du lore</h2></div>
+          <p>Cliquez sur une figure pour comprendre son rôle, son dilemme et l’héritage laissé au monde.</p>
+        </div>
+        <div class="cards"></div>
+      </div>
+    </section>
+
+    <section class="ice-break">
+      <div class="shell">
+        <blockquote>« Le royaume qu’il voulait sauver devint la première victime de son obsession. »<cite>La tragédie d’Arthas Menethil</cite></blockquote>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Épreuve du chroniqueur</div><h2>Le quiz du lore</h2></div>
+          <p>Cinq questions. Chaque réponse révèle une explication — même lorsque vous vous trompez.</p>
+        </div>
+        <div class="quiz-wrap">
+          <aside class="score-panel">
+            <div><span>Score</span><strong><b id="score">0</b>/5</strong></div>
+            <div class="progress" aria-label="Progression"><i></i></div>
+          </aside>
+          <div class="question" aria-live="polite">
+            <div class="count"></div><h3></h3><div class="answers"></div><p class="feedback"></p>
+            <button class="btn quiz-next">Question suivante</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="shell footer-row"><span>Chroniques d’Azeroth — projet non officiel créé pour les passionnés du lore.</span><span>World of Warcraft et ses personnages appartiennent à Blizzard Entertainment.</span></div></footer>
+
+  <dialog id="lore-dialog">
+    <div class="modal-inner">
+      <div class="modal-top"><h2></h2><button class="close" aria-label="Fermer">×</button></div>
+      <p class="modal-role"></p><p class="modal-body"></p><p class="modal-note"></p>
+    </div>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
