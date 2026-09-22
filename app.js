@@ -8,10 +8,10 @@ const eras=[
 ];
 
 const figures=[
-  {sigil:'A',color:'#77bce5',name:'Arthas Menethil',role:'Prince de Lordaeron · Roi-liche',body:'Convaincu que toute limite morale pouvait être franchie pour sauver son royaume, Arthas devient précisément la menace qu’il combattait. Sa chute est une tragédie de l’obsession et du libre arbitre.',note:'Héritage : la destruction de Lordaeron et l’ascension du Fléau.'},
-  {sigil:'T',color:'#d87848',name:'Thrall',role:'Chef de guerre · Chaman',body:'Né esclave, Thrall libère les orcs des camps, redonne à la Horde une identité qui ne repose plus sur le sang démoniaque et conduit son peuple vers Kalimdor.',note:'Héritage : une nouvelle Horde fondée sur la survie, l’honneur et des alliances fragiles.'},
-  {sigil:'J',color:'#7bd8ef',name:'Jaina Portvaillant',role:'Archimage · Dirigeante de Kul Tiras',body:'Idéaliste puis profondément marquée par Theramore, Jaina incarne le coût humain des guerres répétées entre factions. Son rapport à la paix évolue sans jamais devenir simple.',note:'Héritage : un pont difficile entre diplomatie, mémoire et puissance.'},
-  {sigil:'S',color:'#b58ad9',name:'Sylvanas Coursevent',role:'Reine banshee · Réprouvée',body:'Tuée puis relevée par Arthas, Sylvanas construit sa liberté autour du refus de toute domination. Cette quête la conduit pourtant à imposer aux autres des choix aussi radicaux que ceux qu’elle a subis.',note:'Héritage : l’émancipation des Réprouvés, puis une fracture majeure au sein de la Horde.'}
+  {sigil:'A',color:'#77bce5',image:'assets/chute-arthas.png',name:'Arthas Menethil',role:'Prince de Lordaeron · Roi-liche',body:'Convaincu que toute limite morale pouvait être franchie pour sauver son royaume, Arthas devient précisément la menace qu’il combattait. Sa chute est une tragédie de l’obsession et du libre arbitre.',note:'Héritage : la destruction de Lordaeron et l’ascension du Fléau.'},
+  {sigil:'T',color:'#d87848',image:'assets/porte-tenebres.png',name:'Thrall',role:'Chef de guerre · Chaman',body:'Né esclave, Thrall libère les orcs des camps, redonne à la Horde une identité qui ne repose plus sur le sang démoniaque et conduit son peuple vers Kalimdor.',note:'Héritage : une nouvelle Horde fondée sur la survie, l’honneur et des alliances fragiles.'},
+  {sigil:'J',color:'#7bd8ef',image:'assets/mont-hyjal.png',name:'Jaina Portvaillant',role:'Archimage · Dirigeante de Kul Tiras',body:'Idéaliste puis profondément marquée par Theramore, Jaina incarne le coût humain des guerres répétées entre factions. Son rapport à la paix évolue sans jamais devenir simple.',note:'Héritage : un pont difficile entre diplomatie, mémoire et puissance.'},
+  {sigil:'S',color:'#b58ad9',image:'assets/kaldorei-puits-eternite.png',name:'Sylvanas Coursevent',role:'Reine banshee · Réprouvée',body:'Tuée puis relevée par Arthas, Sylvanas construit sa liberté autour du refus de toute domination. Cette quête la conduit pourtant à imposer aux autres des choix aussi radicaux que ceux qu’elle a subis.',note:'Héritage : l’émancipation des Réprouvés, puis une fracture majeure au sein de la Horde.'}
 ];
 
 const questionBank=[
@@ -101,7 +101,8 @@ const stage=document.querySelector('.era-stage');
 
 eras.forEach((item,index)=>{
   const button=document.createElement('button');
-  button.textContent=item.tab;
+  button.innerHTML=`<span>${String(index+1).padStart(2,'0')}</span><strong>${item.tab}</strong>`;
+  button.setAttribute('aria-label',item.tab);
   button.role='tab';
   button.tabIndex=index===0?0:-1;
   button.onclick=()=>renderEra(index);
@@ -147,6 +148,7 @@ figures.forEach(figure=>{
   const button=document.createElement('button');
   button.className='card';
   button.style.setProperty('--card-accent',figure.color);
+  button.style.setProperty('--card-image',`url('${figure.image}')`);
   button.innerHTML=`<span class="sigil">${figure.sigil}</span><h3>${figure.name}</h3><p>${figure.role}</p><span class="open">Lire le destin →</span>`;
   button.onclick=()=>{
     dialog.querySelector('h2').textContent=figure.name;
@@ -154,7 +156,7 @@ figures.forEach(figure=>{
     dialog.querySelector('.modal-body').textContent=figure.body;
     dialog.querySelector('.modal-note').textContent=figure.note;
     dialog.querySelector('.modal-sigil').textContent=figure.sigil;
-    dialog.querySelector('.modal-accent').style.backgroundImage=`linear-gradient(180deg,${figure.color}33,rgba(5,8,16,.55)),url('assets/citadelle-glace.png')`;
+    dialog.querySelector('.modal-accent').style.backgroundImage=`linear-gradient(180deg,${figure.color}22,rgba(5,8,16,.32)),url('${figure.image}')`;
     dialog.showModal();
   };
   cardWrap.appendChild(button);
