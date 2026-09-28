@@ -281,6 +281,19 @@ document.addEventListener('visibilitychange',()=>document.body.classList.toggle(
 
 // Each chapter has its own short view; anchors and browser history remain usable.
 const chapters=[...document.querySelectorAll('main > section[id]')];
+// Reuse the editorial news source: the home feature never needs a second date update.
+const featuredNews=document.querySelector('.news-lead');
+const featuredDate=featuredNews.querySelector('time');
+document.querySelector('#featured-patch-title').textContent=featuredNews.querySelector('h3').innerText;
+document.querySelector('#featured-patch-summary').textContent=featuredNews.querySelector('p').textContent;
+document.querySelector('#featured-patch-date').textContent=featuredDate.textContent;
+document.querySelector('#featured-patch-date').dateTime=featuredDate.dateTime;
+document.querySelectorAll('[data-discovery-category],[data-discovery-search]').forEach(link=>link.addEventListener('click',()=>{
+  search.value=link.dataset.discoverySearch||'';
+  favoritesOnly=false;
+  addonSort.value='selection';
+  document.querySelector(`[data-addon-filter="${link.dataset.discoveryCategory||'all'}"]`).click();
+}));
 document.querySelectorAll('.command-group').forEach((group,index)=>{
   const details=document.createElement('details');
   const summary=document.createElement('summary');
@@ -297,7 +310,8 @@ function showSection(){
   const home=!chapter;
   document.querySelector('.hero').hidden=!home;
   document.querySelector('.essentials').hidden=!home;
-  chapters.forEach(section=>section.hidden=home?section.id!=='addons':section!==chapter);
+  document.querySelector('.discovery').hidden=!home;
+  chapters.forEach(section=>section.hidden=home||section!==chapter);
   document.body.classList.toggle('chapter-view',!home);
   document.querySelectorAll('.topbar nav a').forEach(link=>{
     if(link.hash===(home?'#top':`#${chapter.id}`))link.setAttribute('aria-current','page');
