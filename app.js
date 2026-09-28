@@ -106,6 +106,32 @@ search.addEventListener('input',()=>{currentPage=1;renderAddons();});
 document.addEventListener('keydown',event=>{if(event.key==='/'&&document.activeElement!==search){event.preventDefault();search.focus();}});
 renderAddons();
 
+document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
+  const initial=button.textContent;
+  try{
+    let copied=false;
+    if(navigator.clipboard&&window.isSecureContext){
+      try{await navigator.clipboard.writeText(button.dataset.copy);copied=true;}catch{}
+    }
+    if(!copied){
+      const field=document.createElement('textarea');
+      field.value=button.dataset.copy;
+      field.style.position='fixed';
+      field.style.opacity='0';
+      document.body.appendChild(field);
+      field.select();
+      if(!document.execCommand('copy')) throw new Error('copy unavailable');
+      field.remove();
+      copied=true;
+    }
+    button.textContent='Copié !';
+    button.classList.add('copied');
+  }catch{
+    button.textContent='Copie impossible';
+  }
+  setTimeout(()=>{button.textContent=initial;button.classList.remove('copied');},1600);
+}));
+
 const tabList=document.querySelector('.guide-tabs');
 const guide=document.querySelector('.guide-card');
 tips.forEach((tip,index)=>{
@@ -163,4 +189,4 @@ addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-i
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
   if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}
 }),{threshold:.12});
-document.querySelectorAll('.section-intro,.essential-card,.catalogue-tools,.filter-row,.guide-summary,.guide-layout,.rp-feature,.rp-secondary,.news-lead,.news-card,.news-status').forEach(element=>{element.classList.add('reveal');revealObserver.observe(element);});
+document.querySelectorAll('.section-intro,.essential-card,.catalogue-tools,.filter-row,.guide-summary,.guide-layout,.command-warning,.command-index,.command-group,.command-source,.rp-feature,.rp-secondary,.news-lead,.news-card,.news-status').forEach(element=>{element.classList.add('reveal');revealObserver.observe(element);});

@@ -10,14 +10,14 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=6.2.2">
+  <link rel="stylesheet" href="styles.css?v=6.3.2">
 </head>
 <body>
   <a class="skip-link" href="#addons">Aller aux addons</a>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Renaissance — accueil"><span class="brand-rune">R</span><span><strong>Renaissance</strong><small>Codex communautaire</small></span></a>
-    <nav aria-label="Navigation principale"><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
+    <nav aria-label="Navigation principale"><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#commandes">Commandes</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
   </header>
 
   <main id="top">
@@ -79,12 +79,50 @@
       </div>
     </section>
 
+    <section id="commandes" class="commands" aria-labelledby="commands-title">
+      <div class="section-shell">
+        <div class="section-intro"><div><span class="chapter">04 — Réglages avancés</span><h2 id="commands-title">Commandes utiles</h2></div><p>Des variables console testées dans la bêta de WoW: Forever, classées par effet et prêtes à copier. À utiliser comme réglages expérimentaux, pas comme des options officiellement recommandées.</p></div>
+        <div class="command-warning"><span>Avant toute modification</span><p>Sauvegardez <code>World of Warcraft/_classic_beta_/WTF/Config.wtf</code>. Saisissez les commandes dans le chat ou placez celles que vous gardez dans une macro.</p></div>
+        <div class="command-layout">
+          <aside class="command-index" aria-label="Sommaire des commandes"><a href="#cmd-light">Lumière & ombres <span>05</span></a><a href="#cmd-distance">Distance & détails <span>03</span></a><a href="#cmd-performance">Performance <span>02</span></a><a href="#cmd-weather">Météo <span>01</span></a></aside>
+          <div class="command-groups">
+            <section id="cmd-light" class="command-group"><header><span>01</span><div><h3>Lumière & ombres</h3><p>Pour modeler l’éclairage indirect, l’occlusion et les ombres lointaines.</p></div></header>
+              <div class="command-list">
+                <article class="command-card"><div><span>Éclairage secondaire minimal</span><code>/console giquality 0</code></div><button data-copy="/console giquality 0" aria-label="Copier la commande giquality">Copier</button><p>Supprime l’éclairage indirect. Très sombre : surtout intéressant pour certaines captures, déconseillé en jeu courant.</p><small>Écrasé si vous changez « Éclairage secondaire ».</small></article>
+                <article class="command-card"><div><span>Méthode SSAO</span><code>/console ssaotype 0</code></div><button data-copy="/console ssaotype 0" aria-label="Copier la commande ssaotype">Copier</button><p><b>0</b> produit une occlusion plus marquée ; remplacez par <b>1</b> pour un rendu plus subtil, souvent plus rapide en qualité élevée.</p></article>
+                <article class="command-card command-bundle"><div><span>Réglage SSAO équilibré</span><code>/console assaoHorizonAngleThresh 0.5<br>/console assaoDetailShadowStrength 5000<br>/console assaoBlurPassCount 4</code></div><button data-copy="/console assaoHorizonAngleThresh 0.5&#10;/console assaoDetailShadowStrength 5000&#10;/console assaoBlurPassCount 4" aria-label="Copier les trois réglages SSAO">Tout copier</button><p>Améliore les angles et les petits creux, avec un flou plus stable. Le post ne relève pas d’impact mesurable sur les performances.</p></article>
+                <article class="command-card"><div><span>SSAO sans filtrage</span><code>/console assaoBlurPassCount 1</code></div><button data-copy="/console assaoBlurPassCount 1" aria-label="Copier la commande assaoBlurPassCount">Copier</button><p>Évite certains halos, uniquement avec <code>ssaotype 1</code>. À réserver aux hautes résolutions ou aux fortes échelles de rendu.</p></article>
+                <article class="command-card"><div><span>Cascades d’ombres</span><code>/console shadowNumCascades 4</code></div><button data-copy="/console shadowNumCascades 4" aria-label="Copier la commande shadowNumCascades">Copier</button><p>Étend les ombres assez loin pour mieux fondre le brouillard lumineux. Utile en qualité Bonne, Élevée ou Ultra.</p><small>Écrasé si vous changez la qualité des ombres.</small></article>
+              </div>
+            </section>
+            <section id="cmd-distance" class="command-group"><header><span>02</span><div><h3>Distance & détails</h3><p>Pour ouvrir l’horizon ou densifier les éléments proches.</p></div></header>
+              <div class="command-list">
+                <article class="command-card"><div><span>Brouillard plus lointain</span><code>/console horizonstart 4000</code></div><button data-copy="/console horizonstart 4000" aria-label="Copier la commande horizonstart">Copier</button><p>Repousse le brouillard vers l’horizon. <b>4000</b> correspond à la distance de vue maximale.</p><small>Écrasé si vous changez la distance de vue.</small></article>
+                <article class="command-card"><div><span>Densité du décor au sol</span><code>/console groundEffectDensity 128</code></div><button data-copy="/console groundEffectDensity 128" aria-label="Copier la commande groundEffectDensity">Copier</button><p>Contrôle herbes et petits éléments. Valeurs admises : <b>16 à 256</b> ; le jeu utilise 48 avec le curseur au maximum.</p><small>Impact modéré, selon la distance d’affichage du décor.</small></article>
+                <article class="command-card"><div><span>Affûtage CAS permanent</span><code>/console ResampleAlwaysSharpen 1</code></div><button data-copy="/console ResampleAlwaysSharpen 1" aria-label="Copier la commande ResampleAlwaysSharpen">Copier</button><p>Active l’affûtage adaptatif même sans FSR. Son intensité reste réglable dans les options graphiques.</p></article>
+              </div>
+            </section>
+            <section id="cmd-performance" class="command-group"><header><span>03</span><div><h3>Performance</h3><p>Pour maintenir une fréquence cible avec une échelle de rendu flexible.</p></div></header>
+              <div class="command-list">
+                <article class="command-card"><div><span>Résolution dynamique</span><code>/console DynamicRenderScale 1</code></div><button data-copy="/console DynamicRenderScale 1" aria-label="Copier la commande DynamicRenderScale">Copier</button><p>Active l’ajustement automatique. Définissez ensuite votre fréquence d’images cible dans les options du jeu.</p></article>
+                <article class="command-card"><div><span>Échelle minimale à 80 %</span><code>/console DynamicRenderScaleMin 0.8</code></div><button data-copy="/console DynamicRenderScaleMin 0.8" aria-label="Copier la commande DynamicRenderScaleMin">Copier</button><p>Empêche la résolution dynamique de descendre sous 80 %. Utilisez <b>1</b> pour 100 %, <b>0.5</b> pour 50 %, etc.</p></article>
+              </div>
+            </section>
+            <section id="cmd-weather" class="command-group"><header><span>04</span><div><h3>Météo</h3><p>Pour retrouver une pluie, une neige ou des tempêtes plus présentes.</p></div></header>
+              <div class="command-list"><article class="command-card"><div><span>Météo dense</span><code>/console weatherdensity 3</code></div><button data-copy="/console weatherdensity 3" aria-label="Copier la commande weatherdensity">Copier</button><p>Force l’intensité maximale des effets météo, avec un coût annoncé comme faible.</p><small>Écrasé si vous changez la densité des particules.</small></article></div>
+            </section>
+          </div>
+        </div>
+        <p class="command-source">Adapté et traduit depuis les tests de Weathertop94 sur la bêta. Les variables peuvent changer avant la sortie. <a href="https://www.reddit.com/r/classicwow/comments/1wr75vx/useful_console_commands/" target="_blank" rel="noopener">Consulter le post original ↗</a></p>
+      </div>
+    </section>
+
     <section id="objets-rp" class="rp-vault" aria-labelledby="rp-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">04 — Le cabinet de curiosités</span><h2 id="rp-title">Objets RP</h2></div><p>Des objets à garder pour leur apparence, leur ambiance ou les scènes qu’ils rendent possibles — avec une route claire pour les retrouver.</p></div>
+        <div class="section-intro"><div><span class="chapter">05 — Le cabinet de curiosités</span><h2 id="rp-title">Objets RP</h2></div><p>Des objets à garder pour leur apparence, leur ambiance ou les scènes qu’ils rendent possibles — avec une route claire pour les retrouver.</p></div>
         <div class="rp-grid">
           <article class="rp-feature">
-            <div class="torch-scene" aria-hidden="true"><span class="torch-flame"></span><span class="torch-stick"></span><i></i><i></i><i></i></div>
+            <div class="torch-scene" aria-hidden="true"><img src="assets/torch-rp.png" alt="" width="1024" height="1536"></div>
             <div class="rp-copy">
               <span class="status-pill beta">Découverte bêta · à confirmer au lancement</span>
               <h3>La torche réutilisable de Veillebois</h3>
@@ -109,7 +147,7 @@
 
     <section id="nouvelles" class="newsroom" aria-labelledby="news-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">05 — Dernières dépêches</span><h2 id="news-title">Nouvelles</h2></div><p>Les changements récents de WoW: Forever, résumés sans rumeur et reliés aux annonces officielles de Blizzard.</p></div>
+        <div class="section-intro"><div><span class="chapter">06 — Dernières dépêches</span><h2 id="news-title">Nouvelles</h2></div><p>Les changements récents de WoW: Forever, résumés sans rumeur et reliés aux annonces officielles de Blizzard.</p></div>
         <div class="news-lead">
           <div><span class="news-date">25 septembre 2026</span><h3>Une semaine de révélations pour Forever</h3><p>Blizzard récapitule les ensembles de règles, les noms à deux parties, les nouvelles combinaisons de races et classes, les Éolides et le système d’héritage.</p></div>
           <a href="https://worldofwarcraft.blizzard.com/fr-fr/news/24303315" target="_blank" rel="noopener">Lire le récapitulatif officiel <span>↗</span></a>
@@ -126,6 +164,6 @@
   </main>
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever</span></div><p>Site informatif en lecture seule. Aucun compte ni publication. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
-  <script src="app.js?v=6.2.2"></script>
+  <script src="app.js?v=6.3.2"></script>
 </body>
 </html>
