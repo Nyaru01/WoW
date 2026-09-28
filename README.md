@@ -4,10 +4,10 @@ Un portail communautaire français consacré à WoW: Forever : addons recommand�
 
 ## Fonctionnalités
 
-- Catalogue de 28 addons filtrable par fonction avec recherche instantanée
+- Catalogue de 28 addons filtrable, recherchable et paginé par groupes de huit
 - Six fiches pratiques consacrées à l’installation, au butin, aux quêtes, aux instances, au combat et au dépannage
 - Sélection éditoriale des trois addons indispensables pour démarrer
-- Direction artistique immersive inspirée de WoW: Forever avec visuels officiels Blizzard
+- Direction artistique fantasy sombre, animations sobres et visuels officiels WoW: Forever
 - Interface responsive, animations adaptées aux préférences système et navigation accessible
 - Serveur Node sans dépendance avec en-têtes de sécurité et cache statique
 

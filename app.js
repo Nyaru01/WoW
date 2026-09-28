@@ -51,9 +51,14 @@ const grid=document.querySelector('.addon-grid');
 const search=document.querySelector('#addon-search');
 const count=document.querySelector('#addon-count');
 const empty=document.querySelector('.empty-state');
+const pagination=document.querySelector('.catalogue-pagination');
+const pageNumbers=document.querySelector('.page-numbers');
+const pageStatus=document.querySelector('.page-status');
+const previousPage=document.querySelector('.page-prev');
+const nextPage=document.querySelector('.page-next');
 let activeFilter='all';
-
-const initials=name=>name.split(/\s+/).map(word=>word[0]).join('').slice(0,2).toUpperCase();
+let currentPage=1;
+const pageSize=8;
 
 function renderAddons(){
   const query=search.value.trim().toLocaleLowerCase('fr');
@@ -62,21 +67,40 @@ function renderAddons(){
     const haystack=`${addon.name} ${addon.description} ${categories[addon.category].label}`.toLocaleLowerCase('fr');
     return inCategory&&(!query||haystack.includes(query));
   });
-  grid.innerHTML=matches.map((addon,index)=>`<article class="addon-card" style="--accent:${categories[addon.category].color};--delay:${Math.min(index,8)*35}ms">
-    <div class="addon-top"><span class="addon-icon">${initials(addon.name)}</span><span class="addon-category">${categories[addon.category].short}</span></div>
+  const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));
+  currentPage=Math.min(currentPage,totalPages);
+  const first=(currentPage-1)*pageSize;
+  const pageItems=matches.slice(first,first+pageSize);
+  grid.innerHTML=pageItems.map((addon,index)=>`<article class="addon-card" style="--accent:${categories[addon.category].color};--delay:${Math.min(index,8)*45}ms">
+    <div class="addon-top"><span class="addon-category">${categories[addon.category].label}</span><span class="addon-pick">Sélection guilde</span></div>
     <h3>${addon.name}</h3><p>${addon.description}</p>
     <div class="addon-meta"><span><b>↓ ${addon.downloads}</b> · par ${addon.author}</span><a href="${addon.url}" target="_blank" rel="noopener" aria-label="Voir ${addon.name} sur CurseForge">Installer ↗</a></div>
   </article>`).join('');
   count.textContent=matches.length;
   empty.hidden=matches.length>0;
+  pagination.hidden=matches.length===0;
+  previousPage.disabled=currentPage===1;
+  nextPage.disabled=currentPage===totalPages;
+  pageStatus.textContent=`Page ${currentPage} sur ${totalPages}`;
+  pageNumbers.innerHTML=Array.from({length:totalPages},(_,index)=>`<button class="${index+1===currentPage?'active':''}" data-page="${index+1}" aria-label="Page ${index+1}" ${index+1===currentPage?'aria-current="page"':''}>${String(index+1).padStart(2,'0')}</button>`).join('');
+  pageNumbers.querySelectorAll('[data-page]').forEach(button=>button.addEventListener('click',()=>changePage(Number(button.dataset.page))));
 }
+
+function changePage(page){
+  currentPage=page;
+  renderAddons();
+  document.querySelector('.catalogue-tools').scrollIntoView({behavior:'smooth',block:'start'});
+}
+previousPage.addEventListener('click',()=>changePage(currentPage-1));
+nextPage.addEventListener('click',()=>changePage(currentPage+1));
 
 document.querySelectorAll('[data-addon-filter]').forEach(button=>button.addEventListener('click',()=>{
   activeFilter=button.dataset.addonFilter;
+  currentPage=1;
   document.querySelectorAll('[data-addon-filter]').forEach(candidate=>candidate.classList.toggle('active',candidate===button));
   renderAddons();
 }));
-search.addEventListener('input',renderAddons);
+search.addEventListener('input',()=>{currentPage=1;renderAddons();});
 document.addEventListener('keydown',event=>{if(event.key==='/'&&document.activeElement!==search){event.preventDefault();search.focus();}});
 renderAddons();
 
@@ -94,6 +118,9 @@ tips.forEach((tip,index)=>{
 function renderTip(index){
   const tip=tips[index];
   [...tabList.children].forEach((button,buttonIndex)=>{const selected=buttonIndex===index;button.classList.toggle('active',selected);button.setAttribute('aria-selected',selected);button.tabIndex=selected?0:-1;});
+  guide.classList.remove('guide-switch');
+  void guide.offsetWidth;
+  guide.classList.add('guide-switch');
   guide.style.setProperty('--guide-image',`url('${tip.image}')`);
   guide.querySelector('.guide-category').textContent=tip.category;
   guide.querySelector('.guide-index').textContent=tip.number;
@@ -106,4 +133,10 @@ function renderTip(index){
 renderTip(0);
 
 const progress=document.querySelector('.scroll-progress i');
-addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;},{passive:true});
+const topbar=document.querySelector('.topbar');
+addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;topbar.classList.toggle('scrolled',scrollY>30);},{passive:true});
+
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}
+}),{threshold:.12});
+document.querySelectorAll('.section-intro,.essential-card,.catalogue-tools,.filter-row,.guide-layout,.contribution-inner').forEach(element=>{element.classList.add('reveal');revealObserver.observe(element);});
