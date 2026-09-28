@@ -1,344 +1,109 @@
-const addonCategories={
-  quetes:{label:'Quêtes & navigation',accent:'#63b6d7'},
-  donjons:{label:'Donjons & butin',accent:'#d6a64a'},
-  combat:{label:'Combat & raid',accent:'#d66b5d'},
-  interface:{label:'Interface',accent:'#9e83d4'},
-  confort:{label:'Confort & économie',accent:'#69b986'},
-  support:{label:'Diagnostic',accent:'#d08b4d'}
+const categories={
+  quetes:{label:'Quêtes & navigation',short:'Quêtes',color:'#67c5dd'},
+  donjons:{label:'Donjons & butin',short:'Donjons',color:'#d9ad54'},
+  combat:{label:'Combat & raid',short:'Combat',color:'#e06c5f'},
+  interface:{label:'Interface & lisibilité',short:'Interface',color:'#a58bdd'},
+  confort:{label:'Confort & économie',short:'Confort',color:'#69bc8b'},
+  support:{label:'Diagnostic & dépannage',short:'Diagnostic',color:'#d89152'}
 };
 
 const addons=[
-  {n:'Forever PTR World Map',c:'quetes',d:'Affiche une carte du monde adaptée au serveur WoW: Forever.',dl:'15,3 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/forever-ptr-server-world-map'},
-  {n:'Questie',c:'quetes',d:'Affiche les quêtes disponibles et leurs objectifs sur la carte du monde.',dl:'Communauté',a:'Gô',u:'https://www.curseforge.com/wow/addons/questie'},
-  {n:'QuestTogether',c:'quetes',d:'Facilite la progression et le suivi des quêtes en groupe.',dl:'25,4 k',a:'Apogée',u:'https://www.curseforge.com/wow/addons/questtogether'},
-  {n:'Azeroth Pilot Reloaded',c:'quetes',d:'Optimise le leveling avec des itinéraires rapides et des étapes précises.',dl:'3,6 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/azeroth-pilot-reloaded'},
-  {n:'RestedXP Guide',c:'quetes',d:'Guides de montée en niveau intégrés en jeu, étape par étape.',dl:'26,2 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/restedxp-guide'},
-  {n:'TomTom',c:'quetes',d:'Assistant de navigation avec coordonnées, points de passage et flèche directionnelle.',dl:'89,8 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/tomtom'},
-  {n:'GuildMap',c:'quetes',d:'Affiche la position des membres de la guilde sur la carte.',dl:'196,1 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/guildmap'},
-  {n:'DungeonJournal',c:'donjons',d:'Répertorie les quêtes de donjon, leur emplacement et les butins des boss.',dl:'1,8 k',a:'Apogée',u:'https://www.curseforge.com/wow/addons/dungeonjournal'},
-  {n:'Atlas',c:'donjons',d:'Navigateur de cartes d’instances, simple et incontournable.',dl:'22 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/atlas'},
-  {n:'Attune',c:'donjons',d:'Suit la progression de vos accès et harmonisations.',dl:'12,3 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/attune'},
-  {n:'Nova Instance Tracker',c:'donjons',d:'Suit verrouillages, temps d’instance, échanges d’or et XP reposée des rerolls.',dl:'18,5 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/nova-instance-tracker'},
-  {n:'Lootified',c:'donjons',d:'Journal de butin et assistant Best in Slot pour WoW: Forever.',dl:'188',a:'Apogée',u:'https://www.curseforge.com/wow/addons/lootified'},
-  {n:'Forever Dungeon Scout',c:'donjons',d:'Guide de donjons léger et complet pensé pour WoW: Forever.',dl:'1,5 k',a:'Apogée',u:'https://www.curseforge.com/wow/addons/forever-dungeon-scout'},
-  {n:'Cooldown Manager Centered',c:'combat',d:'Personnalise les icônes, améliorations et barres de temps de recharge.',dl:'6,7 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/cooldown-manager-centered'},
-  {n:'MiniAuras',c:'combat',d:'Affiche les contrôles, défensifs et notifications de sorts importants.',dl:'5,9 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/minicc'},
-  {n:'NKThreat',c:'combat',d:'Mesure de menace avec TPS, alertes de provocation et superposition sur les barres de nom.',dl:'35,4 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/nkthreat'},
-  {n:'WhoDoesWhat',c:'combat',d:'Panneau d’assignations de raid et synchronisation des bénédictions de paladins.',dl:'716',a:'Lili',u:'https://www.curseforge.com/wow/addons/whodoeswhat'},
-  {n:'BlizzMove',c:'interface',d:'Rend les fenêtres Blizzard déplaçables par simple glisser-déposer.',dl:'11,9 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/blizzmove'},
-  {n:'DarkMode',c:'interface',d:'Assombrit les couleurs de l’interface et des fenêtres.',dl:'3,5 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/darkmode'},
-  {n:'FontMagic',c:'interface',d:'Personnalise la police et la taille des textes de combat flottants.',dl:'293,7 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/fontmagic'},
-  {n:'Plumber',c:'interface',d:'Améliore le butin, la difficulté d’instance et de nombreux éléments d’interface.',dl:'19,2 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/plumber'},
-  {n:'WilduTools',c:'interface',d:'Améliore l’interface Blizzard et automatise plusieurs tâches courantes.',dl:'1,3 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/wildutools'},
-  {n:'Auctionator',c:'confort',d:'Simplifie l’hôtel des ventes et le suivi de la valeur des objets.',dl:'201,8 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/auctionator'},
-  {n:'Better Fishing',c:'confort',d:'Améliore la pêche avec raccourci de ciblage et interaction au double-clic.',dl:'5,7 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/better-fishing'},
-  {n:'Speedy AutoLoot',c:'confort',d:'Accélère fortement la récupération automatique du butin.',dl:'11,2 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/speedyautoloot'},
-  {n:'WIM v3',c:'confort',d:'Transforme les chuchotements en fenêtres de messagerie instantanée.',dl:'22,8 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/wim-3'},
-  {n:'BugGrabber',c:'support',d:'Capture les erreurs Lua afin qu’elles puissent être consultées proprement.',dl:'18,6 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/bug-grabber'},
-  {n:'BugSack',c:'support',d:'Centralise les erreurs capturées dans un journal facile à consulter.',dl:'16,4 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/bugsack'}
-];
+  ['Forever PTR World Map','quetes','Une carte du monde adaptée au serveur WoW: Forever.','15,3 k','Lili','forever-ptr-server-world-map'],
+  ['Questie','quetes','Les quêtes disponibles et leurs objectifs directement sur la carte.','Communauté','Gô','questie'],
+  ['QuestTogether','quetes','Un suivi de quêtes plus simple lorsque vous jouez en groupe.','25,4 k','Apogée','questtogether'],
+  ['Azeroth Pilot Reloaded','quetes','Des itinéraires rapides et des étapes précises pour le leveling.','3,6 M','Lili','azeroth-pilot-reloaded'],
+  ['RestedXP Guide','quetes','Des guides de montée en niveau intégrés, étape par étape.','26,2 M','Lili','restedxp-guide'],
+  ['TomTom','quetes','Coordonnées, points de passage et flèche directionnelle.','89,8 M','Lili','tomtom'],
+  ['GuildMap','quetes','La position des membres de la guilde sur votre carte.','196,1 k','Lili','guildmap'],
+  ['DungeonJournal','donjons','Quêtes, emplacements et butins des boss pour chaque donjon.','1,8 k','Apogée','dungeonjournal'],
+  ['Atlas','donjons','Le navigateur classique de cartes d’instances.','22 M','Lili','atlas'],
+  ['Attune','donjons','La progression de vos accès et harmonisations.','12,3 M','Lili','attune'],
+  ['Nova Instance Tracker','donjons','Verrouillages, temps d’instance, or et XP reposée des rerolls.','18,5 M','Lili','nova-instance-tracker'],
+  ['Lootified','donjons','Journal de butin et assistant Best in Slot pour WoW: Forever.','188','Apogée','lootified'],
+  ['Forever Dungeon Scout','donjons','Un guide de donjons léger conçu pour WoW: Forever.','1,5 k','Apogée','forever-dungeon-scout'],
+  ['Cooldown Manager Centered','combat','Personnalisez icônes, améliorations et barres de recharge.','6,7 M','Lili','cooldown-manager-centered'],
+  ['MiniAuras','combat','Contrôles, défensifs et notifications de sorts importants.','5,9 M','Lili','minicc'],
+  ['NKThreat','combat','Menace, TPS en temps réel et alertes de provocation.','35,4 k','Lili','nkthreat'],
+  ['WhoDoesWhat','combat','Assignations de raid et bénédictions de paladins.','716','Lili','whodoeswhat'],
+  ['BlizzMove','interface','Déplacez les fenêtres Blizzard par simple glisser-déposer.','11,9 M','Lili','blizzmove'],
+  ['DarkMode','interface','Une interface et des fenêtres plus sombres.','3,5 M','Lili','darkmode'],
+  ['FontMagic','interface','Polices et tailles personnalisées pour les textes de combat.','293,7 k','Lili','fontmagic'],
+  ['Plumber','interface','Butin, difficulté d’instance et nombreuses améliorations UI.','19,2 M','Lili','plumber'],
+  ['WilduTools','interface','Améliorations Blizzard et automatisation des tâches courantes.','1,3 M','Lili','wildutools'],
+  ['Auctionator','confort','Un hôtel des ventes simple et un meilleur suivi des prix.','201,8 M','Lili','auctionator'],
+  ['Better Fishing','confort','Pêche au raccourci de ciblage et au double-clic.','5,7 M','Lili','better-fishing'],
+  ['Speedy AutoLoot','confort','La récupération automatique du butin à grande vitesse.','11,2 M','Lili','speedyautoloot'],
+  ['WIM v3','confort','Les chuchotements dans de vraies fenêtres de messagerie.','22,8 M','Lili','wim-3'],
+  ['BugGrabber','support','Capture les erreurs Lua sans interrompre votre partie.','18,6 M','Lili','bug-grabber'],
+  ['BugSack','support','Centralise les erreurs dans un journal facile à consulter.','16,4 M','Lili','bugsack']
+].map(([name,category,description,downloads,author,slug])=>({name,category,description,downloads,author,url:`https://www.curseforge.com/wow/addons/${slug}`}));
 
 const tips=[
-  {icon:'01',tag:'Installation',title:'Construire un pack propre',short:'Partir sur une base stable',intro:'Ajoutez les outils progressivement pour identifier immédiatement un conflit ou une baisse de performances.',steps:['Installez d’abord BugGrabber et BugSack pour rendre les erreurs visibles.','Ajoutez les addons par famille, puis rechargez l’interface entre chaque lot.','Conservez uniquement les fonctions réellement utiles à votre façon de jouer.'],note:'Bon réflexe : avant une grosse mise à jour, sauvegardez les dossiers Interface et WTF.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt50839e89a98e4d22/6aa09f512437ed84d9d48846/System_Revamps.jpg'},
-  {icon:'02',tag:'Butin',title:'Préparer sa liste de butin',short:'Cibler les bons donjons',intro:'Un objectif de butin clair évite de parcourir des instances qui ne feront pas progresser votre personnage.',steps:['Repérez vos améliorations dans Lootified et placez-les dans la liste de souhaits.','Croisez la source avec DungeonJournal ou Forever Dungeon Scout.','Ajoutez un point TomTom vers l’entrée et suivez vos verrouillages avec Nova Instance Tracker.'],note:'Les listes BiS sont des guides : adaptez-les à votre spécialisation, votre groupe et vos statistiques actuelles.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt4865ad3281f25cb8/6aa09df51deff31ac7439163/Explore_Untold_Stories.jpg'},
-  {icon:'03',tag:'Progression',title:'Quêter sans perdre le nord',short:'Une route claire et flexible',intro:'Combinez la visibilité des objectifs avec un guide d’itinéraire sans transformer l’aventure en pilote automatique.',steps:['Utilisez Questie pour visualiser les objectifs disponibles.','Choisissez Azeroth Pilot Reloaded ou RestedXP comme guide principal, pas les deux à la fois.','Gardez TomTom pour les coordonnées partagées par le groupe ou la guilde.'],note:'Désactivez temporairement les étapes automatiques si vous souhaitez lire une suite de quêtes ou explorer librement.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt7a58f20dd8f6b2d9/6aa09f1c7ec8fef91000059e/Take_Unknown_Paths.jpg'},
-  {icon:'04',tag:'Instances',title:'Maîtriser ses verrouillages',short:'Éviter les entrées inutiles',intro:'Le suivi des instances devient indispensable lorsque plusieurs personnages ou groupes tournent dans la même journée.',steps:['Consultez Nova Instance Tracker avant de repartir vers une instance.','Vérifiez le nombre d’entrées récentes et la difficulté prévue.','Notez les objets ciblés et le temps moyen afin de choisir la prochaine session rentable.'],note:'Le suivi local dépend de votre historique addon : évitez de supprimer ses données enregistrées sans sauvegarde.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt848d2f0dbc2d2d1e/6aa09dd67ec8fedf4f00059c/Every_Journey_Matters.jpg'},
-  {icon:'05',tag:'Combat',title:'Lire sa menace',short:'Frapper fort sans reprendre',intro:'Une bonne lecture de la menace protège le groupe et permet d’utiliser ses temps de recharge au bon moment.',steps:['Placez la barre personnelle NKThreat près de votre point de focalisation.','Surveillez la marge avec le tank avant un burst ou une ouverture agressive.','Gardez les alertes de provocation visibles sans surcharger le centre de l’écran.'],note:'Un compteur de menace informe ; il ne remplace ni la communication ni l’adaptation au rythme du tank.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt2dc686732f526be5/6aa09db81deff3540b439161/Claim_New_Power.jpg'},
-  {icon:'06',tag:'Dépannage',title:'Traquer une erreur Lua',short:'Trouver le coupable rapidement',intro:'Quand une erreur apparaît, isolez sa source méthodiquement au lieu de désactiver tout le dossier Interface.',steps:['Ouvrez BugSack et relevez le premier addon cité dans la pile d’erreur.','Mettez cet addon à jour, puis testez-le seul avec ses dépendances.','Si l’erreur persiste, désactivez-le et transmettez le message complet à son auteur.'],note:'Ne partagez jamais un journal sans vérifier qu’il ne contient pas de nom de compte, chemin local ou donnée personnelle.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt491397daad992c6d/6aa09e0ec751e10dc30c50e0/Soak_in_Breathtaking_Expanses.jpg'}
+  {number:'01',category:'Installation',title:'Construire un pack propre',summary:'Partir sur une base stable',intro:'Ajoutez les outils progressivement pour identifier immédiatement un conflit ou une baisse de performances.',steps:['Installez d’abord BugGrabber et BugSack pour rendre les erreurs visibles.','Ajoutez les addons par famille, puis rechargez l’interface entre chaque lot.','Conservez uniquement les fonctions réellement utiles à votre façon de jouer.'],note:'Avant une grosse mise à jour, sauvegardez toujours les dossiers Interface et WTF.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt50839e89a98e4d22/6aa09f512437ed84d9d48846/System_Revamps.jpg'},
+  {number:'02',category:'Butin',title:'Préparer sa liste de butin',summary:'Cibler les bons donjons',intro:'Un objectif de butin clair évite de parcourir des instances qui ne feront pas progresser votre personnage.',steps:['Repérez vos améliorations dans Lootified et ajoutez-les à la liste de souhaits.','Croisez leur source avec DungeonJournal ou Forever Dungeon Scout.','Placez un point TomTom vers l’entrée et surveillez vos verrouillages avec Nova Instance Tracker.'],note:'Une liste BiS reste un guide : adaptez-la à votre spécialisation, votre groupe et vos statistiques.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt4865ad3281f25cb8/6aa09df51deff31ac7439163/Explore_Untold_Stories.jpg'},
+  {number:'03',category:'Progression',title:'Quêter sans perdre le nord',summary:'Une route claire et flexible',intro:'Combinez la visibilité des objectifs avec un guide d’itinéraire, sans transformer l’aventure en pilote automatique.',steps:['Utilisez Questie pour visualiser les objectifs disponibles.','Choisissez Azeroth Pilot Reloaded ou RestedXP comme guide principal.','Gardez TomTom pour les coordonnées partagées par le groupe ou la guilde.'],note:'Désactivez les étapes automatiques lorsque vous souhaitez lire une suite de quêtes ou explorer librement.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt7a58f20dd8f6b2d9/6aa09f1c7ec8fef91000059e/Take_Unknown_Paths.jpg'},
+  {number:'04',category:'Instances',title:'Maîtriser ses verrouillages',summary:'Éviter les entrées inutiles',intro:'Le suivi des instances devient indispensable quand plusieurs personnages ou groupes tournent dans la même journée.',steps:['Consultez Nova Instance Tracker avant de repartir vers une instance.','Vérifiez le nombre d’entrées récentes et la difficulté prévue.','Notez les objets ciblés et le temps moyen de chaque session.'],note:'Le suivi dépend de votre historique local : sauvegardez les données de l’addon avant de les réinitialiser.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt848d2f0dbc2d2d1e/6aa09dd67ec8fedf4f00059c/Every_Journey_Matters.jpg'},
+  {number:'05',category:'Combat',title:'Lire sa menace',summary:'Frapper fort sans reprendre',intro:'Une bonne lecture de la menace protège le groupe et permet d’utiliser ses temps de recharge au bon moment.',steps:['Placez la barre personnelle NKThreat près de votre point de focalisation.','Surveillez la marge avec le tank avant un burst ou une ouverture agressive.','Gardez les alertes de provocation visibles sans surcharger le centre de l’écran.'],note:'Un compteur informe ; il ne remplace ni la communication ni l’adaptation au rythme du tank.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt2dc686732f526be5/6aa09db81deff3540b439161/Claim_New_Power.jpg'},
+  {number:'06',category:'Dépannage',title:'Traquer une erreur Lua',summary:'Trouver le coupable rapidement',intro:'Quand une erreur apparaît, isolez sa source méthodiquement plutôt que de désactiver toute votre interface.',steps:['Ouvrez BugSack et relevez le premier addon cité dans la pile d’erreur.','Mettez cet addon à jour, puis testez-le seul avec ses dépendances.','Si l’erreur persiste, désactivez-le et transmettez le message complet à son auteur.'],note:'Vérifiez qu’un journal ne contient aucun nom de compte, chemin local ou donnée personnelle avant de le partager.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt491397daad992c6d/6aa09e0ec751e10dc30c50e0/Soak_in_Breathtaking_Expanses.jpg'}
 ];
 
-const addonGrid=document.querySelector('.addon-grid');
-const addonSearch=document.querySelector('#addon-search');
-const addonCount=document.querySelector('#addon-count');
-const addonEmpty=document.querySelector('.addon-empty');
-let addonFilter='all';
-const initials=name=>name.split(/\s+/).map(part=>part[0]).join('').slice(0,2).toUpperCase();
+const grid=document.querySelector('.addon-grid');
+const search=document.querySelector('#addon-search');
+const count=document.querySelector('#addon-count');
+const empty=document.querySelector('.empty-state');
+let activeFilter='all';
+
+const initials=name=>name.split(/\s+/).map(word=>word[0]).join('').slice(0,2).toUpperCase();
 
 function renderAddons(){
-  const query=addonSearch.value.trim().toLocaleLowerCase('fr');
-  const visible=addons.filter(addon=>(addonFilter==='all'||addon.c===addonFilter)&&(!query||`${addon.n} ${addon.d} ${addonCategories[addon.c].label}`.toLocaleLowerCase('fr').includes(query)));
-  addonGrid.innerHTML=visible.map(addon=>`<article class="addon-card" style="--accent:${addonCategories[addon.c].accent}"><div class="addon-card-top"><span class="addon-sigil">${initials(addon.n)}</span><span class="addon-downloads">↓ ${addon.dl}</span></div><h3>${addon.n}</h3><p>${addon.d}</p><footer><span>${addonCategories[addon.c].label}<br>Par ${addon.a}</span><a href="${addon.u}" target="_blank" rel="noopener">CurseForge ↗</a></footer></article>`).join('');
-  addonCount.textContent=visible.length;
-  addonEmpty.hidden=visible.length!==0;
+  const query=search.value.trim().toLocaleLowerCase('fr');
+  const matches=addons.filter(addon=>{
+    const inCategory=activeFilter==='all'||addon.category===activeFilter;
+    const haystack=`${addon.name} ${addon.description} ${categories[addon.category].label}`.toLocaleLowerCase('fr');
+    return inCategory&&(!query||haystack.includes(query));
+  });
+  grid.innerHTML=matches.map((addon,index)=>`<article class="addon-card" style="--accent:${categories[addon.category].color};--delay:${Math.min(index,8)*35}ms">
+    <div class="addon-top"><span class="addon-icon">${initials(addon.name)}</span><span class="addon-category">${categories[addon.category].short}</span></div>
+    <h3>${addon.name}</h3><p>${addon.description}</p>
+    <div class="addon-meta"><span><b>↓ ${addon.downloads}</b> · par ${addon.author}</span><a href="${addon.url}" target="_blank" rel="noopener" aria-label="Voir ${addon.name} sur CurseForge">Installer ↗</a></div>
+  </article>`).join('');
+  count.textContent=matches.length;
+  empty.hidden=matches.length>0;
 }
+
 document.querySelectorAll('[data-addon-filter]').forEach(button=>button.addEventListener('click',()=>{
-  addonFilter=button.dataset.addonFilter;
-  document.querySelectorAll('[data-addon-filter]').forEach(item=>item.classList.toggle('active',item===button));
+  activeFilter=button.dataset.addonFilter;
+  document.querySelectorAll('[data-addon-filter]').forEach(candidate=>candidate.classList.toggle('active',candidate===button));
   renderAddons();
 }));
-addonSearch.addEventListener('input',renderAddons);
+search.addEventListener('input',renderAddons);
+document.addEventListener('keydown',event=>{if(event.key==='/'&&document.activeElement!==search){event.preventDefault();search.focus();}});
 renderAddons();
 
-const tipList=document.querySelector('.tip-list');
-const tipDetail=document.querySelector('.tip-detail');
+const tabList=document.querySelector('.guide-tabs');
+const guide=document.querySelector('.guide-card');
 tips.forEach((tip,index)=>{
   const button=document.createElement('button');
-  button.className='tip-tab';
+  button.className='guide-tab';
   button.role='tab';
-  button.innerHTML=`<i>${tip.icon}</i><span><strong>${tip.tag}</strong>${tip.short}</span>`;
+  button.innerHTML=`<span>${tip.number}</span><div><strong>${tip.category}</strong><small>${tip.summary}</small></div><b>→</b>`;
   button.addEventListener('click',()=>renderTip(index));
-  tipList.appendChild(button);
+  tabList.appendChild(button);
 });
+
 function renderTip(index){
   const tip=tips[index];
-  [...tipList.children].forEach((button,buttonIndex)=>{button.classList.toggle('active',buttonIndex===index);button.setAttribute('aria-selected',buttonIndex===index);});
-  tipDetail.style.setProperty('--tip-image',`url('${tip.img}')`);
-  tipDetail.querySelector('.tip-badge').textContent=tip.tag;
-  tipDetail.querySelector('.tip-kicker').textContent=`Fiche ${tip.icon} · Conseil de terrain`;
-  tipDetail.querySelector('h3').textContent=tip.title;
-  tipDetail.querySelector('.tip-intro').textContent=tip.intro;
-  tipDetail.querySelector('.tip-steps').innerHTML=tip.steps.map(step=>`<li>${step}</li>`).join('');
-  tipDetail.querySelector('.tip-note').textContent=tip.note;
+  [...tabList.children].forEach((button,buttonIndex)=>{const selected=buttonIndex===index;button.classList.toggle('active',selected);button.setAttribute('aria-selected',selected);button.tabIndex=selected?0:-1;});
+  guide.style.setProperty('--guide-image',`url('${tip.image}')`);
+  guide.querySelector('.guide-category').textContent=tip.category;
+  guide.querySelector('.guide-index').textContent=tip.number;
+  guide.querySelector('.guide-kicker').textContent=`Guide ${tip.number} · ${tip.summary}`;
+  guide.querySelector('h3').textContent=tip.title;
+  guide.querySelector('.guide-intro').textContent=tip.intro;
+  guide.querySelector('.guide-steps').innerHTML=tip.steps.map(step=>`<li>${step}</li>`).join('');
+  guide.querySelector('.guide-note span').textContent=tip.note;
 }
 renderTip(0);
 
-const eras=[
-  {tab:'Cosmos',kicker:'Avant l’histoire mortelle',title:'L’ordonnancement d’Azeroth',text:'Les Titans découvrent Azeroth, un monde abritant une âme-monde exceptionnelle. Leurs gardiens affrontent les Dieux très anciens et façonnent les structures qui stabilisent la planète.',facts:[['Acteurs','Titans · Gardiens'],['Menace','Dieux très anciens'],['Héritage','Forges titanesques']],img:'assets/azeroth-cosmique.png',alt:'Monde fantastique entouré de gardiens cosmiques'},
-  {tab:'Kaldorei',kicker:'Il y a plus de 10 000 ans',title:'L’Empire et le Puits d’éternité',text:'La civilisation kaldorei s’élève autour du Puits d’éternité. L’usage démesuré de sa magie attire la Légion ardente et déclenche la Guerre des Anciens.',facts:[['Capitale','Zin-Azshari'],['Souveraine','Reine Azshara'],['Rupture','Grande Fracture']],img:'assets/kaldorei-puits-eternite.png',alt:'Capitale kaldorei autour du Puits d’éternité sous une lune immense'},
-  {tab:'Première Guerre',kicker:'An 0 du calendrier moderne',title:'L’ouverture de la Porte des ténèbres',text:'Manipulés par la Légion ardente, les clans orcs passent de Draenor à Azeroth. Hurlevent tombe : le conflit entre la Horde et l’Alliance commence.',facts:[['Passage','Porte des ténèbres'],['Envahisseurs','Clans orcs'],['Conséquence','Chute de Hurlevent']],img:'assets/porte-tenebres.png',alt:'Armée franchissant une gigantesque porte d’énergie gangrenée'},
-  {tab:'Troisième Guerre',kicker:'La peste de Lordaeron',title:'La chute d’Arthas',text:'Le prince Arthas poursuit la peste de non-mort jusqu’en Norfendre. En saisissant Deuillegivre pour sauver son peuple, il perd son âme et devient l’instrument du Roi-liche.',facts:[['Départ','Stratholme'],['Arme','Deuillegivre'],['Point de non-retour','Norfendre']],img:'assets/chute-arthas.png',alt:'Prince déchu tendant la main vers une lame maudite dans le blizzard'},
-  {tab:'Nouveau monde',kicker:'Après le mont Hyjal',title:'Horde et Alliance se reforment',text:'La Légion est repoussée au mont Hyjal, mais la paix ne dure pas. La nouvelle Horde s’établit en Kalimdor tandis que les survivants de l’Alliance reconstruisent leurs royaumes.',facts:[['Horde','Orgrimmar'],['Alliance','Hurlevent'],['Tension','Ressources et frontières']],img:'assets/mont-hyjal.png',alt:'Armées alliées contemplant un arbre-monde au lever du soleil'},
-  {tab:'Norfendre',kicker:'La guerre contre le Fléau',title:'La fin du règne du Roi-liche',text:'Les armées d’Azeroth assiègent la Couronne de glace. Arthas est vaincu, mais le Fléau ne peut rester sans maître : Bolvar Fordragon accepte la couronne et devient son geôlier.',facts:[['Forteresse','Citadelle de la Couronne de glace'],['Champion','Tirion Fordring'],['Successeur','Bolvar Fordragon']],img:'assets/citadelle-glace.png',alt:'Forteresse sombre prise dans une tempête de glace'}
-];
-
-const figures=[
-  {sigil:'A',color:'#77bce5',image:'assets/chute-arthas.png',name:'Arthas Menethil',role:'Prince de Lordaeron · Roi-liche',body:'Convaincu que toute limite morale pouvait être franchie pour sauver son royaume, Arthas devient précisément la menace qu’il combattait. Sa chute est une tragédie de l’obsession et du libre arbitre.',note:'Héritage : la destruction de Lordaeron et l’ascension du Fléau.'},
-  {sigil:'T',color:'#d87848',image:'assets/porte-tenebres.png',name:'Thrall',role:'Chef de guerre · Chaman',body:'Né esclave, Thrall libère les orcs des camps, redonne à la Horde une identité qui ne repose plus sur le sang démoniaque et conduit son peuple vers Kalimdor.',note:'Héritage : une nouvelle Horde fondée sur la survie, l’honneur et des alliances fragiles.'},
-  {sigil:'J',color:'#7bd8ef',image:'assets/mont-hyjal.png',name:'Jaina Portvaillant',role:'Archimage · Dirigeante de Kul Tiras',body:'Idéaliste puis profondément marquée par Theramore, Jaina incarne le coût humain des guerres répétées entre factions. Son rapport à la paix évolue sans jamais devenir simple.',note:'Héritage : un pont difficile entre diplomatie, mémoire et puissance.'},
-  {sigil:'S',color:'#b58ad9',image:'assets/kaldorei-puits-eternite.png',name:'Sylvanas Coursevent',role:'Reine banshee · Réprouvée',body:'Tuée puis relevée par Arthas, Sylvanas construit sa liberté autour du refus de toute domination. Cette quête la conduit pourtant à imposer aux autres des choix aussi radicaux que ceux qu’elle a subis.',note:'Héritage : l’émancipation des Réprouvés, puis une fracture majeure au sein de la Horde.'}
-];
-
-const questionBank=[
-  {c:'Origines',q:'Que cherchent à protéger les Titans en ordonnant Azeroth ?',a:['Une âme-monde','Le Rêve d’émeraude','La Porte des ténèbres'],ok:0,why:'Azeroth abrite une âme-monde d’une puissance exceptionnelle, raison centrale de l’intérêt des Titans.'},
-  {c:'Origines',q:'Quels êtres furent enfermés sous Azeroth par les gardiens titanesques ?',a:['Les Naaru','Les Dieux très anciens','Les Seigneurs de l’effroi'],ok:1,why:'Les Dieux très anciens furent emprisonnés sous la surface plutôt que détruits, leur présence étant profondément liée au monde.'},
-  {c:'Origines',q:'Quel Dieu très ancien fut arraché d’Azeroth par Aman’Thul ?',a:['Yogg-Saron','N’Zoth','Y’Shaarj'],ok:2,why:'Aman’Thul arracha Y’Shaarj du monde, laissant une blessure immense qui devint le Puits d’éternité.'},
-  {c:'Origines',q:'Quelle installation titanesque se trouve en Norfendre ?',a:['Ulduar','Uldum','Uldir'],ok:0,why:'Ulduar est la vaste cité-prison titanesque du Norfendre, notamment liée à Yogg-Saron.'},
-  {c:'Origines',q:'De quelle malédiction descendent les races de chair issues des créations titanesques ?',a:['La malédiction des worgens','La malédiction de la chair','La peste de non-mort'],ok:1,why:'La malédiction de la chair transforma progressivement plusieurs créations de pierre ou de métal en êtres mortels.'},
-  {c:'Origines',q:'Quel titan devint le chef de la Légion ardente ?',a:['Aman’Thul','Sargeras','Aggramar'],ok:1,why:'Sargeras abandonna le Panthéon et fonda la Légion ardente pour mener sa croisade cosmique.'},
-  {c:'Kaldorei',q:'Quelle source de magie alimentait l’empire kaldorei ?',a:['Le Puits d’éternité','Le Maelström','Le Sunwell'],ok:0,why:'Le Puits d’éternité était au cœur de la puissance et de la civilisation de l’ancien empire kaldorei.'},
-  {c:'Kaldorei',q:'Qui régnait sur Zin-Azshari avant la Guerre des Anciens ?',a:['Tyrande Murmevent','Azshara','Maiev Chantelombre'],ok:1,why:'La reine Azshara dirigeait l’empire kaldorei depuis Zin-Azshari avec les Bien-nés.'},
-  {c:'Kaldorei',q:'Quel événement attira la Légion ardente sur Azeroth ?',a:['L’usage immodéré du Puits','La naissance des dragons','La forge de Deuillegivre'],ok:0,why:'La magie considérable exploitée par les Bien-nés permit à la Légion de repérer Azeroth.'},
-  {c:'Kaldorei',q:'Qui enseigna le druidisme à Malfurion Hurlorage ?',a:['Cénarius','Nozdormu','Velen'],ok:0,why:'Le demi-dieu Cénarius fut le mentor de Malfurion, premier grand druide parmi les elfes de la nuit.'},
-  {c:'Kaldorei',q:'Que provoqua l’effondrement du Puits d’éternité ?',a:['La Grande Fracture','Le Cataclysme','La destruction de Draenor'],ok:0,why:'L’implosion du Puits disloqua l’ancien continent unique : cet événement est la Grande Fracture.'},
-  {c:'Kaldorei',q:'Quel arbre-monde fut planté après la Guerre des Anciens ?',a:['Teldrassil','Nordrassil','Shaladrassil'],ok:1,why:'Nordrassil fut planté au mont Hyjal au-dessus du nouveau puits créé par Illidan.'},
-  {c:'Kaldorei',q:'Quel artefact Illidan utilisa-t-il pour accroître sa puissance démoniaque ?',a:['Le Crâne de Gul’dan','Le Marteau-du-Destin','Le Cœur d’Y’Shaarj'],ok:0,why:'Illidan consomma l’énergie du Crâne de Gul’dan et acquit une forme démoniaque.'},
-  {c:'Kaldorei',q:'Qui devint la grande prêtresse d’Élune ?',a:['Azshara','Tyrande Murmevent','Shandris Pennelune'],ok:1,why:'Tyrande Murmevent devint la grande prêtresse d’Élune et une dirigeante centrale des Kaldorei.'},
-  {c:'Ancienne Horde',q:'Quel était le monde d’origine des orcs ?',a:['Argus','Draenor','K’aresh'],ok:1,why:'Les orcs sont originaires de Draenor, monde devenu plus tard l’Outreterre.'},
-  {c:'Ancienne Horde',q:'Quel démon offrit son sang aux clans orcs ?',a:['Mannoroth','Archimonde','Kil’jaeden'],ok:0,why:'Le sang de Mannoroth lia de nombreux orcs à la corruption démoniaque.'},
-  {c:'Ancienne Horde',q:'Qui ouvrit la Porte des ténèbres depuis Azeroth ?',a:['Medivh','Khadgar','Anduin Lothar'],ok:0,why:'Possédé par Sargeras, Medivh coopéra avec Gul’dan pour ouvrir la Porte entre les deux mondes.'},
-  {c:'Ancienne Horde',q:'Quelle cité humaine tomba pendant la Première Guerre ?',a:['Lordaeron','Hurlevent','Dalaran'],ok:1,why:'Hurlevent fut prise par la Horde, forçant ses survivants à fuir vers le nord.'},
-  {c:'Ancienne Horde',q:'Qui renversa Main-Noire et devint chef de guerre ?',a:['Orgrim Marteau-du-Destin','Durotan','Grommash Hurlenfer'],ok:0,why:'Orgrim tua Main-Noire, prit le titre de chef de guerre et mena la Horde durant la Deuxième Guerre.'},
-  {c:'Ancienne Horde',q:'Quel héros mena les forces de l’Alliance pendant la Deuxième Guerre ?',a:['Turalyon','Anduin Lothar','Daelin Portvaillant'],ok:1,why:'Anduin Lothar fut le commandant suprême de l’Alliance de Lordaeron jusqu’à sa mort.'},
-  {c:'Ancienne Horde',q:'Qui ferma la Porte des ténèbres depuis Draenor ?',a:['Khadgar','Medivh','Antonidas'],ok:0,why:'Khadgar et l’expédition de l’Alliance refermèrent la Porte depuis Draenor pour protéger Azeroth.'},
-  {c:'Ancienne Horde',q:'Pourquoi Draenor fut-il déchiré et devint-il l’Outreterre ?',a:['Le réveil de Gruul','Les portails de Ner’zhul','Une attaque des Titans'],ok:1,why:'Ner’zhul ouvrit simultanément de nombreux portails, provoquant la dislocation du monde.'},
-  {c:'Troisième Guerre',q:'Quelle ville Arthas fit-il purger pour stopper la peste ?',a:['Andorhal','Stratholme','Comté-de-l’Or'],ok:1,why:'Arthas ordonna la purge de Stratholme lorsque ses habitants furent contaminés par le grain pestiféré.'},
-  {c:'Troisième Guerre',q:'Quel nathrezim Arthas poursuivit-il en Norfendre ?',a:['Tichondrius','Balnazzar','Mal’Ganis'],ok:2,why:'Mal’Ganis attira Arthas vers le Norfendre, où le prince trouva Deuillegivre.'},
-  {c:'Troisième Guerre',q:'Comment se nomme la lame runique d’Arthas ?',a:['Deuillegivre','Porte-Cendres','Quel’Delar'],ok:0,why:'Deuillegivre dévora l’âme d’Arthas et le lia au Roi-liche.'},
-  {c:'Troisième Guerre',q:'Quel ancien compagnon Arthas retrouva-t-il près de Deuillegivre ?',a:['Muradin Barbe-de-Bronze','Magni Barbe-de-Bronze','Falstad Marteau-Hardi'],ok:0,why:'Muradin accompagnait une expédition naine en Norfendre lorsqu’Arthas le retrouva.'},
-  {c:'Troisième Guerre',q:'Quel paladin fut tué par Arthas après son retour en Lordaeron ?',a:['Tirion Fordring','Uther le Porteur de Lumière','Alexandros Mograine'],ok:1,why:'Uther tenta d’empêcher Arthas de profaner les cendres du roi Terenas.'},
-  {c:'Troisième Guerre',q:'Pourquoi Arthas attaqua-t-il Quel’Thalas ?',a:['Pour ressusciter Kel’Thuzad','Pour capturer le roi Anasterian','Pour détruire le Puits de soleil'],ok:0,why:'Arthas utilisa l’énergie du Puits de soleil afin de ramener Kel’Thuzad sous forme de liche.'},
-  {c:'Troisième Guerre',q:'Quel était le titre de Sylvanas avant sa mort ?',a:['Grande prêtresse','Générale des forestiers','Dame de Theramore'],ok:1,why:'Sylvanas était la générale des forestiers de Lune-d’Argent avant d’être relevée par Arthas.'},
-  {c:'Troisième Guerre',q:'Qui mena l’assaut final de la Légion au mont Hyjal ?',a:['Archimonde','Kil’jaeden','Mannoroth'],ok:0,why:'Archimonde tenta d’absorber la puissance de Nordrassil avant d’être détruit par les feux follets.'},
-  {c:'Troisième Guerre',q:'Quel prophète avertit Thrall et Jaina de partir vers Kalimdor ?',a:['Velen','Medivh','Khadgar'],ok:1,why:'Medivh, revenu comme prophète, chercha à unir les peuples contre la Légion.'},
-  {c:'Roi-liche',q:'Quelles âmes fusionnèrent initialement dans le Roi-liche couronné ?',a:['Arthas et Ner’zhul','Arthas et Kel’Thuzad','Bolvar et Ner’zhul'],ok:0,why:'Après avoir revêtu le heaume, Arthas s’unit à l’esprit de Ner’zhul.'},
-  {c:'Roi-liche',q:'Qui brisa Deuillegivre lors du combat final ?',a:['Darion Mograine','Tirion Fordring','Bolvar Fordragon'],ok:1,why:'Tirion, libéré de la glace, frappa Deuillegivre avec Porte-Cendres et brisa la lame.'},
-  {c:'Roi-liche',q:'Qui porta le Heaume de domination après Arthas ?',a:['Bolvar Fordragon','Tirion Fordring','Darion Mograine'],ok:0,why:'Bolvar accepta de devenir le geôlier du Fléau pour empêcher les morts-vivants de se déchaîner.'},
-  {c:'Royaumes',q:'Quelle est la capitale traditionnelle des humains de l’Alliance ?',a:['Hurlevent','Boralus','Stromgarde'],ok:0,why:'Hurlevent est la capitale du royaume éponyme et le principal centre humain de l’Alliance.'},
-  {c:'Royaumes',q:'Quelle ville Thrall fonda-t-il en Durotar ?',a:['Fossoyeuse','Orgrimmar','Pitons-du-Tonnerre'],ok:1,why:'Orgrimmar fut fondée par Thrall et nommée en hommage à Orgrim Marteau-du-Destin.'},
-  {c:'Royaumes',q:'Où l’Exodar s’écrasa-t-il en arrivant sur Azeroth ?',a:['L’île de Brume-Azur','L’île de Quel’Danas','Tol Barad'],ok:0,why:'Le vaisseau draeneï s’écrasa sur l’île de Brume-Azur, au large de Kalimdor.'},
-  {c:'Royaumes',q:'Qui ordonna l’incendie de Teldrassil ?',a:['Garrosh Hurlenfer','Sylvanas Coursevent','Genn Grisetête'],ok:1,why:'Sylvanas ordonna de brûler Teldrassil à la fin de la guerre des Épines.'},
-  {c:'Royaumes',q:'Quel désastre força les gnomes à abandonner Gnomeregan ?',a:['Une irradiation','Une inondation','Une invasion du Fléau'],ok:0,why:'La tentative de Sicco Thermaplugg contre les troggs contamina la cité par irradiation.'},
-  {c:'Royaumes',q:'Quel royaume resta longtemps isolé derrière un immense mur ?',a:['Gilnéas','Kul Tiras','Alterac'],ok:0,why:'Gilnéas se retira de l’Alliance et s’isola derrière le mur de Grisetête.'},
-  {c:'Aspects',q:'Quel Aspect est lié à la vie ?',a:['Alexstrasza','Ysera','Kalecgos'],ok:0,why:'Alexstrasza la Lieuse-de-Vie veille sur la vie et dirigeait le Vol draconique rouge.'},
-  {c:'Aspects',q:'Quel Aspect garde les voies du temps ?',a:['Malygos','Nozdormu','Neltharion'],ok:1,why:'Nozdormu l’Intemporel et le Vol de bronze protègent le déroulement du temps.'},
-  {c:'Aspects',q:'Quel Aspect était le gardien de la magie ?',a:['Malygos','Ysera','Irion'],ok:0,why:'Malygos et le Vol bleu furent chargés de surveiller les forces magiques.'},
-  {c:'Aspects',q:'Quel était le nom de Deathwing avant sa corruption ?',a:['Neltharion','Galakrond','Sabellian'],ok:0,why:'Neltharion, le Gardeterre, devint Deathwing après sa corruption par les Dieux très anciens.'},
-  {c:'Aspects',q:'À quel royaume Ysera est-elle intimement liée ?',a:['Les Terres de l’Ombre','Le Rêve d’émeraude','Le Néant distordu'],ok:1,why:'Ysera et le Vol vert veillent sur le Rêve d’émeraude.'},
-  {c:'Aspects',q:'Quel proto-dragon gigantesque menaça les autres avant la naissance des Aspects ?',a:['Galakrond','Raszageth','Iridikron'],ok:0,why:'La corruption et l’appétit de Galakrond poussèrent cinq proto-dragons à s’unir contre lui.'},
-  {c:'Peuples',q:'Qui mena les trolls Sombrelance après Sen’jin ?',a:['Vol’jin','Zul’jin','Rokhan'],ok:0,why:'Vol’jin succéda à son père Sen’jin et devint le chef des Sombrelance.'},
-  {c:'Peuples',q:'Quel chef tauren fonda les Pitons-du-Tonnerre ?',a:['Baine Sabot-de-Sang','Cairne Sabot-de-Sang','Hamuul Totem-Runique'],ok:1,why:'Cairne mena les tribus taurènes vers Mulgore et établit leur capitale.'},
-  {c:'Peuples',q:'Quel dirigeant guida les draeneï jusqu’à Azeroth ?',a:['Velen','Maraad','Akama'],ok:0,why:'Le prophète Velen refusa Sargeras et guida les exilés érédars devenus les draeneï.'},
-  {c:'Peuples',q:'Quel prince donna aux hauts-elfes le nom de Sin’dorei ?',a:['Kael’thas Haut-Soleil','Lor’themar Theron','Anasterian Haut-Soleil'],ok:0,why:'Kael’thas renomma les survivants elfes de sang, ou Sin’dorei, en mémoire des morts.'},
-  {c:'Peuples',q:'Quelle magie transforma les habitants de Gilnéas en worgens ?',a:['Une forme druidique incontrôlée','Le sang de Mannoroth','La peste de non-mort'],ok:0,why:'La malédiction worgen provient d’une ancienne forme de meute druidique devenue incontrôlable.'},
-  {c:'Cataclysme',q:'Qui provoqua le Cataclysme en surgissant du Tréfonds ?',a:['Ragnaros','Deathwing','Al’Akir'],ok:1,why:'Le retour de Deathwing depuis le Tréfonds fractura Azeroth et bouleversa ses continents.'},
-  {c:'Cataclysme',q:'Au-dessus de quel lieu Deathwing surgit-il ?',a:['Le Maelström','Le mont Hyjal','La Couronne de glace'],ok:0,why:'Deathwing traversa le plan terrestre et émergea au niveau du Maelström.'},
-  {c:'Pandarie',q:'Que sont les Sha ?',a:['Des fragments d’émotions négatives','Des esprits élémentaires','Des serviteurs des Naaru'],ok:0,why:'Les Sha sont des manifestations des émotions négatives, issues de l’essence d’Y’Shaarj.'},
-  {c:'Pandarie',q:'Quel empereur enveloppa la Pandarie dans les brumes ?',a:['Shaohao','Lei Shen','Shao-Tien'],ok:0,why:'L’empereur Shaohao sacrifia son existence pour protéger la Pandarie lors de la Grande Fracture.'},
-  {c:'Draenor',q:'Avec quel dragon Garrosh s’échappa-t-il avant son procès ?',a:['Kairozdormu','Chromie','Nozdormu'],ok:0,why:'Kairozdormu aida Garrosh à rejoindre un Draenor alternatif.'},
-  {c:'Draenor',q:'Quelle Horde naquit sur le Draenor alternatif ?',a:['La Horde de Fer','La Horde noire','La Gangr’Horde'],ok:0,why:'Garrosh poussa les clans à refuser le sang démoniaque et à former la Horde de Fer.'},
-  {c:'Légion',q:'Quel monde servait de siège principal à la Légion ardente ?',a:['Argus','Draenor','Xoroth'],ok:0,why:'Argus, ancien monde des érédars, devint le cœur militaire de la Légion.'},
-  {c:'Légion',q:'Par quel lieu la Légion lança-t-elle sa grande invasion ?',a:['La Tombe de Sargeras','La Porte du Courroux','Le Temple noir'],ok:0,why:'Gul’dan ouvrit un portail à la Tombe de Sargeras, permettant l’invasion des îles Brisées.'},
-  {c:'Quatrième Guerre',q:'Quel minerai apparut après la blessure infligée à Azeroth ?',a:['Azerite','Saronite','Gangreschiste'],ok:0,why:'L’Azerite est le sang cristallisé de l’âme-monde, apparu après le coup de Sargeras.'},
-  {c:'Quatrième Guerre',q:'Quel Dieu très ancien fut affronté à Ny’alotha ?',a:['C’Thun','Yogg-Saron','N’Zoth'],ok:2,why:'N’Zoth tenta de superposer Ny’alotha à la réalité avant sa défaite.'},
-  {c:'Ombreterre',q:'Qui gouverne le royaume de Bastion ?',a:['La reine de l’hiver','L’Archonte','Le Primat'],ok:1,why:'L’Archonte dirige les Kyrians et le royaume de Bastion.'},
-  {c:'Ombreterre',q:'Quel Éternel est lié à Maldraxxus ?',a:['Le Primat','Denathrius','Le Geôlier'],ok:0,why:'Le Primat est le maître stratège et le dirigeant de Maldraxxus.'},
-  {c:'Ombreterre',q:'Qui règne sur Sylvarden ?',a:['La reine de l’hiver','L’Archonte','Élune'],ok:0,why:'La reine de l’hiver veille sur les âmes de la nature à Sylvarden.'},
-  {c:'Îles aux Dragons',q:'Quelle Incarnation primordiale fut libérée en premier ?',a:['Fyrakka','Raszageth','Vyranoth'],ok:1,why:'Raszageth la Mange-tempêtes fut libérée avant ses frères et sœur.'}
-];
-
-const QUIZ_SIZE=50;
-const shuffle=items=>{
-  for(let index=items.length-1;index>0;index--){
-    const random=Math.floor(Math.random()*(index+1));
-    [items[index],items[random]]=[items[random],items[index]];
-  }
-  return items;
-};
-let quiz=shuffle([...questionBank]).slice(0,QUIZ_SIZE);
-
-let era=0,qIndex=0,score=0,locked=false;
-let bestScore=Number(localStorage.getItem('azeroth-best-score-50'))||0;
-document.querySelector('#quiz-total').textContent=quiz.length;
-document.querySelector('#best-score').textContent=bestScore?`${bestScore}/${quiz.length}`:'—';
-const controls=document.querySelector('.era-controls');
-const stage=document.querySelector('.era-stage');
-
-eras.forEach((item,index)=>{
-  const button=document.createElement('button');
-  button.innerHTML=`<span>${String(index+1).padStart(2,'0')}</span><strong>${item.tab}</strong>`;
-  button.setAttribute('aria-label',item.tab);
-  button.role='tab';
-  button.tabIndex=index===0?0:-1;
-  button.onclick=()=>renderEra(index);
-  button.onkeydown=event=>{
-    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-    event.preventDefault();
-    const target=event.key==='Home'?0:event.key==='End'?eras.length-1:(index+(event.key==='ArrowRight'?1:-1)+eras.length)%eras.length;
-    renderEra(target);
-    controls.children[target].focus();
-  };
-  controls.appendChild(button);
-});
-
-function renderEra(index){
-  era=index;
-  const item=eras[index];
-  [...controls.children].forEach((button,buttonIndex)=>{
-    button.classList.toggle('active',buttonIndex===index);
-    button.setAttribute('aria-selected',buttonIndex===index);
-    button.tabIndex=buttonIndex===index?0:-1;
-  });
-  stage.classList.remove('fade');
-  void stage.offsetWidth;
-  stage.classList.add('fade');
-  stage.querySelector('.era-number').textContent=String(index+1).padStart(2,'0');
-  const image=stage.querySelector('img');
-  image.src=item.img;
-  image.alt=item.alt;
-  stage.querySelector('.era-kicker').textContent=item.kicker;
-  stage.querySelector('h3').textContent=item.title;
-  stage.querySelector('.era-text').textContent=item.text;
-  stage.querySelector('.keyfacts').innerHTML=item.facts.map(fact=>`<div><strong>${fact[0]}</strong><span>${fact[1]}</span></div>`).join('');
-  stage.querySelector('.era-progress-count').textContent=`${String(index+1).padStart(2,'0')} / ${String(eras.length).padStart(2,'0')}`;
-  stage.querySelector('.era-progress b').style.width=`${(index+1)/eras.length*100}%`;
-}
-
-stage.querySelector('.next-era').onclick=()=>renderEra((era+1)%eras.length);
-renderEra(0);
-
-const cardWrap=document.querySelector('.cards');
-const dialog=document.querySelector('#lore-dialog');
-figures.forEach(figure=>{
-  const button=document.createElement('button');
-  button.className='card';
-  button.style.setProperty('--card-accent',figure.color);
-  button.style.setProperty('--card-image',`url('${figure.image}')`);
-  button.innerHTML=`<span class="sigil">${figure.sigil}</span><h3>${figure.name}</h3><p>${figure.role}</p><span class="open">Lire le destin →</span>`;
-  button.onclick=()=>{
-    dialog.querySelector('h2').textContent=figure.name;
-    dialog.querySelector('.modal-role').textContent=figure.role;
-    dialog.querySelector('.modal-body').textContent=figure.body;
-    dialog.querySelector('.modal-note').textContent=figure.note;
-    dialog.querySelector('.modal-sigil').textContent=figure.sigil;
-    dialog.querySelector('.modal-accent').style.backgroundImage=`linear-gradient(180deg,${figure.color}22,rgba(5,8,16,.32)),url('${figure.image}')`;
-    dialog.showModal();
-  };
-  cardWrap.appendChild(button);
-});
-dialog.querySelector('.close').onclick=()=>dialog.close();
-dialog.onclick=event=>{if(event.target===dialog)dialog.close();};
-
-const qbox=document.querySelector('.question');
-const next=document.querySelector('.quiz-next');
-function renderQ(){
-  locked=false;
-  qbox.classList.remove('result-copy');
-  const item=quiz[qIndex];
-  qbox.querySelector('.count').textContent=`${item.c} · Question ${qIndex+1} sur ${quiz.length}`;
-  qbox.querySelector('h3').textContent=item.q;
-  qbox.querySelector('.feedback').textContent='';
-  qbox.querySelector('.feedback').classList.remove('visible');
-  next.classList.remove('show');
-  const answers=qbox.querySelector('.answers');
-  answers.innerHTML='';
-  item.a.forEach((label,index)=>{
-    const button=document.createElement('button');
-    button.className='answer';
-    button.dataset.letter=String.fromCharCode(65+index);
-    button.textContent=label;
-    button.onclick=()=>answer(index);
-    answers.appendChild(button);
-  });
-  document.querySelector('.progress i').style.width=`${qIndex/quiz.length*100}%`;
-}
-function answer(index){
-  if(locked)return;
-  locked=true;
-  const item=quiz[qIndex];
-  const buttons=[...qbox.querySelectorAll('.answer')];
-  buttons.forEach((button,buttonIndex)=>{
-    button.disabled=true;
-    if(buttonIndex===item.ok)button.classList.add('correct');
-  });
-  if(index===item.ok){score++;document.querySelector('#score').textContent=score;}
-  else buttons[index].classList.add('wrong');
-  qbox.querySelector('.feedback').textContent=(index===item.ok?'Juste. ':'Pas tout à fait. ')+item.why;
-  qbox.querySelector('.feedback').classList.add('visible');
-  next.textContent=qIndex===quiz.length-1?'Voir mon résultat':'Question suivante';
-  next.classList.add('show');
-  document.querySelector('.progress i').style.width=`${(qIndex+1)/quiz.length*100}%`;
-}
-function advanceQuiz(){
-  if(qIndex<quiz.length-1){qIndex++;renderQ();return;}
-  bestScore=Math.max(bestScore,score);
-  localStorage.setItem('azeroth-best-score-50',String(bestScore));
-  document.querySelector('#best-score').textContent=`${bestScore}/${quiz.length}`;
-  const ratio=score/quiz.length;
-  qbox.classList.add('result-copy');
-  qbox.querySelector('.count').textContent='Chronique terminée';
-  qbox.querySelector('h3').textContent=ratio===1?'Gardien absolu des chroniques':ratio>=.8?'Érudit d’Azeroth':ratio>=.5?'Chroniqueur confirmé':'Voyageur nouvellement arrivé';
-  qbox.querySelector('.answers').innerHTML=`<div class="result-medal"><span>${score}/${quiz.length}</span></div>`;
-  qbox.querySelector('.feedback').textContent=ratio>=.8?'Votre mémoire rivalise avec celle des plus grands archivistes.':ratio>=.5?'Les fondations sont solides. Quelques archives restent à explorer.':'Azeroth est vaste : chaque nouvelle lecture révèle un autre fragment de son histoire.';
-  qbox.querySelector('.feedback').classList.add('visible');
-  next.textContent='Recommencer';
-  next.onclick=()=>{
-    quiz=shuffle([...questionBank]).slice(0,QUIZ_SIZE);
-    qIndex=0;score=0;document.querySelector('#score').textContent=0;
-    next.onclick=advanceQuiz;
-    renderQ();
-  };
-}
-next.onclick=advanceQuiz;
-renderQ();
-
-document.querySelectorAll('[data-go]').forEach(button=>button.onclick=()=>document.querySelector('#'+button.dataset.go).scrollIntoView({behavior:'smooth'}));
-const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-  if(entry.isIntersecting){document.querySelectorAll('nav button').forEach(button=>{const active=button.dataset.go===entry.target.id;button.classList.toggle('active',active);button.setAttribute('aria-current',active?'true':'false');});}
-}),{rootMargin:'-35% 0px -55%'});
-['addons','astuces','chronologie','quiz'].forEach(id=>observer.observe(document.getElementById(id)));
-
-const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-  if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target);}
-}),{threshold:.12});
-document.querySelectorAll('.section-head,.addon-card,.tip-layout,.era-stage,.card,.ice-break blockquote,.quiz-wrap').forEach((element,index)=>{
-  element.classList.add('reveal');
-  element.style.transitionDelay=`${Math.min(index%4,3)*70}ms`;
-  revealObserver.observe(element);
-});
-
-const updateScrollProgress=()=>{
-  const max=document.documentElement.scrollHeight-innerHeight;
-  document.querySelector('.scroll-progress i').style.width=`${max?scrollY/max*100:0}%`;
-};
-addEventListener('scroll',updateScrollProgress,{passive:true});
-updateScrollProgress();
+const progress=document.querySelector('.scroll-progress i');
+addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;},{passive:true});

@@ -1,6 +1,6 @@
 {
-  "name": "chroniques-azeroth",
-  "version": "5.0.0",
+  "name": "renaissance-wow-codex",
+  "version": "6.0.0",
   "private": true,
   "description": "Portail communautaire francophone pour les addons, astuces et chroniques de WoW: Forever",
   "scripts": {

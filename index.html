@@ -3,167 +3,80 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Le portail francophone de la guilde Renaissance pour les addons, astuces, butins et chroniques de WoW: Forever.">
-  <meta name="theme-color" content="#070b13">
-  <meta property="og:title" content="Renaissance — Le Grimoire de WoW: Forever">
-  <meta property="og:description" content="Addons recommandés, astuces de jeu, guides de butin et archives d’Azeroth.">
+  <meta name="description" content="Le codex communautaire de la guilde Renaissance : addons, astuces et butins pour WoW: Forever.">
+  <meta name="theme-color" content="#071014">
+  <meta property="og:title" content="Renaissance — Le Codex de WoW: Forever">
+  <meta property="og:description" content="Trouvez les bons addons et les astuces utiles pour votre aventure sur WoW: Forever.">
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23070b13' stroke='%23d9a441' stroke-width='3'/%3E%3Cpath d='M32 10 43 30 32 54 21 30Z' fill='%231d6f91' stroke='%23f2d083' stroke-width='2'/%3E%3Ccircle cx='32' cy='31' r='7' fill='%23f2d083'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=5.0.0">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=6.0.0">
 </head>
 <body>
-  <a class="skip-link" href="#addons">Aller au contenu</a>
+  <a class="skip-link" href="#addons">Aller aux addons</a>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <header class="topbar">
-    <div class="shell">
-      <div class="brand"><i class="brand-mark" aria-hidden="true"></i><span><strong>Renaissance</strong><small>Le Grimoire</small></span></div>
-      <nav aria-label="Navigation principale">
-        <button data-go="addons" class="active">Addons</button>
-        <button data-go="astuces">Astuces</button>
-        <button data-go="chronologie">Lore</button>
-        <button data-go="quiz">Quiz</button>
-      </nav>
-      <button class="nav-cta" data-go="addons">Voir les addons</button>
-    </div>
+    <a class="brand" href="#top" aria-label="Renaissance — accueil"><span class="brand-rune">R</span><span><strong>Renaissance</strong><small>Codex communautaire</small></span></a>
+    <nav aria-label="Navigation principale"><a href="#addons">Addons</a><a href="#astuces">Astuces</a></nav>
+    <span class="community-badge"><i></i> Mis à jour par la guilde</span>
   </header>
 
-  <main>
-    <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="hero-stars" aria-hidden="true"></div>
-      <div class="hero-orbit orbit-one" aria-hidden="true"></div>
-      <div class="hero-orbit orbit-two" aria-hidden="true"></div>
-      <div class="shell">
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-art" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="overline">Guilde Renaissance présente</p>
         <img class="forever-logo" src="https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt527dd61848a757c7/6aa3316cad92093ee45628fd/camelot-logo-gamepage.png" alt="World of Warcraft Forever">
-        <div class="hero-volume"><span>Guilde Renaissance</span><i></i><span>Guides communautaires</span></div>
-        <h1 id="hero-title">Le grimoire<br>d’Azeroth <span>Addons · Astuces · Butins · Lore</span></h1>
-        <p>Une sélection francophone d’outils et de conseils pour préparer votre aventure sur WoW: Forever, enrichie par les découvertes de la communauté.</p>
-        <div class="actions">
-          <button class="btn" data-go="addons">Choisir mes addons <b>→</b></button>
-          <button class="btn secondary" data-go="astuces">Voir les astuces</button>
-        </div>
-        <div class="hero-stats" aria-label="Contenu des archives">
-          <div><strong>28</strong><span>Addons vérifiés</span></div>
-          <div><strong>06</strong><span>Catégories</span></div>
-          <div><strong>06</strong><span>Astuces de départ</span></div>
-        </div>
+        <h1 id="hero-title">Votre aventure.<br><em>Mieux équipée.</em></h1>
+        <p class="hero-copy">Les addons vraiment utiles et les conseils de terrain de la communauté, réunis dans un codex clair et sans détour.</p>
+        <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#astuces">Ouvrir le carnet</a></div>
       </div>
-      <button class="scroll-cue" data-go="addons" aria-label="Découvrir les addons"><span>Explorer</span><i></i></button>
+      <div class="hero-meter" aria-label="Contenu du site"><div><strong>28</strong><span>Addons sélectionnés</span></div><div><strong>06</strong><span>Catégories utiles</span></div><div><strong>06</strong><span>Guides pratiques</span></div></div>
     </section>
 
-    <section id="addons" class="addons-section">
-      <div class="shell">
-        <div class="section-head">
-          <span class="section-number" aria-hidden="true">I</span>
-          <div><div class="eyebrow">L’arsenal de l’aventurier</div><h2>Les addons</h2></div>
-          <p>Vingt-huit outils conseillés par la guilde, classés par fonction. Recherchez un besoin, filtrez, puis ouvrez directement sa fiche CurseForge.</p>
+    <section class="essentials" aria-labelledby="essentials-title">
+      <div class="section-shell">
+        <div class="section-intro compact"><div><span class="chapter">01 — Démarrage rapide</span><h2 id="essentials-title">Les indispensables</h2></div><p>Trois bases solides pour partir en quête, comprendre son butin et garder une interface saine.</p></div>
+        <div class="essential-grid">
+          <a href="https://www.curseforge.com/wow/addons/questie" target="_blank" rel="noopener" class="essential-card quest"><span class="essential-number">01</span><span class="essential-tag">Quêtes</span><h3>Questie</h3><p>Objectifs et quêtes disponibles directement sur la carte.</p><b>Voir sur CurseForge ↗</b></a>
+          <a href="https://www.curseforge.com/wow/addons/lootified" target="_blank" rel="noopener" class="essential-card loot"><span class="essential-number">02</span><span class="essential-tag">Butin</span><h3>Lootified</h3><p>Journal de loot et assistant Best in Slot pour WoW: Forever.</p><b>Voir sur CurseForge ↗</b></a>
+          <a href="https://www.curseforge.com/wow/addons/bugsack" target="_blank" rel="noopener" class="essential-card debug"><span class="essential-number">03</span><span class="essential-tag">Diagnostic</span><h3>BugSack</h3><p>Les erreurs Lua rangées dans un journal réellement lisible.</p><b>Voir sur CurseForge ↗</b></a>
         </div>
-        <div class="addon-toolbar">
-          <label class="addon-search"><span>Rechercher</span><input id="addon-search" type="search" placeholder="Nom, usage, fonction…" autocomplete="off"></label>
-          <div class="addon-total"><strong id="addon-count">28</strong><span>résultats</span></div>
+      </div>
+    </section>
+
+    <section id="addons" class="catalogue" aria-labelledby="addons-title">
+      <div class="section-shell">
+        <div class="section-intro"><div><span class="chapter">02 — L’arsenal</span><h2 id="addons-title">Tous les addons</h2></div><p>Recherchez par nom ou par usage. Chaque fiche mène directement à la page CurseForge recommandée par la guilde.</p></div>
+        <div class="catalogue-tools">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="addon-search" type="search" placeholder="Rechercher un addon ou une fonction…" autocomplete="off"><kbd>/</kbd></label>
+          <div class="result-counter"><strong id="addon-count">28</strong><span>résultats</span></div>
         </div>
-        <div class="addon-filters" role="group" aria-label="Filtrer les addons">
-          <button class="active" data-addon-filter="all">Tous</button>
-          <button data-addon-filter="quetes">Quêtes & navigation</button>
-          <button data-addon-filter="donjons">Donjons & butin</button>
-          <button data-addon-filter="combat">Combat & raid</button>
-          <button data-addon-filter="interface">Interface</button>
-          <button data-addon-filter="confort">Confort & économie</button>
-          <button data-addon-filter="support">Diagnostic</button>
+        <div class="filter-row" role="group" aria-label="Filtrer les addons">
+          <button class="active" data-addon-filter="all">Tous <span>28</span></button><button data-addon-filter="quetes">Quêtes <span>7</span></button><button data-addon-filter="donjons">Donjons & butin <span>6</span></button><button data-addon-filter="combat">Combat <span>4</span></button><button data-addon-filter="interface">Interface <span>5</span></button><button data-addon-filter="confort">Confort <span>4</span></button><button data-addon-filter="support">Diagnostic <span>2</span></button>
         </div>
         <div class="addon-grid" aria-live="polite"></div>
-        <p class="addon-empty" hidden>Aucun addon ne correspond à cette recherche.</p>
+        <div class="empty-state" hidden><span>⌕</span><h3>Aucun résultat</h3><p>Essayez un nom plus court ou choisissez une autre catégorie.</p></div>
       </div>
     </section>
 
-    <section id="astuces" class="tips-section">
-      <div class="shell">
-        <div class="section-head">
-          <span class="section-number" aria-hidden="true">II</span>
-          <div><div class="eyebrow">Le carnet de campagne</div><h2>Astuces & butins</h2></div>
-          <p>Des fiches courtes, actionnables et faciles à enrichir au fil des découvertes de la guilde.</p>
-        </div>
-        <div class="tip-layout">
-          <div class="tip-list" role="tablist" aria-label="Choisir une astuce"></div>
-          <article class="tip-detail" aria-live="polite">
-            <div class="tip-visual"><span class="tip-badge"></span></div>
-            <div class="tip-copy"><div class="eyebrow tip-kicker"></div><h3></h3><p class="tip-intro"></p><ol class="tip-steps"></ol><p class="tip-note"></p></div>
+    <section id="astuces" class="guidebook" aria-labelledby="tips-title">
+      <div class="section-shell">
+        <div class="section-intro light"><div><span class="chapter">03 — Le carnet de campagne</span><h2 id="tips-title">Astuces de terrain</h2></div><p>Des procédures courtes et concrètes, pensées pour être consultées entre deux aventures.</p></div>
+        <div class="guide-layout">
+          <div class="guide-tabs" role="tablist" aria-label="Choisir une astuce"></div>
+          <article class="guide-card" aria-live="polite">
+            <div class="guide-image"><span class="guide-category"></span><span class="guide-index"></span></div>
+            <div class="guide-content"><span class="guide-kicker"></span><h3></h3><p class="guide-intro"></p><ol class="guide-steps"></ol><aside class="guide-note"><strong>À retenir</strong><span></span></aside></div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="chronologie">
-      <div class="shell">
-        <div class="section-head">
-          <span class="section-number" aria-hidden="true">III</span>
-          <div><div class="eyebrow">La grande chronologie</div><h2>L’histoire d’Azeroth</h2></div>
-          <p>Choisissez une époque. Chaque chapitre relie un événement fondateur à ses conséquences sur les peuples d’Azeroth.</p>
-        </div>
-        <div class="era-controls" role="tablist" aria-label="Choisir une époque"></div>
-        <article class="era-stage fade" aria-live="polite">
-          <div class="era-visual"><span class="era-number">01</span><img alt="" src="assets/azeroth-cosmique.png"><div class="image-vignette"></div></div>
-          <div class="era-copy">
-            <div class="era-progress"><span>Chapitre</span><i><b></b></i><span class="era-progress-count">01 / 06</span></div>
-            <div class="eyebrow era-kicker"></div>
-            <h3></h3>
-            <p class="era-text"></p>
-            <div class="keyfacts"></div>
-            <button class="next-era">Époque suivante →</button>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="cast" id="figures">
-      <div class="shell">
-        <div class="section-head">
-          <span class="section-number" aria-hidden="true">IV</span>
-          <div><div class="eyebrow">Destins croisés</div><h2>Héros, chefs et parias</h2></div>
-          <p>Cliquez sur une figure pour comprendre son rôle, son dilemme et l’héritage laissé au monde.</p>
-        </div>
-        <div class="cards"></div>
-      </div>
-    </section>
-
-    <section class="ice-break">
-      <div class="shell">
-        <div class="quote-mark" aria-hidden="true">“</div>
-        <blockquote>« Le royaume qu’il voulait sauver devint la première victime de son obsession. »<cite><i></i>La tragédie d’Arthas Menethil</cite></blockquote>
-      </div>
-    </section>
-
-    <section id="quiz">
-      <div class="shell">
-        <div class="section-head">
-          <span class="section-number" aria-hidden="true">V</span>
-          <div><div class="eyebrow">Épreuve du chroniqueur</div><h2>Testez vos connaissances</h2></div>
-          <p>Cinquante questions tirées aléatoirement d’une banque de soixante-cinq. Chaque réponse révèle une explication.</p>
-        </div>
-        <div class="quiz-wrap">
-          <aside class="score-panel">
-            <div><span>Score</span><strong><b id="score">0</b>/<span id="quiz-total">50</span></strong></div>
-            <div class="progress" aria-label="Progression"><i></i></div>
-            <p class="best-score">Meilleur score <b id="best-score">—</b></p>
-          </aside>
-          <div class="question" aria-live="polite">
-            <div class="count"></div><h3></h3><div class="answers"></div><p class="feedback"></p>
-            <button class="btn quiz-next">Question suivante</button>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section class="contribution"><div class="section-shell contribution-inner"><span class="contribution-rune">R</span><div><span class="chapter">Un codex vivant</span><h2>Une trouvaille à partager ?</h2><p>Le catalogue évolue avec les recommandations, tests et retours de la guilde Renaissance.</p></div><a href="#addons" class="text-link">Revenir au catalogue ↑</a></div></section>
   </main>
 
-  <footer><div class="shell footer-row"><div><strong>Renaissance — Le Grimoire</strong><span>Addons, astuces et chroniques créés par la communauté.</span></div><span>Projet non officiel. Visuels et univers © Blizzard Entertainment.</span><button data-go="hero" class="to-top" aria-label="Retour en haut">↑</button></div></footer>
-
-  <dialog id="lore-dialog">
-    <div class="modal-inner">
-      <div class="modal-accent" aria-hidden="true"><span class="modal-sigil"></span></div>
-      <div class="modal-content"><div class="modal-top"><div><span class="eyebrow">Archive de personnage</span><h2></h2></div><button class="close" aria-label="Fermer">×</button></div>
-      <p class="modal-role"></p><p class="modal-body"></p><p class="modal-note"></p></div>
-    </div>
-  </dialog>
-  <script src="app.js?v=5.0.0"></script>
+  <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever</span></div><p>Projet communautaire non officiel. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
+  <script src="app.js?v=6.0.0"></script>
 </body>
 </html>
