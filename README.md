@@ -5,6 +5,8 @@ Un codex français en lecture seule consacré à WoW: Forever : addons recommand
 ## Fonctionnalités
 
 - Navigation par rubrique avec liens directs et historique du navigateur, sans longue page à parcourir
+- Menu mobile dépliant avec toutes les rubriques, fermeture par Échap et navigation clavier
+- Tri du catalogue par sélection, nom ou catégorie, compteur de plage et réinitialisation des filtres
 - Favoris enregistrés localement, filtre « Mes favoris » et affichage cartes ou liste mémorisé
 - Groupes de commandes repliables, avec ouverture automatique depuis un lien direct
 - Accueil illustré par le mont Hyjal et sélection de démarrage compacte

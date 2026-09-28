@@ -10,15 +10,16 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=7.2.0">
-  <link rel="stylesheet" href="theme.css?v=7.2.0">
+  <link rel="stylesheet" href="styles.css?v=7.3.0">
+  <link rel="stylesheet" href="theme.css?v=7.3.0">
 </head>
 <body>
   <a class="skip-link" href="#addons">Aller aux addons</a>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Renaissance — accueil"><span class="brand-rune">R</span><span><strong>Renaissance</strong><small>Codex communautaire</small></span></a>
-    <nav aria-label="Navigation principale"><a href="#top">Accueil</a><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#commandes">Commandes</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation"><span aria-hidden="true">☰</span> Menu</button>
+    <nav id="main-navigation" aria-label="Navigation principale"><a href="#top">Accueil</a><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#commandes">Commandes</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
   </header>
 
   <main id="top">
@@ -59,10 +60,10 @@
         </div>
         <div class="collection-toolbar">
           <button id="favorites-filter" aria-pressed="false">☆ Mes favoris <span id="favorites-count">0</span></button>
-          <span class="collection-hint">Gardez vos essentiels avec l’étoile.</span>
+          <div class="sort-control"><label for="addon-sort">Trier</label><select id="addon-sort"><option value="selection">Sélection du codex</option><option value="name">Nom : A → Z</option><option value="category">Catégorie</option></select></div>
           <div class="view-switch" role="group" aria-label="Affichage du catalogue"><button data-view="cards" aria-pressed="true">Cartes</button><button data-view="list" aria-pressed="false">Liste</button></div>
         </div>
-        <p id="catalogue-status" class="sr-only" role="status"></p>
+        <div class="catalogue-summary"><p id="catalogue-status" role="status"></p><button id="clear-filters" hidden>Effacer les filtres ×</button></div>
         <div class="addon-grid" aria-live="polite"></div>
         <nav class="catalogue-pagination" aria-label="Pages du catalogue">
           <button class="page-arrow page-prev" aria-label="Page précédente">←</button>
@@ -182,6 +183,6 @@
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site informatif en lecture seule. Aucun compte ni publication. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
   <div class="site-preferences section-shell"><span>À votre rythme, en Azeroth.</span><button id="motion-toggle" aria-pressed="false">Animations : activées</button></div>
-  <script src="app.js?v=7.2.0"></script>
+  <script src="app.js?v=7.3.0"></script>
 </body>
 </html>

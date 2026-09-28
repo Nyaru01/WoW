@@ -74,6 +74,10 @@ const favorites=new Set(Array.isArray(savedFavorites)?savedFavorites.filter(url=
 let favoritesOnly=false;
 const favoritesFilter=document.querySelector('#favorites-filter');
 const catalogueStatus=document.querySelector('#catalogue-status');
+const addonSort=document.querySelector('#addon-sort');
+const clearFilters=document.querySelector('#clear-filters');
+addonSort.addEventListener('change',()=>{currentPage=1;renderAddons();});
+clearFilters.addEventListener('click',()=>document.querySelector('#reset-catalogue').click());
 const initialView=readPreference('renaissance-view','cards');
 function setView(view){
   grid.classList.toggle('list-view',view==='list');
@@ -105,6 +109,9 @@ function renderAddons(){
     const haystack=normalizeSearch(`${addon.name} ${addon.description} ${categories[addon.category].label}`);
     return inCategory&&(!favoritesOnly||favorites.has(addon.url))&&(!query||haystack.includes(query));
   });
+  if(addonSort.value==='name')matches.sort((a,b)=>a.name.localeCompare(b.name,'fr'));
+  if(addonSort.value==='category')matches.sort((a,b)=>categories[a.category].label.localeCompare(categories[b.category].label,'fr')||a.name.localeCompare(b.name,'fr'));
+  clearFilters.hidden=!query&&activeFilter==='all'&&!favoritesOnly;
   const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));
   currentPage=Math.min(currentPage,totalPages);
   const first=(currentPage-1)*pageSize;
@@ -118,7 +125,7 @@ function renderAddons(){
   count.textContent=matches.length;
   document.querySelector('#favorites-count').textContent=favorites.size;
   favoritesFilter.setAttribute('aria-pressed',String(favoritesOnly));
-  catalogueStatus.textContent=`${matches.length} addon${matches.length===1?'':'s'} trouvé${matches.length===1?'':'s'}.`;
+  catalogueStatus.textContent=matches.length?`${first+1}–${Math.min(first+pageSize,matches.length)} sur ${matches.length} addon${matches.length===1?'':'s'}${favoritesOnly?' favoris':''}`:'Aucun addon trouvé';
   empty.querySelector('h3').textContent=favoritesOnly&&favorites.size===0?'Votre sac est encore vide':'Aucun résultat';
   empty.querySelector('p').textContent=favoritesOnly&&favorites.size===0?'Ajoutez vos addons préférés avec l’étoile sur chaque fiche.':'Essayez un autre mot-clé ou réinitialisez les filtres.';
   empty.hidden=matches.length>0;
@@ -238,6 +245,23 @@ tabList.addEventListener('keydown',event=>{
 
 const progress=document.querySelector('.scroll-progress i');
 const topbar=document.querySelector('.topbar');
+const menuToggle=document.querySelector('.menu-toggle');
+const mainNavigation=document.querySelector('#main-navigation');
+function closeMenu(restoreFocus=false){
+  topbar.classList.remove('menu-open');
+  menuToggle.setAttribute('aria-expanded','false');
+  if(restoreFocus)menuToggle.focus();
+}
+menuToggle.addEventListener('click',()=>{
+  const open=menuToggle.getAttribute('aria-expanded')!=='true';
+  menuToggle.setAttribute('aria-expanded',String(open));
+  topbar.classList.toggle('menu-open',open);
+});
+mainNavigation.addEventListener('click',event=>{if(event.target.closest('a'))closeMenu();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&topbar.classList.contains('menu-open'))closeMenu(true);});
+document.addEventListener('click',event=>{if(!topbar.contains(event.target))closeMenu();});
+topbar.addEventListener('focusout',event=>{if(!topbar.contains(event.relatedTarget))closeMenu();});
+matchMedia('(max-width: 820px)').addEventListener('change',()=>closeMenu());
 addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;topbar.classList.toggle('scrolled',scrollY>30);},{passive:true});
 
 const motionToggle=document.querySelector('#motion-toggle');
