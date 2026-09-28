@@ -1,8 +1,8 @@
 {
   "name": "renaissance-wow-codex",
-  "version": "6.1.0",
+  "version": "6.2.2",
   "private": true,
-  "description": "Portail communautaire francophone pour les addons, astuces et chroniques de WoW: Forever",
+  "description": "Codex francophone en lecture seule pour les addons, astuces, objets RP et nouvelles de WoW: Forever",
   "scripts": {
     "start": "node server.js",
     "check": "node --check server.js && node --check app.js"

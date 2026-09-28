@@ -1,13 +1,15 @@
 # Renaissance — Le Grimoire de WoW: Forever
 
-Un portail communautaire français consacré à WoW: Forever : addons recommandés, astuces de terrain et guides de butin.
+Un codex français en lecture seule consacré à WoW: Forever : addons recommandés, astuces de terrain, objets RP et nouvelles officielles.
 
 ## Fonctionnalités
 
 - Catalogue de 28 addons filtrable, recherchable et paginé par groupes de huit
-- Six fiches pratiques consacrées à l’installation, au butin, aux quêtes, aux instances, au combat et au dépannage
+- Huit fiches pratiques enrichies avec durée, contexte, outil conseillé et procédure courte
 - Sélection éditoriale des trois addons indispensables pour démarrer
-- Direction artistique fantasy sombre, animations sobres et visuels officiels WoW: Forever
+- Cabinet d’objets RP avec la torche réutilisable de la bêta et la Torche de Grayson
+- Rubrique Nouvelles datée, résumée et reliée aux annonces officielles de Blizzard
+- Direction artistique fantasy sombre, respiration du décor, logo flottant, braises et visuels officiels WoW: Forever
 - Interface responsive, animations adaptées aux préférences système et navigation accessible
 - Serveur Node sans dépendance avec en-têtes de sécurité et cache statique
 
