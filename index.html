@@ -10,15 +10,15 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=7.1.0">
-  <link rel="stylesheet" href="theme.css?v=7.1.0">
+  <link rel="stylesheet" href="styles.css?v=7.2.0">
+  <link rel="stylesheet" href="theme.css?v=7.2.0">
 </head>
 <body>
   <a class="skip-link" href="#addons">Aller aux addons</a>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Renaissance — accueil"><span class="brand-rune">R</span><span><strong>Renaissance</strong><small>Codex communautaire</small></span></a>
-    <nav aria-label="Navigation principale"><a href="#top">Accueil</a><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#commandes">Commandes</a><a href="#outils">Mon carnet</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
+    <nav aria-label="Navigation principale"><a href="#top">Accueil</a><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#commandes">Commandes</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
   </header>
 
   <main id="top">
@@ -31,8 +31,7 @@
         <h1 id="hero-title">Moins de réglages.<br><em>Plus d’aventure.</em></h1>
         <p class="hero-copy">Trouvez rapidement le bon addon, une astuce claire ou un réglage utile — réunis par la communauté pour vous accompagner en jeu.</p>
         <div class="faction-signature" aria-label="Pour les joueurs Alliance et Horde"><span class="alliance">Alliance</span><span aria-hidden="true">◆</span><span class="horde">Horde</span><small>Deux factions. Une même aventure.</small></div>
-        <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#astuces">Ouvrir le carnet</a></div>
-        <aside class="adventure-hub" aria-label="À portée de main"><span class="chapter">À portée de main</span><h2>Prêt pour la prochaine quête ?</h2><a href="#outils"><span>01</span><div><strong>Préparer ma session</strong><small>Checklist et notes personnelles</small></div><b>→</b></a><a href="#nouvelles"><span>02</span><div><strong>Lire les patch notes</strong><small>Les changements à connaître</small></div><b>→</b></a><a href="#commandes"><span>03</span><div><strong>Ajuster mon jeu</strong><small>Réglages prêts à copier</small></div><b>→</b></a></aside>
+        <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#nouvelles">Voir les patch notes <span>→</span></a></div>
       </div>
       <nav class="hero-meter" aria-label="Accès rapides"><a href="#addons"><strong>29</strong><span><b>Trouver un addon</b><small>Recherche et filtres</small></span><i>→</i></a><a href="#astuces"><strong>08</strong><span><b>Bien démarrer</b><small>Guides pratiques</small></span><i>→</i></a><a href="#objets-rp"><strong>02</strong><span><b>Partir en quête</b><small>Objets à dénicher</small></span><i>→</i></a></nav>
     </section>
@@ -73,25 +72,6 @@
         </nav>
         <div class="empty-state" hidden><span>⌕</span><h3>Aucun résultat</h3><p>Essayez un nom plus court ou choisissez une autre catégorie.</p><button id="reset-catalogue" class="button ghost">Voir tous les addons</button></div>
         <p class="collection-footnote">Vos favoris sont conservés dans ce navigateur, sans compte.</p>
-      </div>
-    </section>
-
-    <section id="outils" class="player-tools" aria-labelledby="tools-title">
-      <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">Votre espace d’aventure</span><h2 id="tools-title">Mon carnet</h2></div><p>Une préparation rapide et vos idées à portée de main. Tout reste dans ce navigateur, sans compte.</p></div>
-        <div class="player-tools-grid">
-          <article class="session-card"><div class="tool-heading"><span class="chapter">Avant le départ</span><span id="checklist-count" role="status">0 / 6</span></div><h3>La checklist de session</h3><p>Quelques vérifications pour partir l’esprit tranquille.</p><progress id="checklist-progress" max="6" value="0" aria-label="Préparation de la session"></progress>
-            <div class="session-checks">
-              <label><input type="checkbox" data-check="repair"><span><strong>Équipement réparé</strong><small>Un détour chez le marchand avant de partir.</small></span></label>
-              <label><input type="checkbox" data-check="bags"><span><strong>De la place dans les sacs</strong><small>Gardez de quoi accueillir votre prochain butin.</small></span></label>
-              <label><input type="checkbox" data-check="supplies"><span><strong>Consommables et composants</strong><small>Nourriture, eau et fournitures utiles à votre classe.</small></span></label>
-              <label><input type="checkbox" data-check="quests"><span><strong>Quêtes et destination vérifiées</strong><small>Un objectif clair pour la session.</small></span></label>
-              <label><input type="checkbox" data-check="group"><span><strong>Groupe et rôles confirmés</strong><small>Ou simplement votre itinéraire en solo.</small></span></label>
-              <label><input type="checkbox" data-check="addons"><span><strong>Interface prête</strong><small>Les outils utiles sont activés et bien placés.</small></span></label>
-            </div><button id="reset-checklist" class="button ghost">Nouvelle session</button>
-          </article>
-          <article class="notes-card"><div class="tool-heading"><span class="chapter">À ne pas oublier</span><span id="notes-count">0 / 4000</span></div><h3>Vos notes d’aventure</h3><p>Un objet à chercher, une quête à terminer, le nom d’un compagnon…</p><label class="sr-only" for="adventure-notes">Notes personnelles</label><textarea id="adventure-notes" maxlength="4000" placeholder="Ma prochaine destination…"></textarea><p id="notes-status" role="status">Enregistrement local automatique.</p><div class="notebook-links"><a href="#addons">Ouvrir mes addons →</a><a href="#astuces">Consulter les guides →</a></div></article>
-        </div>
       </div>
     </section>
 
@@ -202,6 +182,6 @@
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site informatif en lecture seule. Aucun compte ni publication. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
   <div class="site-preferences section-shell"><span>À votre rythme, en Azeroth.</span><button id="motion-toggle" aria-pressed="false">Animations : activées</button></div>
-  <script src="app.js?v=7.1.0"></script>
+  <script src="app.js?v=7.2.0"></script>
 </body>
 </html>

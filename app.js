@@ -240,29 +240,6 @@ const progress=document.querySelector('.scroll-progress i');
 const topbar=document.querySelector('.topbar');
 addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;topbar.classList.toggle('scrolled',scrollY>30);},{passive:true});
 
-// Personal notebook: graceful fallback when browser storage is unavailable.
-const checks=[...document.querySelectorAll('[data-check]')];
-const savedChecks=readPreference('renaissance-checklist',[]);
-checks.forEach(check=>check.checked=Array.isArray(savedChecks)&&savedChecks.includes(check.dataset.check));
-function updateChecklist(persist=false){
-  const selected=checks.filter(check=>check.checked).map(check=>check.dataset.check);
-  const saved=!persist||savePreference('renaissance-checklist',selected);
-  document.querySelector('#checklist-count').textContent=`${selected.length} / ${checks.length}${selected.length===checks.length?' · Prêt à partir !':''}${saved?'':' · Non enregistré'}`;
-  document.querySelector('#checklist-progress').value=selected.length;
-}
-checks.forEach(check=>check.addEventListener('change',()=>updateChecklist(true)));
-document.querySelector('#reset-checklist').addEventListener('click',()=>{checks.forEach(check=>check.checked=false);updateChecklist(true);});
-updateChecklist();
-const notes=document.querySelector('#adventure-notes');
-const storedNotes=readPreference('renaissance-notes','');
-notes.value=typeof storedNotes==='string'?storedNotes.slice(0,4000):'';
-function updateNotesCount(){document.querySelector('#notes-count').textContent=`${notes.value.length} / 4000`;}
-updateNotesCount();
-notes.addEventListener('input',()=>{
-  updateNotesCount();
-  const saved=savePreference('renaissance-notes',notes.value);
-  document.querySelector('#notes-status').textContent=saved?'Notes enregistrées dans ce navigateur.':'Enregistrement indisponible : gardez une copie de vos notes avant de fermer cette page.';
-});
 const motionToggle=document.querySelector('#motion-toggle');
 const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
 let motionDisabled=readPreference('renaissance-motion',false)===true;
