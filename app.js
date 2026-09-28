@@ -61,12 +61,13 @@ const nextPage=document.querySelector('.page-next');
 let activeFilter='all';
 let currentPage=1;
 const pageSize=8;
+const normalizeSearch=value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr');
 
 function renderAddons(){
-  const query=search.value.trim().toLocaleLowerCase('fr');
+  const query=normalizeSearch(search.value.trim());
   const matches=addons.filter(addon=>{
     const inCategory=activeFilter==='all'||addon.category===activeFilter;
-    const haystack=`${addon.name} ${addon.description} ${categories[addon.category].label}`.toLocaleLowerCase('fr');
+    const haystack=normalizeSearch(`${addon.name} ${addon.description} ${categories[addon.category].label}`);
     return inCategory&&(!query||haystack.includes(query));
   });
   const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));
@@ -99,11 +100,19 @@ nextPage.addEventListener('click',()=>changePage(currentPage+1));
 document.querySelectorAll('[data-addon-filter]').forEach(button=>button.addEventListener('click',()=>{
   activeFilter=button.dataset.addonFilter;
   currentPage=1;
-  document.querySelectorAll('[data-addon-filter]').forEach(candidate=>candidate.classList.toggle('active',candidate===button));
+  document.querySelectorAll('[data-addon-filter]').forEach(candidate=>{
+    candidate.classList.toggle('active',candidate===button);
+    candidate.setAttribute('aria-pressed',String(candidate===button));
+  });
   renderAddons();
 }));
 search.addEventListener('input',()=>{currentPage=1;renderAddons();});
-document.addEventListener('keydown',event=>{if(event.key==='/'&&document.activeElement!==search){event.preventDefault();search.focus();}});
+document.querySelectorAll('[data-addon-filter]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.addonFilter===activeFilter)));
+document.addEventListener('keydown',event=>{
+  if(event.key!=='/'||event.ctrlKey||event.metaKey||event.altKey||event.target.closest('input,textarea,select,[contenteditable]')) return;
+  event.preventDefault();
+  search.focus();
+});
 renderAddons();
 
 document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
@@ -138,6 +147,8 @@ tips.forEach((tip,index)=>{
   const button=document.createElement('button');
   button.className='guide-tab';
   button.role='tab';
+  button.id=`guide-tab-${index}`;
+  button.setAttribute('aria-controls','guide-panel');
   button.innerHTML=`<span>${tip.number}</span><div><strong>${tip.category}</strong><small>${tip.summary}</small></div><b>→</b>`;
   button.addEventListener('click',()=>renderTip(index));
   tabList.appendChild(button);
@@ -145,6 +156,7 @@ tips.forEach((tip,index)=>{
 
 function renderTip(index){
   const tip=tips[index];
+  guide.setAttribute('aria-labelledby',`guide-tab-${index}`);
   [...tabList.children].forEach((button,buttonIndex)=>{const selected=buttonIndex===index;button.classList.toggle('active',selected);button.setAttribute('aria-selected',selected);button.tabIndex=selected?0:-1;});
   guide.classList.remove('guide-switch');
   void guide.offsetWidth;
@@ -164,7 +176,7 @@ renderTip(0);
 addEventListener('load',()=>{
   if(!location.hash) return;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    const target=document.querySelector(location.hash);
+    const target=document.getElementById(location.hash.slice(1));
     if(!target) return;
     document.documentElement.style.scrollBehavior='auto';
     target.scrollIntoView({block:'start'});

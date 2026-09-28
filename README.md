@@ -4,15 +4,16 @@ Un codex français en lecture seule consacré à WoW: Forever : addons recommand
 
 ## Fonctionnalités
 
-- Catalogue de 28 addons filtrable, recherchable et paginé par groupes de huit
+- Catalogue de 28 addons filtrable, avec recherche sans accents et pagination par groupes de huit
 - Huit fiches pratiques enrichies avec durée, contexte, outil conseillé et procédure courte
 - Manuel de commandes console classé par usage, avec copie en un clic et avertissements de sauvegarde
 - Sélection éditoriale des trois addons indispensables pour démarrer
 - Cabinet d’objets RP avec un visuel de torche original, la torche réutilisable de la bêta et la Torche de Grayson
 - Rubrique Nouvelles datée, résumée et reliée aux annonces officielles de Blizzard
-- Direction artistique fantasy sombre, respiration du décor, logo flottant, braises et visuels officiels WoW: Forever
+- Direction artistique fantasy sombre, accueil compact, raccourcis de navigation et cartes arrondies
 - Interface responsive, animations adaptées aux préférences système et navigation accessible
-- Serveur Node sans dépendance avec en-têtes de sécurité et cache statique
+- Serveur Node sans dépendance avec en-têtes de sécurité, cache statique et accès limité aux fichiers publics
+- Signature « Créé par Nyaru » dans le pied de page
 
 ## Lancer localement
 

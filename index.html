@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=6.3.2">
+  <link rel="stylesheet" href="styles.css?v=6.4.0">
 </head>
 <body>
   <a class="skip-link" href="#addons">Aller aux addons</a>
@@ -25,12 +25,13 @@
       <div class="hero-art" aria-hidden="true"></div>
       <div class="embers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="hero-content">
+        <span class="hero-kicker">Le codex francophone de la communauté</span>
         <img class="forever-logo" src="https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt527dd61848a757c7/6aa3316cad92093ee45628fd/camelot-logo-gamepage.png" alt="World of Warcraft Forever">
         <h1 id="hero-title">Votre aventure.<br><em>Mieux équipée.</em></h1>
-        <p class="hero-copy">Les addons vraiment utiles et les conseils de terrain de la communauté, réunis dans un codex clair et sans détour.</p>
+        <p class="hero-copy">Trouvez rapidement le bon addon, une astuce claire ou un réglage utile — réunis par la communauté pour vous accompagner en jeu.</p>
         <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#astuces">Ouvrir le carnet</a></div>
       </div>
-      <div class="hero-meter" aria-label="Contenu du site"><div><strong>28</strong><span>Addons sélectionnés</span></div><div><strong>08</strong><span>Guides pratiques</span></div><div><strong>02</strong><span>Objets à dénicher</span></div></div>
+      <nav class="hero-meter" aria-label="Accès rapides"><a href="#addons"><strong>28</strong><span><b>Trouver un addon</b><small>Recherche et filtres</small></span><i>→</i></a><a href="#astuces"><strong>08</strong><span><b>Bien démarrer</b><small>Guides pratiques</small></span><i>→</i></a><a href="#objets-rp"><strong>02</strong><span><b>Partir en quête</b><small>Objets à dénicher</small></span><i>→</i></a></nav>
     </section>
 
     <section class="essentials" aria-labelledby="essentials-title">
@@ -48,7 +49,7 @@
       <div class="section-shell">
         <div class="section-intro"><div><span class="chapter">02 — L’arsenal</span><h2 id="addons-title">Tous les addons</h2></div><p>Recherchez par nom ou par usage. Chaque fiche mène directement à la page CurseForge recommandée par la guilde.</p></div>
         <div class="catalogue-tools">
-          <label class="search-box"><span aria-hidden="true">⌕</span><input id="addon-search" type="search" placeholder="Rechercher un addon ou une fonction…" autocomplete="off"><kbd>/</kbd></label>
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="addon-search" type="search" aria-label="Rechercher un addon ou une fonction" placeholder="Rechercher un addon ou une fonction…" autocomplete="off"><kbd>/</kbd></label>
           <div class="result-counter"><strong id="addon-count">28</strong><span>résultats</span></div>
         </div>
         <div class="filter-row" role="group" aria-label="Filtrer les addons">
@@ -71,7 +72,7 @@
         <div class="guide-summary" aria-label="Résumé du carnet"><span><strong>08</strong> fiches</span><span><strong>3–10 min</strong> par préparation</span><span><strong>100 %</strong> consultable sans compte</span></div>
         <div class="guide-layout">
           <div class="guide-tabs" role="tablist" aria-label="Choisir une astuce"></div>
-          <article class="guide-card" aria-live="polite">
+          <article id="guide-panel" class="guide-card" role="tabpanel" tabindex="0" aria-live="polite">
             <div class="guide-image"><span class="guide-category"></span><span class="guide-index"></span></div>
             <div class="guide-content"><span class="guide-kicker"></span><h3></h3><p class="guide-intro"></p><div class="guide-facts"></div><ol class="guide-steps"></ol><aside class="guide-note"><strong>À retenir</strong><span></span></aside></div>
           </article>
@@ -163,7 +164,7 @@
     </section>
   </main>
 
-  <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever</span></div><p>Site informatif en lecture seule. Aucun compte ni publication. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
-  <script src="app.js?v=6.3.2"></script>
+  <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site informatif en lecture seule. Aucun compte ni publication. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
+  <script src="app.js?v=6.4.0"></script>
 </body>
 </html>
