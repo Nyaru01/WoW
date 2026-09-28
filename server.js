@@ -20,7 +20,7 @@ http.createServer((request,response)=>{
   }
   const requested=pathname==='/'?'index.html':pathname.replace(/^\/+/, '');
   // Publish only the website, never repository metadata or server source.
-  if(!['index.html','styles.css','app.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp)$/i.test(requested)){
+  if(!['index.html','styles.css','theme.css','app.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp)$/i.test(requested)){
     response.writeHead(404,securityHeaders({'Content-Type':'text/plain; charset=utf-8'})).end('Not found');
     return;
   }

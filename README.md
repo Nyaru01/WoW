@@ -4,6 +4,12 @@ Un codex français en lecture seule consacré à WoW: Forever : addons recommand
 
 ## Fonctionnalités
 
+- Navigation par rubrique avec liens directs et historique du navigateur, sans longue page à parcourir
+- Favoris enregistrés localement, filtre « Mes favoris » et affichage cartes ou liste mémorisé
+- Groupes de commandes repliables, avec ouverture automatique depuis un lien direct
+- Accueil illustré par le mont Hyjal et sélection de démarrage compacte
+- Thème pierre sombre et dorures commun à toutes les rubriques, avec Alliance et Horde représentées à l’accueil
+- Notes de bêta du 24 septembre et mise à jour client du 23 septembre 2026, résumées en français avec liens Blizzard
 - Catalogue de 28 addons filtrable, avec recherche sans accents et pagination par groupes de huit
 - Huit fiches pratiques enrichies avec durée, contexte, outil conseillé et procédure courte
 - Manuel de commandes console classé par usage, avec copie en un clic et avertissements de sauvegarde
@@ -28,3 +34,11 @@ Le site est ensuite disponible sur `http://localhost:3000`.
 Le dépôt contient `railway.json` et écoute automatiquement sur la variable `PORT` fournie par Railway. Il suffit de créer un service Railway depuis ce dépôt GitHub.
 
 > Projet non officiel. World of Warcraft et son univers appartiennent à Blizzard Entertainment.
+
+## Actualités
+
+La rubrique est éditoriale et ne se met pas à jour automatiquement. Dernière vérification : 28 septembre 2026. Pour une mise à jour, vérifier les annonces de Blizzard, modifier les résumés et leurs dates dans `index.html`, puis publier sur la branche `Addon`.
+
+Sources des notes de bêta :
+- https://eu.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-24-september/631316
+- https://eu.forums.blizzard.com/en/wow/t/beta-client-update-23-september/630815

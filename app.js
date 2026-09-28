@@ -62,24 +62,59 @@ let activeFilter='all';
 let currentPage=1;
 const pageSize=8;
 const normalizeSearch=value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr');
+function readPreference(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}}
+function savePreference(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
+const savedFavorites=readPreference('renaissance-favorites',[]);
+const favorites=new Set(Array.isArray(savedFavorites)?savedFavorites.filter(url=>addons.some(addon=>addon.url===url)):[]);
+let favoritesOnly=false;
+const favoritesFilter=document.querySelector('#favorites-filter');
+const catalogueStatus=document.querySelector('#catalogue-status');
+const initialView=readPreference('renaissance-view','cards');
+function setView(view){
+  grid.classList.toggle('list-view',view==='list');
+  document.querySelectorAll('[data-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.view===view)));
+}
+setView(initialView==='list'?'list':'cards');
+document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{setView(button.dataset.view);savePreference('renaissance-view',button.dataset.view);}));
+favoritesFilter.addEventListener('click',()=>{favoritesOnly=!favoritesOnly;currentPage=1;renderAddons();});
+grid.addEventListener('click',event=>{
+  const button=event.target.closest('[data-favorite]');
+  if(!button)return;
+  const url=button.dataset.favorite;
+  const adding=!favorites.has(url);
+  adding?favorites.add(url):favorites.delete(url);
+  const persisted=savePreference('renaissance-favorites',[...favorites]);
+  renderAddons();
+  catalogueStatus.textContent=`${adding?'Ajouté aux favoris.':'Retiré des favoris.'}${persisted?'':' Conservation indisponible : favoris limités à cette visite.'}`;
+  const replacement=[...grid.querySelectorAll('[data-favorite]')].find(candidate=>candidate.dataset.favorite===url);
+  (replacement||favoritesFilter).focus({preventScroll:true});
+});
+document.querySelector('#reset-catalogue').addEventListener('click',()=>{
+  search.value='';favoritesOnly=false;document.querySelector('[data-addon-filter="all"]').click();search.focus();
+});
 
 function renderAddons(){
   const query=normalizeSearch(search.value.trim());
   const matches=addons.filter(addon=>{
     const inCategory=activeFilter==='all'||addon.category===activeFilter;
     const haystack=normalizeSearch(`${addon.name} ${addon.description} ${categories[addon.category].label}`);
-    return inCategory&&(!query||haystack.includes(query));
+    return inCategory&&(!favoritesOnly||favorites.has(addon.url))&&(!query||haystack.includes(query));
   });
   const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));
   currentPage=Math.min(currentPage,totalPages);
   const first=(currentPage-1)*pageSize;
   const pageItems=matches.slice(first,first+pageSize);
   grid.innerHTML=pageItems.map((addon,index)=>`<article class="addon-card" style="--accent:${categories[addon.category].color};--delay:${Math.min(index,8)*45}ms">
-    <div class="addon-top"><span class="addon-category">${categories[addon.category].label}</span><span class="addon-pick">Sélection guilde</span></div>
+    <div class="addon-top"><span class="addon-category">${categories[addon.category].label}</span><button class="favorite-button" data-favorite="${addon.url}" aria-pressed="${favorites.has(addon.url)}" aria-label="${favorites.has(addon.url)?'Retirer':'Ajouter'} ${addon.name} ${favorites.has(addon.url)?'des':'aux'} favoris">${favorites.has(addon.url)?'★':'☆'}</button></div>
     <h3>${addon.name}</h3><p>${addon.description}</p>
     <div class="addon-meta"><span><b>↓ ${addon.downloads}</b> · par ${addon.author}</span><a href="${addon.url}" target="_blank" rel="noopener" aria-label="Voir ${addon.name} sur CurseForge">Installer ↗</a></div>
   </article>`).join('');
   count.textContent=matches.length;
+  document.querySelector('#favorites-count').textContent=favorites.size;
+  favoritesFilter.setAttribute('aria-pressed',String(favoritesOnly));
+  catalogueStatus.textContent=`${matches.length} addon${matches.length===1?'':'s'} trouvé${matches.length===1?'':'s'}.`;
+  empty.querySelector('h3').textContent=favoritesOnly&&favorites.size===0?'Votre sac est encore vide':'Aucun résultat';
+  empty.querySelector('p').textContent=favoritesOnly&&favorites.size===0?'Ajoutez vos addons préférés avec l’étoile sur chaque fiche.':'Essayez un autre mot-clé ou réinitialisez les filtres.';
   empty.hidden=matches.length>0;
   pagination.hidden=matches.length===0;
   previousPage.disabled=currentPage===1;
@@ -111,6 +146,7 @@ document.querySelectorAll('[data-addon-filter]').forEach(button=>button.setAttri
 document.addEventListener('keydown',event=>{
   if(event.key!=='/'||event.ctrlKey||event.metaKey||event.altKey||event.target.closest('input,textarea,select,[contenteditable]')) return;
   event.preventDefault();
+  if(document.querySelector('#addons').hidden){location.hash='addons';showSection();}
   search.focus();
 });
 renderAddons();
@@ -198,7 +234,37 @@ const progress=document.querySelector('.scroll-progress i');
 const topbar=document.querySelector('.topbar');
 addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;topbar.classList.toggle('scrolled',scrollY>30);},{passive:true});
 
-const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-  if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}
-}),{threshold:.12});
-document.querySelectorAll('.section-intro,.essential-card,.catalogue-tools,.filter-row,.guide-summary,.guide-layout,.command-warning,.command-index,.command-group,.command-source,.rp-feature,.rp-secondary,.news-lead,.news-card,.news-status').forEach(element=>{element.classList.add('reveal');revealObserver.observe(element);});
+// Each chapter has its own short view; anchors and browser history remain usable.
+const chapters=[...document.querySelectorAll('main > section[id]')];
+document.querySelectorAll('.command-group').forEach((group,index)=>{
+  const details=document.createElement('details');
+  const summary=document.createElement('summary');
+  const header=group.querySelector('header');
+  const total=group.querySelectorAll('.command-card').length;
+  summary.innerHTML=`<span>${header.querySelector('h3').textContent}</span><small>${total} réglage${total>1?'s':''}</small>`;
+  details.open=index===0;
+  details.append(summary,group.querySelector('.command-list'));
+  header.remove();group.append(details);
+});
+function showSection(){
+  const target=document.getElementById(location.hash.slice(1));
+  const chapter=target?.closest('main > section[id]');
+  const home=!chapter;
+  document.querySelector('.hero').hidden=!home;
+  document.querySelector('.essentials').hidden=!home;
+  chapters.forEach(section=>section.hidden=home?section.id!=='addons':section!==chapter);
+  document.body.classList.toggle('chapter-view',!home);
+  document.querySelectorAll('.topbar nav a').forEach(link=>{
+    if(link.hash===(home?'#top':`#${chapter.id}`))link.setAttribute('aria-current','page');
+    else link.removeAttribute('aria-current');
+  });
+  if(target?.classList.contains('command-group'))target.querySelector('details').open=true;
+}
+showSection();
+addEventListener('hashchange',()=>{
+  showSection();
+  const target=document.getElementById(location.hash.slice(1))||document.querySelector('main');
+  target.scrollIntoView({block:'start',behavior:'instant'});
+  const heading=target.querySelector('h1,h2,summary');
+  if(heading){if(heading.tagName!=='SUMMARY')heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});}
+});

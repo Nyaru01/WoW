@@ -1,0 +1,142 @@
+/* Shared art direction for every chapter: dark stone, aged gold, Azeroth. */
+:root {
+  --stone: #151719;
+  --stone-raised: #202326;
+  --frame: #4b4538;
+  --parchment: #eee3cb;
+  --quiet: #b7b4aa;
+  --gilding: #dfbd78;
+}
+body { background: var(--stone); color: var(--parchment); }
+.topbar, .topbar.scrolled {
+  background: linear-gradient(#1d1d1e, #101214);
+  border-bottom: 1px solid #706047;
+  box-shadow: 0 3px 20px #0006;
+}
+.brand strong { color: #f1d699; }
+.brand-rune { background: #29251e; box-shadow: inset 0 0 12px #0008; }
+.topbar nav a[aria-current] { background: linear-gradient(transparent,#b58a3022); }
+.hero-art {
+  background: linear-gradient(90deg,#111416ef, #111416a6 47%, #11141626),
+    linear-gradient(0deg,#151719,transparent 65%), url('assets/mont-hyjal.png') center 43%/cover;
+}
+.hero h1 { color: #f7efdd; text-shadow: 0 3px 20px #000a; }
+.hero h1 em { color: #eed098; }
+.faction-signature { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; font: 600 .76rem var(--body); letter-spacing: .06em; }
+.faction-signature .alliance { color: #9dcaf0; border-bottom: 2px solid #487baf; padding-bottom: 4px; }
+.faction-signature .horde { color: #eda49a; border-bottom: 2px solid #a54e41; padding-bottom: 4px; }
+.faction-signature>span:nth-child(2) { color: #ae9059; font-size: .6rem; }
+.faction-signature small { font-weight: 400; color: #c2beb2; letter-spacing: 0; }
+.button.primary { background: linear-gradient(#e5c58a,#ac7c35); border-color: #efd49b; color: #24190c; box-shadow: inset 0 1px #fff7,0 4px 18px #0005; }
+.hero-meter { background: linear-gradient(#252629,#191b1d); border-color: #675b46; }
+.hero-meter a { border-color: #514a3e; }
+.essentials { background: #151719; }
+.catalogue,.guidebook,.commands,.rp-vault,.newsroom {
+  background: radial-gradient(ellipse at 50% 0,#79633b14,transparent 60%),#151719;
+  color: var(--parchment);
+  border-top: 1px solid #514635;
+}
+.rp-vault:after { display: none; }
+.section-intro { position: relative; padding-bottom: 23px; border-bottom: 1px solid #74603f65; }
+.section-intro:after { content: ''; position: absolute; bottom: -2px; left: 0; width: 52px; height: 3px; background: #c6a15e; }
+.section-intro h2 { color: #f2e7cf; font-weight: 600; }
+.section-intro h2[tabindex="-1"]:focus,.hero h1[tabindex="-1"]:focus { outline: none; }
+.section-intro .chapter,.section-intro.light .chapter,.newsroom .section-intro .chapter { color: #c6a976; }
+.section-intro p,.section-intro.light p,.commands .section-intro p,.newsroom .section-intro p { color: var(--quiet); }
+.section-intro.compact { border: 0; padding: 0; }
+.section-intro.compact:after { display: none; }
+.essential-card,.addon-card,.guide-card,.rp-feature,.rp-secondary,.news-card,.patch-client,.patch-highlights article {
+  border: 1px solid var(--frame);
+  border-radius: 6px;
+  background-color: var(--stone-raised);
+  box-shadow: inset 0 1px #e4c78d08,0 5px 20px #0002;
+}
+.essential-card:hover,.addon-card:hover,.news-card:hover { border-color: #bd9e61; background-color: #2c2d2b; transform: translateY(-2px); }
+.addon-card { background: linear-gradient(145deg,#242627,#1b1e21); }
+.addon-meta { border-color: #4b483f; }
+.search-box,.result-counter { background: #101315; border-color: #645941; }
+.filter-row button { border-color: #514b3e; background: #222427; color: #c9c4b7; }
+.filter-row button.active { background: #d9b879; }
+.collection-toolbar button { border-color: #62583e; }
+.favorite-button { background: #181b1d; border-color: #595344; }
+.guide-summary { border-color: #514b3e; background: #202326; }
+.guide-summary span { border-color: #514b3e; color: #bfb8a7; }
+.guide-summary strong { color: #e2bf7d; }
+.guide-tabs { background: transparent; }
+.guide-tab { background: #202326; color: #d4cec0; border-color: #514b3e; }
+.guide-tab>span { color: #c5a574; }
+.guide-tab small { color: #aba89e; }
+.guide-tab:hover,.guide-tab.active { background: linear-gradient(100deg,#3b3325,#25282a); color: #f4dfb3; box-shadow: inset 3px 0 #d7b06b; }
+.guide-tab.active small,.guide-tab:hover small { color: #d0c3a7; }
+.guide-card { background: #202326; }
+.guide-content h3 { color: #eee2cb; }
+.guide-kicker { color: #d5b676; }
+.guide-intro,.guide-steps li { color: #c6c3b8; }
+.guide-steps li { border-color: #514b3e; }
+.guide-steps li:before { color: #d7b06b; }
+.guide-facts,.guide-facts span,.guide-facts span:first-child { border-color: #514b3e; }
+.guide-facts span small { color: #b8a784; }
+.guide-facts span b { color: #e3dbc9; }
+.guide-note { background: #302e27; border-color: #b89a5f; }
+.guide-note strong { color: #e3bd76; }
+.guide-note span { color: #d3ccbd; }
+.command-warning { background: #27231c; border-color: #796444; }
+.command-warning>span { background: #342919; border-color: #796444; }
+.command-index,.command-group { background: #202326; border-color: #514b3e; }
+.command-index a { border-color: #514b3e; color: #c5c0b4; }
+.command-index a:hover { background: #373024; }
+.command-group details>summary { background: linear-gradient(90deg,#302c24,#222528); color: #eee1c6; }
+.command-group details[open]>summary { border-color: #514b3e; }
+.command-list { background: #514b3e; }
+.command-card { background: #1e2224; }
+.command-card code { color: #abd2cb; }
+.command-source { color: #b4b4a9; }
+.rp-feature,.rp-secondary { background: #202326; color: #ece0c9; }
+.rp-copy h3,.rp-secondary h3 { color: #ece0c9; }
+.rp-copy>p,.rp-secondary p { color: #c0bcaf; }
+.rp-secondary .item-level { color: #bfab83; }
+.quest-route { border-color: #514b3e; }
+.quest-route span { color: #c4aa7d; }
+.quest-route b { color: #e7ddc9; }
+.lore-link.dark { color: #e3bd76; }
+.lore-link.dark:hover { color: #fff0d2; }
+.status-pill.stable { background: #26332a; color: #bbd1aa; border-color: #647859; }
+.status-pill.beta { color: #e5bd7b; }
+.news-lead {
+  border-color: #8e7955; border-radius: 6px;
+  background: linear-gradient(90deg,#141719f5,#141719a3),url('assets/mont-hyjal.png') center 40%/cover;
+  min-height: 240px;
+}
+.news-lead h3 { color: #f0e2c5; font-size: clamp(2.3rem,4vw,3.7rem); }
+.news-lead p { color: #d1cabb; }
+.patch-highlights { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 12px; }
+.patch-highlights article { padding: 23px; }
+.patch-highlights article>span { color: #bc9e67; text-transform: uppercase; font-size: .67rem; letter-spacing: .12em; }
+.patch-highlights h3,.patch-client h3 { color: #f0e2c5; font: 600 1.17rem/1.3 var(--body); margin: 10px 0; }
+.patch-highlights p,.patch-client p { color: #bdbbad; font-size: .89rem; margin: 0; }
+.patch-client { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 25px; padding: 23px; margin-top: 12px; }
+.patch-client .lore-link { white-space: nowrap; }
+.news-subheading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 35px 0 12px; }
+.news-subheading h3 { font: 600 1.2rem var(--body); margin: 0; }
+.news-subheading>span { color: #aaa695; font-size: .78rem; }
+.news-card { background: #202326; color: #eaddc4; }
+.news-card time,.news-card b { color: #cdb17c; }
+.news-topic { border-color: #635842; color: #d6b77c; background: #2e2b24; }
+.news-card p { color: #bdbbad; }
+.news-status { background: #222522; border-color: #575540; }
+.news-status p { color: #c2c0b2; }
+.news-status a { color: #e2c184; }
+footer { background: #101214; border-color: #514635; }
+@media(max-width:820px) {
+  .patch-highlights { grid-template-columns: 1fr; }
+  .patch-highlights article { padding: 18px 20px; }
+  .patch-client { grid-template-columns: 1fr; gap: 10px; }
+  .news-lead { padding: 24px; }
+}
+@media(max-width:600px) {
+  .hero-content { padding-bottom: 110px; }
+  .faction-signature { gap: 10px; font-size: .7rem; }
+  .faction-signature small { flex-basis: 100%; }
+  .news-subheading { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .news-status a { line-height: 1.5; }
+}

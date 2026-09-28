@@ -10,14 +10,15 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=6.4.0">
+  <link rel="stylesheet" href="styles.css?v=7.0.0">
+  <link rel="stylesheet" href="theme.css?v=7.0.0">
 </head>
 <body>
   <a class="skip-link" href="#addons">Aller aux addons</a>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Renaissance — accueil"><span class="brand-rune">R</span><span><strong>Renaissance</strong><small>Codex communautaire</small></span></a>
-    <nav aria-label="Navigation principale"><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#commandes">Commandes</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
+    <nav aria-label="Navigation principale"><a href="#top">Accueil</a><a href="#addons">Addons</a><a href="#astuces">Astuces</a><a href="#commandes">Commandes</a><a href="#objets-rp">Objets RP</a><a href="#nouvelles">Nouvelles</a></nav>
   </header>
 
   <main id="top">
@@ -25,10 +26,11 @@
       <div class="hero-art" aria-hidden="true"></div>
       <div class="embers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="hero-content">
-        <span class="hero-kicker">Le codex francophone de la communauté</span>
+        <span class="hero-kicker">Renaissance · Le codex de WoW: Forever</span>
         <img class="forever-logo" src="https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt527dd61848a757c7/6aa3316cad92093ee45628fd/camelot-logo-gamepage.png" alt="World of Warcraft Forever">
-        <h1 id="hero-title">Votre aventure.<br><em>Mieux équipée.</em></h1>
+        <h1 id="hero-title">Moins de réglages.<br><em>Plus d’aventure.</em></h1>
         <p class="hero-copy">Trouvez rapidement le bon addon, une astuce claire ou un réglage utile — réunis par la communauté pour vous accompagner en jeu.</p>
+        <div class="faction-signature" aria-label="Pour les joueurs Alliance et Horde"><span class="alliance">Alliance</span><span aria-hidden="true">◆</span><span class="horde">Horde</span><small>Deux factions. Une même aventure.</small></div>
         <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#astuces">Ouvrir le carnet</a></div>
       </div>
       <nav class="hero-meter" aria-label="Accès rapides"><a href="#addons"><strong>28</strong><span><b>Trouver un addon</b><small>Recherche et filtres</small></span><i>→</i></a><a href="#astuces"><strong>08</strong><span><b>Bien démarrer</b><small>Guides pratiques</small></span><i>→</i></a><a href="#objets-rp"><strong>02</strong><span><b>Partir en quête</b><small>Objets à dénicher</small></span><i>→</i></a></nav>
@@ -55,6 +57,12 @@
         <div class="filter-row" role="group" aria-label="Filtrer les addons">
           <button class="active" data-addon-filter="all">Tous <span>28</span></button><button data-addon-filter="quetes">Quêtes <span>7</span></button><button data-addon-filter="donjons">Donjons & butin <span>6</span></button><button data-addon-filter="combat">Combat <span>4</span></button><button data-addon-filter="interface">Interface <span>5</span></button><button data-addon-filter="confort">Confort <span>4</span></button><button data-addon-filter="support">Diagnostic <span>2</span></button>
         </div>
+        <div class="collection-toolbar">
+          <button id="favorites-filter" aria-pressed="false">☆ Mes favoris <span id="favorites-count">0</span></button>
+          <span class="collection-hint">Gardez vos essentiels avec l’étoile.</span>
+          <div class="view-switch" role="group" aria-label="Affichage du catalogue"><button data-view="cards" aria-pressed="true">Cartes</button><button data-view="list" aria-pressed="false">Liste</button></div>
+        </div>
+        <p id="catalogue-status" class="sr-only" role="status"></p>
         <div class="addon-grid" aria-live="polite"></div>
         <nav class="catalogue-pagination" aria-label="Pages du catalogue">
           <button class="page-arrow page-prev" aria-label="Page précédente">←</button>
@@ -62,7 +70,8 @@
           <span class="page-status"></span>
           <button class="page-arrow page-next" aria-label="Page suivante">→</button>
         </nav>
-        <div class="empty-state" hidden><span>⌕</span><h3>Aucun résultat</h3><p>Essayez un nom plus court ou choisissez une autre catégorie.</p></div>
+        <div class="empty-state" hidden><span>⌕</span><h3>Aucun résultat</h3><p>Essayez un nom plus court ou choisissez une autre catégorie.</p><button id="reset-catalogue" class="button ghost">Voir tous les addons</button></div>
+        <p class="collection-footnote">Vos favoris sont conservés dans ce navigateur, sans compte.</p>
       </div>
     </section>
 
@@ -148,23 +157,30 @@
 
     <section id="nouvelles" class="newsroom" aria-labelledby="news-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">06 — Dernières dépêches</span><h2 id="news-title">Nouvelles</h2></div><p>Les changements récents de WoW: Forever, résumés sans rumeur et reliés aux annonces officielles de Blizzard.</p></div>
+        <div class="section-intro"><div><span class="chapter">06 — Le journal d’Azeroth</span><h2 id="news-title">Patch notes & actualités</h2></div><p>Les mises à jour de la bêta, les changements en jeu et les annonces officielles. Sélection vérifiée le 28 septembre 2026.</p></div>
         <div class="news-lead">
-          <div><span class="news-date">25 septembre 2026</span><h3>Une semaine de révélations pour Forever</h3><p>Blizzard récapitule les ensembles de règles, les noms à deux parties, les nouvelles combinaisons de races et classes, les Éolides et le système d’héritage.</p></div>
-          <a href="https://worldofwarcraft.blizzard.com/fr-fr/news/24303315" target="_blank" rel="noopener">Lire le récapitulatif officiel <span>↗</span></a>
+          <div><span class="news-date">Notes de développement · <time datetime="2026-09-24">24 septembre 2026</time></span><h3>La bêta évolue.<br>Votre façon de jouer aussi.</h3><p>Équilibrage des classes, premiers tests du gestionnaire de temps de recharge et améliorations de la manette : les changements à connaître avant votre prochaine connexion.</p></div>
+          <a href="https://eu.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-24-september/631316" target="_blank" rel="noopener">Patch notes Blizzard · EN <span>↗</span></a>
         </div>
+        <div class="patch-highlights" aria-label="Résumé du patch du 24 septembre">
+          <article><span>01 / Classes</span><h3>Des ajustements pour les neuf classes</h3><p>Colère du druide voit ses dégâts de base augmenter d’environ 50 %. Le coût de réinitialisation des talents redescend à une pièce d’argent après une heure, uniquement pendant la bêta.</p></article>
+          <article><span>02 / Interface</span><h3>Vos temps de recharge à portée de regard</h3><p>Le gestionnaire est testable pour druide, mage, prêtre, guerrier et démoniste. Activez-le dans les options d’amélioration du gameplay ; le suivi des rangs de sorts reste à venir.</p></article>
+          <article><span>03 / Confort</span><h3>Manette, performances et feu de camp</h3><p>Nouvelles options de ciblage et barre compacte à la manette. Une fuite mémoire est corrigée ; lancer des sorts ou fabriquer des objets n’interrompt plus l’attente des bonus du feu de camp.</p></article>
+        </div>
+        <div class="patch-client"><div><span class="news-date">Mise à jour du client · 23 septembre 2026</span><h3>Build 1.60.1.69977 : Mac et manette</h3><p>Correctifs d’affichage et de stabilité sur Mac, navigation à la manette dans la sélection des personnages et interaction avec les objets qui donnent des quêtes.</p></div><a class="lore-link" href="https://eu.forums.blizzard.com/en/wow/t/beta-client-update-23-september/630815" target="_blank" rel="noopener">Note Blizzard · EN ↗</a></div>
+        <div class="news-subheading"><h3>À découvrir aussi</h3><span>Annonces & systèmes de jeu</span></div>
         <div class="news-grid">
           <a class="news-card" href="https://worldofwarcraft.blizzard.com/fr-fr/news/24307383" target="_blank" rel="noopener"><time datetime="2026-09-23">23.09.26</time><span class="news-topic">Progression</span><h3>Le système d’héritage dévoilé</h3><p>65 défis, des points liés au compte et trois arbres d’avantages à spécialiser par personnage.</p><b>Annonce Blizzard ↗</b></a>
           <a class="news-card" href="https://worldofwarcraft.blizzard.com/fr-fr/news/24302071/d%C3%A9couvrez-les-%C3%A9olides-dans-wow-forever" target="_blank" rel="noopener"><time datetime="2026-09-22">22.09.26</time><span class="news-topic">Nouvelle race</span><h3>Les Éolides prennent leur envol</h3><p>Une zone de départ du niveau 1 à 12 et un choix d’allégeance entre Horde et Alliance.</p><b>Annonce Blizzard ↗</b></a>
           <a class="news-card" href="https://worldofwarcraft.blizzard.com/fr-fr/news/24304161/" target="_blank" rel="noopener"><time datetime="2026-09-21">21.09.26</time><span class="news-topic">Identité</span><h3>Prénom et nom pour chaque personnage</h3><p>Les personnages disposent désormais d’un nom complet unique à l’échelle de leur région.</p><b>Annonce Blizzard ↗</b></a>
           <a class="news-card" href="https://worldofwarcraft.blizzard.com/fr-fr/news/24302070/" target="_blank" rel="noopener"><time datetime="2026-09-21">21.09.26</time><span class="news-topic">Règles de jeu</span><h3>Les royaumes cèdent la place aux règles</h3><p>Normal, JcJ, Jeu de rôle et plus tard Extrême deviennent les portes d’entrée du monde.</p><b>Annonce Blizzard ↗</b></a>
         </div>
-        <div class="news-status"><span></span><p><strong>État au 28 septembre 2026.</strong> La bêta reste ouverte jusqu’au 21 octobre ; le lancement français est annoncé pour le 5 novembre à minuit.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/news/24304160" target="_blank" rel="noopener">Détails de la bêta ↗</a></div>
+        <div class="news-status"><span></span><p><strong>Dernière vérification : 28 septembre 2026.</strong> Résumés éditoriaux en français ; les liens Blizzard donnent accès aux notes complètes et à leurs éventuelles corrections.</p><a href="https://eu.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-24-september/631316" target="_blank" rel="noopener">Notes officielles ↗</a></div>
       </div>
     </section>
   </main>
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site informatif en lecture seule. Aucun compte ni publication. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
-  <script src="app.js?v=6.4.0"></script>
+  <script src="app.js?v=7.0.0"></script>
 </body>
 </html>
