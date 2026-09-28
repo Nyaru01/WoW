@@ -281,6 +281,13 @@ document.addEventListener('visibilitychange',()=>document.body.classList.toggle(
 
 // Each chapter has its own short view; anchors and browser history remain usable.
 const chapters=[...document.querySelectorAll('main > section[id]')];
+document.querySelector('.hero-search').addEventListener('submit',event=>{
+  event.preventDefault();
+  search.value=document.querySelector('#home-search').value;
+  favoritesOnly=false;
+  document.querySelector('[data-addon-filter="all"]').click();
+  location.hash='addons';
+});
 // Reuse the editorial news source: the home feature never needs a second date update.
 const featuredNews=document.querySelector('.news-lead');
 const featuredDate=featuredNews.querySelector('time');

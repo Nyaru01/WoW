@@ -10,8 +10,8 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=7.4.0">
-  <link rel="stylesheet" href="theme.css?v=7.4.0">
+  <link rel="stylesheet" href="styles.css?v=8.0.0">
+  <link rel="stylesheet" href="theme.css?v=8.0.0">
 </head>
 <body>
   <a class="skip-link" href="#addons">Aller aux addons</a>
@@ -27,25 +27,15 @@
       <div class="hero-art" aria-hidden="true"></div>
       <div class="embers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="hero-content">
-        <span class="hero-kicker">Renaissance · Le codex de WoW: Forever</span>
-        <img class="forever-logo" src="https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt527dd61848a757c7/6aa3316cad92093ee45628fd/camelot-logo-gamepage.png" alt="World of Warcraft Forever">
-        <h1 id="hero-title">Moins de réglages.<br><em>Plus d’aventure.</em></h1>
-        <p class="hero-copy">Trouvez rapidement le bon addon, une astuce claire ou un réglage utile — réunis par la communauté pour vous accompagner en jeu.</p>
+        <span class="hero-kicker">Le guide communautaire de WoW: Forever</span>
+        <h1 id="hero-title">Azeroth<br><em>vous attend.</em></h1>
+        <p class="hero-copy">Votre prochaine découverte. Votre interface idéale.<br>Tout pour vivre l’aventure, à votre façon.</p>
         <div class="faction-signature" aria-label="Pour les joueurs Alliance et Horde"><span class="alliance">Alliance</span><span aria-hidden="true">◆</span><span class="horde">Horde</span><small>Deux factions. Une même aventure.</small></div>
         <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#nouvelles">Voir les patch notes <span>→</span></a></div>
+        <form class="hero-search" role="search" aria-label="Recherche rapide"><label for="home-search" class="sr-only">Quel addon recherchez-vous ?</label><span aria-hidden="true">⌕</span><input id="home-search" type="search" placeholder="Questie, interface, donjons…" autocomplete="off"><button type="submit" aria-label="Rechercher dans les addons">→</button></form>
+        <span class="hero-credit">Un codex indépendant, créé par <strong>Nyaru</strong></span>
       </div>
       <nav class="hero-meter" aria-label="Accès rapides"><a href="#addons"><strong>29</strong><span><b>Trouver un addon</b><small>Recherche et filtres</small></span><i>→</i></a><a href="#astuces"><strong>08</strong><span><b>Bien démarrer</b><small>Guides pratiques</small></span><i>→</i></a><a href="#objets-rp"><strong>02</strong><span><b>Partir en quête</b><small>Objets à dénicher</small></span><i>→</i></a></nav>
-    </section>
-
-    <section class="essentials" aria-labelledby="essentials-title">
-      <div class="section-shell">
-        <div class="section-intro compact"><div><span class="chapter">01 — Démarrage rapide</span><h2 id="essentials-title">Les indispensables</h2></div><p>Trois bases solides pour partir en quête, comprendre son butin et garder une interface saine.</p></div>
-        <div class="essential-grid">
-          <a href="https://www.curseforge.com/wow/addons/questie" target="_blank" rel="noopener" class="essential-card quest"><span class="essential-number">01</span><span class="essential-tag">Quêtes</span><h3>Questie</h3><p>Objectifs et quêtes disponibles directement sur la carte.</p><b>Voir sur CurseForge ↗</b></a>
-          <a href="https://www.curseforge.com/wow/addons/lootified" target="_blank" rel="noopener" class="essential-card loot"><span class="essential-number">02</span><span class="essential-tag">Butin</span><h3>Lootified</h3><p>Journal de loot et assistant Best in Slot pour WoW: Forever.</p><b>Voir sur CurseForge ↗</b></a>
-          <a href="https://www.curseforge.com/wow/addons/bugsack" target="_blank" rel="noopener" class="essential-card debug"><span class="essential-number">03</span><span class="essential-tag">Diagnostic</span><h3>BugSack</h3><p>Les erreurs Lua rangées dans un journal réellement lisible.</p><b>Voir sur CurseForge ↗</b></a>
-        </div>
-      </div>
     </section>
 
     <section class="discovery" aria-labelledby="discovery-title">
@@ -57,6 +47,17 @@
           <a class="discovery-card discovery-rp" href="#objets-rp"><span class="discovery-label">Au-delà des quêtes</span><div><span class="chapter">Le goût de l’exploration</span><h3>Éclairez votre chemin</h3><p>Deux torches à dénicher pour vos aventures et vos scènes RP.</p><b>Voir les objets RP <span aria-hidden="true">→</span></b></div></a>
         </div>
         <div class="journey-bar"><div><span class="chapter">À vous de choisir</span><h3>Qu’avez-vous prévu aujourd’hui ?</h3></div><nav aria-label="Trouver des addons par besoin"><a href="#addons" data-discovery-category="quetes">Explorer Azeroth <span>↗</span></a><a href="#addons" data-discovery-category="donjons">Partir en donjon <span>↗</span></a><a href="#addons" data-discovery-category="interface">Refaire mon interface <span>↗</span></a><a href="#addons" data-discovery-category="support">Résoudre un problème <span>↗</span></a></nav></div>
+      </div>
+    </section>
+
+    <section class="essentials" aria-labelledby="essentials-title">
+      <div class="section-shell">
+        <div class="section-intro compact"><div><span class="chapter">01 — Démarrage rapide</span><h2 id="essentials-title">Les indispensables</h2></div><p>Trois bases solides pour partir en quête, comprendre son butin et garder une interface saine.</p></div>
+        <div class="essential-grid">
+          <a href="https://www.curseforge.com/wow/addons/questie" target="_blank" rel="noopener" class="essential-card quest"><span class="essential-number">01</span><span class="essential-tag">Quêtes</span><h3>Questie</h3><p>Objectifs et quêtes disponibles directement sur la carte.</p><b>Voir sur CurseForge ↗</b></a>
+          <a href="https://www.curseforge.com/wow/addons/lootified" target="_blank" rel="noopener" class="essential-card loot"><span class="essential-number">02</span><span class="essential-tag">Butin</span><h3>Lootified</h3><p>Journal de loot et assistant Best in Slot pour WoW: Forever.</p><b>Voir sur CurseForge ↗</b></a>
+          <a href="https://www.curseforge.com/wow/addons/bugsack" target="_blank" rel="noopener" class="essential-card debug"><span class="essential-number">03</span><span class="essential-tag">Diagnostic</span><h3>BugSack</h3><p>Les erreurs Lua rangées dans un journal réellement lisible.</p><b>Voir sur CurseForge ↗</b></a>
+        </div>
       </div>
     </section>
 
@@ -195,6 +196,6 @@
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site informatif en lecture seule. Aucun compte ni publication. World of Warcraft et ses visuels appartiennent à Blizzard Entertainment.</p><a href="https://worldofwarcraft.blizzard.com/fr-fr/forever" target="_blank" rel="noopener">Site officiel ↗</a></div></footer>
   <div class="site-preferences section-shell"><span>À votre rythme, en Azeroth.</span><button id="motion-toggle" aria-pressed="false">Animations : activées</button></div>
-  <script src="app.js?v=7.4.0"></script>
+  <script src="app.js?v=8.0.0"></script>
 </body>
 </html>

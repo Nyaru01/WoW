@@ -6,6 +6,7 @@ Un codex français en lecture seule consacré à WoW: Forever : addons recommand
 
 - Navigation par rubrique avec liens directs et historique du navigateur, sans longue page à parcourir
 - Accueil éditorial compact : patch notes synchronisées avec la rubrique Actualités, focus EllesmereUI et découverte RP
+- Direction Renaissance : titres à empattements, composition asymétrique, indispensables compacts et recherche dès l’accueil
 - Parcours par besoin (exploration, donjons, interface, dépannage) ouvrant directement le catalogue filtré
 - Menu mobile dépliant avec toutes les rubriques, fermeture par Échap et navigation clavier
 - Tri du catalogue par sélection, nom ou catégorie, compteur de plage et réinitialisation des filtres
