@@ -8,6 +8,7 @@ const categories={
 };
 
 const addons=[
+  ['EllesmereUI','interface','Interface modulaire : barres d’action, cadres et styles. Une version WoW: Forever est disponible.','6,1 M','Ellesmere','ellesmereui'],
   ['Forever PTR World Map','quetes','Une carte du monde adaptée au serveur WoW: Forever.','15,3 k','Lili','forever-ptr-server-world-map'],
   ['Questie','quetes','Les quêtes disponibles et leurs objectifs directement sur la carte.','Communauté','Gô','questie'],
   ['QuestTogether','quetes','Un suivi de quêtes plus simple lorsque vous jouez en groupe.','25,4 k','Apogée','questtogether'],
@@ -50,6 +51,10 @@ const tips=[
 ];
 
 const grid=document.querySelector('.addon-grid');
+document.querySelector('.hero-meter strong').textContent=addons.length;
+document.querySelectorAll('[data-addon-filter]').forEach(button=>{
+  button.querySelector('span').textContent=button.dataset.addonFilter==='all'?addons.length:addons.filter(addon=>addon.category===button.dataset.addonFilter).length;
+});
 const search=document.querySelector('#addon-search');
 const count=document.querySelector('#addon-count');
 const empty=document.querySelector('.empty-state');
@@ -107,6 +112,7 @@ function renderAddons(){
   grid.innerHTML=pageItems.map((addon,index)=>`<article class="addon-card" style="--accent:${categories[addon.category].color};--delay:${Math.min(index,8)*45}ms">
     <div class="addon-top"><span class="addon-category">${categories[addon.category].label}</span><button class="favorite-button" data-favorite="${addon.url}" aria-pressed="${favorites.has(addon.url)}" aria-label="${favorites.has(addon.url)?'Retirer':'Ajouter'} ${addon.name} ${favorites.has(addon.url)?'des':'aux'} favoris">${favorites.has(addon.url)?'★':'☆'}</button></div>
     <h3>${addon.name}</h3><p>${addon.description}</p>
+    ${addon.name==='EllesmereUI'?'<div class="addon-resources"><a href="https://ellesmereui.com/" target="_blank" rel="noopener">Site officiel ↗</a><a href="https://www.curseforge.com/wow/addons/ellesmereui/files/all" target="_blank" rel="noopener">Versions Forever ↗</a></div>':''}
     <div class="addon-meta"><span><b>↓ ${addon.downloads}</b> · par ${addon.author}</span><a href="${addon.url}" target="_blank" rel="noopener" aria-label="Voir ${addon.name} sur CurseForge">Installer ↗</a></div>
   </article>`).join('');
   count.textContent=matches.length;
@@ -233,6 +239,44 @@ tabList.addEventListener('keydown',event=>{
 const progress=document.querySelector('.scroll-progress i');
 const topbar=document.querySelector('.topbar');
 addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;topbar.classList.toggle('scrolled',scrollY>30);},{passive:true});
+
+// Personal notebook: graceful fallback when browser storage is unavailable.
+const checks=[...document.querySelectorAll('[data-check]')];
+const savedChecks=readPreference('renaissance-checklist',[]);
+checks.forEach(check=>check.checked=Array.isArray(savedChecks)&&savedChecks.includes(check.dataset.check));
+function updateChecklist(persist=false){
+  const selected=checks.filter(check=>check.checked).map(check=>check.dataset.check);
+  const saved=!persist||savePreference('renaissance-checklist',selected);
+  document.querySelector('#checklist-count').textContent=`${selected.length} / ${checks.length}${selected.length===checks.length?' · Prêt à partir !':''}${saved?'':' · Non enregistré'}`;
+  document.querySelector('#checklist-progress').value=selected.length;
+}
+checks.forEach(check=>check.addEventListener('change',()=>updateChecklist(true)));
+document.querySelector('#reset-checklist').addEventListener('click',()=>{checks.forEach(check=>check.checked=false);updateChecklist(true);});
+updateChecklist();
+const notes=document.querySelector('#adventure-notes');
+const storedNotes=readPreference('renaissance-notes','');
+notes.value=typeof storedNotes==='string'?storedNotes.slice(0,4000):'';
+function updateNotesCount(){document.querySelector('#notes-count').textContent=`${notes.value.length} / 4000`;}
+updateNotesCount();
+notes.addEventListener('input',()=>{
+  updateNotesCount();
+  const saved=savePreference('renaissance-notes',notes.value);
+  document.querySelector('#notes-status').textContent=saved?'Notes enregistrées dans ce navigateur.':'Enregistrement indisponible : gardez une copie de vos notes avant de fermer cette page.';
+});
+const motionToggle=document.querySelector('#motion-toggle');
+const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
+let motionDisabled=readPreference('renaissance-motion',false)===true;
+function updateMotion(){
+  const disabled=motionDisabled||motionPreference.matches;
+  document.body.classList.toggle('motion-paused',disabled);
+  motionToggle.setAttribute('aria-pressed',String(disabled));
+  motionToggle.disabled=motionPreference.matches;
+  motionToggle.textContent=motionPreference.matches?'Animations réduites (système)':disabled?'Animations : désactivées':'Animations : activées';
+}
+motionToggle.addEventListener('click',()=>{motionDisabled=!motionDisabled;savePreference('renaissance-motion',motionDisabled);updateMotion();});
+motionPreference.addEventListener('change',updateMotion);
+updateMotion();
+document.addEventListener('visibilitychange',()=>document.body.classList.toggle('page-inactive',document.hidden));
 
 // Each chapter has its own short view; anchors and browser history remain usable.
 const chapters=[...document.querySelectorAll('main > section[id]')];

@@ -1,6 +1,6 @@
 {
   "name": "renaissance-wow-codex",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "private": true,
   "description": "Codex francophone en lecture seule pour les addons, astuces, objets RP et nouvelles de WoW: Forever",
   "scripts": {

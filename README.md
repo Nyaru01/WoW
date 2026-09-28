@@ -10,7 +10,10 @@ Un codex français en lecture seule consacré à WoW: Forever : addons recommand
 - Accueil illustré par le mont Hyjal et sélection de démarrage compacte
 - Thème pierre sombre et dorures commun à toutes les rubriques, avec Alliance et Horde représentées à l’accueil
 - Notes de bêta du 24 septembre et mise à jour client du 23 septembre 2026, résumées en français avec liens Blizzard
-- Catalogue de 28 addons filtrable, avec recherche sans accents et pagination par groupes de huit
+- Catalogue de 29 addons filtrable, dont EllesmereUI avec ses liens officiels et versions Forever
+- Mise en page large jusqu’à 1680 px, avec marges adaptées à l’écran
+- Carnet personnel : checklist de session et notes enregistrées dans le navigateur
+- Animations d’ambiance et de navigation désactivables, respectant la préférence système de réduction des mouvements
 - Huit fiches pratiques enrichies avec durée, contexte, outil conseillé et procédure courte
 - Manuel de commandes console classé par usage, avec copie en un clic et avertissements de sauvegarde
 - Sélection éditoriale des trois addons indispensables pour démarrer

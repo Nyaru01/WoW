@@ -6,7 +6,12 @@
   --parchment: #eee3cb;
   --quiet: #b7b4aa;
   --gilding: #dfbd78;
+  --content-width: 1680px;
+  --page-gutter: clamp(16px, 3vw, 56px);
 }
+.section-shell,.hero-content { width: min(var(--content-width),calc(100% - var(--page-gutter) * 2)); }
+.topbar { padding-inline: max(var(--page-gutter),calc((100vw - var(--content-width)) / 2)); }
+.hero-meter { width: min(var(--content-width),calc(100% - var(--page-gutter) * 2)); }
 body { background: var(--stone); color: var(--parchment); }
 .topbar, .topbar.scrolled {
   background: linear-gradient(#1d1d1e, #101214);
@@ -127,6 +132,46 @@ body { background: var(--stone); color: var(--parchment); }
 .news-status p { color: #c2c0b2; }
 .news-status a { color: #e2c184; }
 footer { background: #101214; border-color: #514635; }
+
+/* The wide layout uses the extra space for useful content, not larger type. */
+.hero-content { padding-top: 106px; padding-bottom: 116px; }
+.hero-content>h1,.hero-content>.hero-copy { max-width: 58%; }
+.hero-content>.forever-logo { right: 24px; top: 78px; width: 96px; max-height: 32px; }
+.adventure-hub { position: absolute; right: 0; top: 122px; width: 32%; max-width: 420px; padding: 24px; border: 1px solid #a68a4e70; border-radius: 8px; background: linear-gradient(130deg,#15191be8,#25251cb5); backdrop-filter: blur(12px); box-shadow: 0 12px 40px #0003; }
+.adventure-hub h2 { font: 600 1.45rem/1.2 var(--head); color: #f0e3c7; margin: 8px 0 15px; }
+.adventure-hub a { display: flex; align-items: center; gap: 13px; padding: 13px 0; border-top: 1px solid #a58b4d35; text-decoration: none; transition: color .2s, transform .2s; }
+.adventure-hub a>span { color: #c9a46b; font: 600 .75rem var(--head); }
+.adventure-hub a div { display: grid; gap: 3px; }.adventure-hub strong { font-size: .88rem; font-weight: 600; }.adventure-hub small { color: #b6b5a9; font-size: .75rem; }.adventure-hub b { margin-left: auto; color: #d5b176; }.adventure-hub a:hover { color: #f1cc81; transform: translateX(4px); }
+.addon-resources { display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 15px; font-size: .75rem; color: #dbc18f; }.addon-resources a { text-underline-offset: 4px; }
+.list-view .addon-resources { grid-column: 2; grid-row: 3; margin: 8px 0 0; }.list-view .addon-meta { grid-row: 1/4; }
+.player-tools { padding: 40px 0 48px; background: radial-gradient(ellipse at 50% 0,#79633b14,transparent 60%),#151719; border-top: 1px solid #514635; }
+.player-tools-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; }
+.session-card,.notes-card { padding: clamp(22px,2.4vw,36px); background: linear-gradient(145deg,#252729,#1c1f22); border: 1px solid #5b513c; border-radius: 8px; }
+.tool-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }.tool-heading>span:last-child { color: #d9bd80; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.session-card h3,.notes-card h3 { font: 600 1.8rem var(--head); margin: 12px 0 5px; }.session-card>p,.notes-card>p { margin: 0 0 18px; color: #b9b7aa; font-size: .9rem; }
+.session-card progress { width: 100%; height: 6px; border: 0; border-radius: 8px; background: #121518; accent-color: #d5b176; overflow: hidden; }.session-card progress::-webkit-progress-bar { background: #121518; }.session-card progress::-webkit-progress-value { background: linear-gradient(90deg,#a38344,#efd098); transition: width .3s; }.session-card progress::-moz-progress-bar { background: #d5b176; }
+.session-checks { display: grid; margin: 16px 0 20px; }.session-checks label { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid #b49b6526; cursor: pointer; }.session-checks input { width: 19px; height: 19px; flex-shrink: 0; accent-color: #d5b176; }.session-checks label>span { display: grid; gap: 2px; }.session-checks strong { font-size: .92rem; font-weight: 500; transition: color .2s; }.session-checks small { color: #aaa99f; font-size: .79rem; }.session-checks input:checked+span strong { color: #a9c5a1; }.session-checks input:checked+span small { color: #91968c; }
+.session-card .button { cursor: pointer; }.notes-card { display: flex; flex-direction: column; }.notes-card textarea { flex: 1; min-height: 300px; width: 100%; resize: vertical; padding: 20px; border: 1px solid #62583f; border-radius: 6px; background: repeating-linear-gradient(transparent 0 30px,#e8d7a90a 30px 31px),#14181a; color: #eee3cd; font: .95rem/31px var(--body); }.notes-card textarea::placeholder { color: #a49d8d; }.notes-card #notes-status { margin: 12px 0 20px; font-size: .78rem; }.notebook-links { display: flex; gap: 24px; flex-wrap: wrap; }.notebook-links a { color: #dcc18b; text-decoration: none; font-size: .85rem; }
+.site-preferences { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; font-size: .75rem; color: #aaa597; }.site-preferences button { background: transparent; color: #ccb990; border: 1px solid #514635; border-radius: 5px; padding: 8px 12px; font: inherit; cursor: pointer; }.site-preferences button:disabled { cursor: default; color: #aaa597; }
+@media(min-width:1400px) { .guide-layout { grid-template-columns: 275px minmax(0,1fr); align-items: start; }.guide-tabs { grid-template-columns: 1fr; }.guide-tab { min-height: 66px; }.guide-card { grid-template-columns: 34% 1fr; }.guide-content { padding: 30px 40px; }.command-layout { grid-template-columns: 240px minmax(0,1fr); }.news-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }.section-intro { grid-template-columns: 1fr minmax(300px,520px); } }
+@media(max-width:1100px) { .adventure-hub { width: 34%; padding: 18px; }.hero-content>h1 { font-size: 3.5rem; }.list-view .addon-meta { grid-row: 4; } }
+@media(max-width:820px) { .adventure-hub { display: none; }.hero-content>h1,.hero-content>.hero-copy { max-width: 100%; }.player-tools-grid { grid-template-columns: 1fr; }.notes-card textarea { min-height: 280px; } }
+@media(max-width:600px) { .hero-content { padding-top: 88px; }.hero-content>h1 { font-size: 3rem; }.site-preferences { flex-wrap: wrap; }.list-view .addon-resources { grid-column: 1; grid-row: 4; }.list-view .addon-meta { grid-row: 5; } }
+
+/* Motion is decorative, bounded and optional; content is never hidden by it. */
+@keyframes chapter-arrive { from { opacity: .65; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+@keyframes azeroth-drift { from { transform: scale(1.015); } to { transform: scale(1.065) translateX(-.5%); } }
+@keyframes gold-breathe { 0%,100% { box-shadow: 0 0 0 #d7ad5800; } 50% { box-shadow: 0 0 24px #d7ad5815; } }
+@media(prefers-reduced-motion:no-preference) {
+  body:not(.motion-paused) main>section:not([hidden]) .section-shell { animation: chapter-arrive .35s ease-out both; }
+  body:not(.motion-paused) .hero-art { animation: azeroth-drift 22s ease-in-out infinite alternate!important; }
+  body:not(.motion-paused) .adventure-hub { animation: gold-breathe 6s ease-in-out infinite; }
+  .hero-meter a i { transition: transform .25s; }.hero-meter a:hover i { transform: translateX(5px); }
+  .favorite-button[aria-pressed=true] { animation: chapter-arrive .2s ease-out; }
+}
+body.motion-paused *,body.motion-paused *:before,body.motion-paused *:after { animation: none!important; transition: none!important; scroll-behavior: auto!important; }
+body.page-inactive * { animation-play-state: paused!important; }
+@media(prefers-reduced-motion:reduce) { *,*:before,*:after { animation: none!important; transition: none!important; scroll-behavior: auto!important; } }
 @media(max-width:820px) {
   .patch-highlights { grid-template-columns: 1fr; }
   .patch-highlights article { padding: 18px 20px; }
