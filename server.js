@@ -23,12 +23,12 @@ http.createServer((request,response)=>{
     response.writeHead(200,securityHeaders({'Content-Type':types[path.extname(filePath).toLowerCase()]||'application/octet-stream','Cache-Control':cache}));
     fs.createReadStream(filePath).pipe(response);
   });
-}).listen(port,'0.0.0.0',()=>console.log(`Chroniques d’Azeroth écoute sur le port ${port}`));
+}).listen(port,'0.0.0.0',()=>console.log(`Le Grimoire de Renaissance écoute sur le port ${port}`));
 
 function securityHeaders(headers){
   return {
     ...headers,
-    'Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+    'Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://blz-contentstack-images.akamaized.net; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
     'Referrer-Policy':'strict-origin-when-cross-origin',
     'X-Content-Type-Options':'nosniff',
     'X-Frame-Options':'DENY'

@@ -1,3 +1,97 @@
+const addonCategories={
+  quetes:{label:'Quêtes & navigation',accent:'#63b6d7'},
+  donjons:{label:'Donjons & butin',accent:'#d6a64a'},
+  combat:{label:'Combat & raid',accent:'#d66b5d'},
+  interface:{label:'Interface',accent:'#9e83d4'},
+  confort:{label:'Confort & économie',accent:'#69b986'},
+  support:{label:'Diagnostic',accent:'#d08b4d'}
+};
+
+const addons=[
+  {n:'Forever PTR World Map',c:'quetes',d:'Affiche une carte du monde adaptée au serveur WoW: Forever.',dl:'15,3 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/forever-ptr-server-world-map'},
+  {n:'Questie',c:'quetes',d:'Affiche les quêtes disponibles et leurs objectifs sur la carte du monde.',dl:'Communauté',a:'Gô',u:'https://www.curseforge.com/wow/addons/questie'},
+  {n:'QuestTogether',c:'quetes',d:'Facilite la progression et le suivi des quêtes en groupe.',dl:'25,4 k',a:'Apogée',u:'https://www.curseforge.com/wow/addons/questtogether'},
+  {n:'Azeroth Pilot Reloaded',c:'quetes',d:'Optimise le leveling avec des itinéraires rapides et des étapes précises.',dl:'3,6 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/azeroth-pilot-reloaded'},
+  {n:'RestedXP Guide',c:'quetes',d:'Guides de montée en niveau intégrés en jeu, étape par étape.',dl:'26,2 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/restedxp-guide'},
+  {n:'TomTom',c:'quetes',d:'Assistant de navigation avec coordonnées, points de passage et flèche directionnelle.',dl:'89,8 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/tomtom'},
+  {n:'GuildMap',c:'quetes',d:'Affiche la position des membres de la guilde sur la carte.',dl:'196,1 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/guildmap'},
+  {n:'DungeonJournal',c:'donjons',d:'Répertorie les quêtes de donjon, leur emplacement et les butins des boss.',dl:'1,8 k',a:'Apogée',u:'https://www.curseforge.com/wow/addons/dungeonjournal'},
+  {n:'Atlas',c:'donjons',d:'Navigateur de cartes d’instances, simple et incontournable.',dl:'22 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/atlas'},
+  {n:'Attune',c:'donjons',d:'Suit la progression de vos accès et harmonisations.',dl:'12,3 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/attune'},
+  {n:'Nova Instance Tracker',c:'donjons',d:'Suit verrouillages, temps d’instance, échanges d’or et XP reposée des rerolls.',dl:'18,5 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/nova-instance-tracker'},
+  {n:'Lootified',c:'donjons',d:'Journal de butin et assistant Best in Slot pour WoW: Forever.',dl:'188',a:'Apogée',u:'https://www.curseforge.com/wow/addons/lootified'},
+  {n:'Forever Dungeon Scout',c:'donjons',d:'Guide de donjons léger et complet pensé pour WoW: Forever.',dl:'1,5 k',a:'Apogée',u:'https://www.curseforge.com/wow/addons/forever-dungeon-scout'},
+  {n:'Cooldown Manager Centered',c:'combat',d:'Personnalise les icônes, améliorations et barres de temps de recharge.',dl:'6,7 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/cooldown-manager-centered'},
+  {n:'MiniAuras',c:'combat',d:'Affiche les contrôles, défensifs et notifications de sorts importants.',dl:'5,9 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/minicc'},
+  {n:'NKThreat',c:'combat',d:'Mesure de menace avec TPS, alertes de provocation et superposition sur les barres de nom.',dl:'35,4 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/nkthreat'},
+  {n:'WhoDoesWhat',c:'combat',d:'Panneau d’assignations de raid et synchronisation des bénédictions de paladins.',dl:'716',a:'Lili',u:'https://www.curseforge.com/wow/addons/whodoeswhat'},
+  {n:'BlizzMove',c:'interface',d:'Rend les fenêtres Blizzard déplaçables par simple glisser-déposer.',dl:'11,9 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/blizzmove'},
+  {n:'DarkMode',c:'interface',d:'Assombrit les couleurs de l’interface et des fenêtres.',dl:'3,5 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/darkmode'},
+  {n:'FontMagic',c:'interface',d:'Personnalise la police et la taille des textes de combat flottants.',dl:'293,7 k',a:'Lili',u:'https://www.curseforge.com/wow/addons/fontmagic'},
+  {n:'Plumber',c:'interface',d:'Améliore le butin, la difficulté d’instance et de nombreux éléments d’interface.',dl:'19,2 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/plumber'},
+  {n:'WilduTools',c:'interface',d:'Améliore l’interface Blizzard et automatise plusieurs tâches courantes.',dl:'1,3 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/wildutools'},
+  {n:'Auctionator',c:'confort',d:'Simplifie l’hôtel des ventes et le suivi de la valeur des objets.',dl:'201,8 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/auctionator'},
+  {n:'Better Fishing',c:'confort',d:'Améliore la pêche avec raccourci de ciblage et interaction au double-clic.',dl:'5,7 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/better-fishing'},
+  {n:'Speedy AutoLoot',c:'confort',d:'Accélère fortement la récupération automatique du butin.',dl:'11,2 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/speedyautoloot'},
+  {n:'WIM v3',c:'confort',d:'Transforme les chuchotements en fenêtres de messagerie instantanée.',dl:'22,8 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/wim-3'},
+  {n:'BugGrabber',c:'support',d:'Capture les erreurs Lua afin qu’elles puissent être consultées proprement.',dl:'18,6 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/bug-grabber'},
+  {n:'BugSack',c:'support',d:'Centralise les erreurs capturées dans un journal facile à consulter.',dl:'16,4 M',a:'Lili',u:'https://www.curseforge.com/wow/addons/bugsack'}
+];
+
+const tips=[
+  {icon:'01',tag:'Installation',title:'Construire un pack propre',short:'Partir sur une base stable',intro:'Ajoutez les outils progressivement pour identifier immédiatement un conflit ou une baisse de performances.',steps:['Installez d’abord BugGrabber et BugSack pour rendre les erreurs visibles.','Ajoutez les addons par famille, puis rechargez l’interface entre chaque lot.','Conservez uniquement les fonctions réellement utiles à votre façon de jouer.'],note:'Bon réflexe : avant une grosse mise à jour, sauvegardez les dossiers Interface et WTF.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt50839e89a98e4d22/6aa09f512437ed84d9d48846/System_Revamps.jpg'},
+  {icon:'02',tag:'Butin',title:'Préparer sa liste de butin',short:'Cibler les bons donjons',intro:'Un objectif de butin clair évite de parcourir des instances qui ne feront pas progresser votre personnage.',steps:['Repérez vos améliorations dans Lootified et placez-les dans la liste de souhaits.','Croisez la source avec DungeonJournal ou Forever Dungeon Scout.','Ajoutez un point TomTom vers l’entrée et suivez vos verrouillages avec Nova Instance Tracker.'],note:'Les listes BiS sont des guides : adaptez-les à votre spécialisation, votre groupe et vos statistiques actuelles.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt4865ad3281f25cb8/6aa09df51deff31ac7439163/Explore_Untold_Stories.jpg'},
+  {icon:'03',tag:'Progression',title:'Quêter sans perdre le nord',short:'Une route claire et flexible',intro:'Combinez la visibilité des objectifs avec un guide d’itinéraire sans transformer l’aventure en pilote automatique.',steps:['Utilisez Questie pour visualiser les objectifs disponibles.','Choisissez Azeroth Pilot Reloaded ou RestedXP comme guide principal, pas les deux à la fois.','Gardez TomTom pour les coordonnées partagées par le groupe ou la guilde.'],note:'Désactivez temporairement les étapes automatiques si vous souhaitez lire une suite de quêtes ou explorer librement.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt7a58f20dd8f6b2d9/6aa09f1c7ec8fef91000059e/Take_Unknown_Paths.jpg'},
+  {icon:'04',tag:'Instances',title:'Maîtriser ses verrouillages',short:'Éviter les entrées inutiles',intro:'Le suivi des instances devient indispensable lorsque plusieurs personnages ou groupes tournent dans la même journée.',steps:['Consultez Nova Instance Tracker avant de repartir vers une instance.','Vérifiez le nombre d’entrées récentes et la difficulté prévue.','Notez les objets ciblés et le temps moyen afin de choisir la prochaine session rentable.'],note:'Le suivi local dépend de votre historique addon : évitez de supprimer ses données enregistrées sans sauvegarde.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt848d2f0dbc2d2d1e/6aa09dd67ec8fedf4f00059c/Every_Journey_Matters.jpg'},
+  {icon:'05',tag:'Combat',title:'Lire sa menace',short:'Frapper fort sans reprendre',intro:'Une bonne lecture de la menace protège le groupe et permet d’utiliser ses temps de recharge au bon moment.',steps:['Placez la barre personnelle NKThreat près de votre point de focalisation.','Surveillez la marge avec le tank avant un burst ou une ouverture agressive.','Gardez les alertes de provocation visibles sans surcharger le centre de l’écran.'],note:'Un compteur de menace informe ; il ne remplace ni la communication ni l’adaptation au rythme du tank.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt2dc686732f526be5/6aa09db81deff3540b439161/Claim_New_Power.jpg'},
+  {icon:'06',tag:'Dépannage',title:'Traquer une erreur Lua',short:'Trouver le coupable rapidement',intro:'Quand une erreur apparaît, isolez sa source méthodiquement au lieu de désactiver tout le dossier Interface.',steps:['Ouvrez BugSack et relevez le premier addon cité dans la pile d’erreur.','Mettez cet addon à jour, puis testez-le seul avec ses dépendances.','Si l’erreur persiste, désactivez-le et transmettez le message complet à son auteur.'],note:'Ne partagez jamais un journal sans vérifier qu’il ne contient pas de nom de compte, chemin local ou donnée personnelle.',img:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt491397daad992c6d/6aa09e0ec751e10dc30c50e0/Soak_in_Breathtaking_Expanses.jpg'}
+];
+
+const addonGrid=document.querySelector('.addon-grid');
+const addonSearch=document.querySelector('#addon-search');
+const addonCount=document.querySelector('#addon-count');
+const addonEmpty=document.querySelector('.addon-empty');
+let addonFilter='all';
+const initials=name=>name.split(/\s+/).map(part=>part[0]).join('').slice(0,2).toUpperCase();
+
+function renderAddons(){
+  const query=addonSearch.value.trim().toLocaleLowerCase('fr');
+  const visible=addons.filter(addon=>(addonFilter==='all'||addon.c===addonFilter)&&(!query||`${addon.n} ${addon.d} ${addonCategories[addon.c].label}`.toLocaleLowerCase('fr').includes(query)));
+  addonGrid.innerHTML=visible.map(addon=>`<article class="addon-card" style="--accent:${addonCategories[addon.c].accent}"><div class="addon-card-top"><span class="addon-sigil">${initials(addon.n)}</span><span class="addon-downloads">↓ ${addon.dl}</span></div><h3>${addon.n}</h3><p>${addon.d}</p><footer><span>${addonCategories[addon.c].label}<br>Par ${addon.a}</span><a href="${addon.u}" target="_blank" rel="noopener">CurseForge ↗</a></footer></article>`).join('');
+  addonCount.textContent=visible.length;
+  addonEmpty.hidden=visible.length!==0;
+}
+document.querySelectorAll('[data-addon-filter]').forEach(button=>button.addEventListener('click',()=>{
+  addonFilter=button.dataset.addonFilter;
+  document.querySelectorAll('[data-addon-filter]').forEach(item=>item.classList.toggle('active',item===button));
+  renderAddons();
+}));
+addonSearch.addEventListener('input',renderAddons);
+renderAddons();
+
+const tipList=document.querySelector('.tip-list');
+const tipDetail=document.querySelector('.tip-detail');
+tips.forEach((tip,index)=>{
+  const button=document.createElement('button');
+  button.className='tip-tab';
+  button.role='tab';
+  button.innerHTML=`<i>${tip.icon}</i><span><strong>${tip.tag}</strong>${tip.short}</span>`;
+  button.addEventListener('click',()=>renderTip(index));
+  tipList.appendChild(button);
+});
+function renderTip(index){
+  const tip=tips[index];
+  [...tipList.children].forEach((button,buttonIndex)=>{button.classList.toggle('active',buttonIndex===index);button.setAttribute('aria-selected',buttonIndex===index);});
+  tipDetail.style.setProperty('--tip-image',`url('${tip.img}')`);
+  tipDetail.querySelector('.tip-badge').textContent=tip.tag;
+  tipDetail.querySelector('.tip-kicker').textContent=`Fiche ${tip.icon} · Conseil de terrain`;
+  tipDetail.querySelector('h3').textContent=tip.title;
+  tipDetail.querySelector('.tip-intro').textContent=tip.intro;
+  tipDetail.querySelector('.tip-steps').innerHTML=tip.steps.map(step=>`<li>${step}</li>`).join('');
+  tipDetail.querySelector('.tip-note').textContent=tip.note;
+}
+renderTip(0);
+
 const eras=[
   {tab:'Cosmos',kicker:'Avant l’histoire mortelle',title:'L’ordonnancement d’Azeroth',text:'Les Titans découvrent Azeroth, un monde abritant une âme-monde exceptionnelle. Leurs gardiens affrontent les Dieux très anciens et façonnent les structures qui stabilisent la planète.',facts:[['Acteurs','Titans · Gardiens'],['Menace','Dieux très anciens'],['Héritage','Forges titanesques']],img:'assets/azeroth-cosmique.png',alt:'Monde fantastique entouré de gardiens cosmiques'},
   {tab:'Kaldorei',kicker:'Il y a plus de 10 000 ans',title:'L’Empire et le Puits d’éternité',text:'La civilisation kaldorei s’élève autour du Puits d’éternité. L’usage démesuré de sa magie attire la Légion ardente et déclenche la Guerre des Anciens.',facts:[['Capitale','Zin-Azshari'],['Souveraine','Reine Azshara'],['Rupture','Grande Fracture']],img:'assets/kaldorei-puits-eternite.png',alt:'Capitale kaldorei autour du Puits d’éternité sous une lune immense'},
@@ -231,12 +325,12 @@ document.querySelectorAll('[data-go]').forEach(button=>button.onclick=()=>docume
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
   if(entry.isIntersecting){document.querySelectorAll('nav button').forEach(button=>{const active=button.dataset.go===entry.target.id;button.classList.toggle('active',active);button.setAttribute('aria-current',active?'true':'false');});}
 }),{rootMargin:'-35% 0px -55%'});
-['chronologie','figures','quiz'].forEach(id=>observer.observe(document.getElementById(id)));
+['addons','astuces','chronologie','quiz'].forEach(id=>observer.observe(document.getElementById(id)));
 
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
   if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target);}
 }),{threshold:.12});
-document.querySelectorAll('.section-head,.era-stage,.card,.ice-break blockquote,.quiz-wrap').forEach((element,index)=>{
+document.querySelectorAll('.section-head,.addon-card,.tip-layout,.era-stage,.card,.ice-break blockquote,.quiz-wrap').forEach((element,index)=>{
   element.classList.add('reveal');
   element.style.transitionDelay=`${Math.min(index%4,3)*70}ms`;
   revealObserver.observe(element);

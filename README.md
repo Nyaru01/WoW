@@ -1,9 +1,12 @@
-# Chroniques d’Azeroth
+# Renaissance — Le Grimoire de WoW: Forever
 
-Une expérience éditoriale interactive en français autour des grandes périodes du lore de World of Warcraft, avec chronologie illustrée, personnages et quiz à progression sauvegardée.
+Un portail communautaire français consacré à WoW: Forever : addons recommandés, astuces de terrain, guides de butin et archives interactives du lore.
 
 ## Fonctionnalités
 
+- Catalogue de 28 addons filtrable par fonction avec recherche instantanée
+- Six fiches pratiques consacrées à l’installation, au butin, aux quêtes, aux instances, au combat et au dépannage
+- Direction artistique inspirée de WoW: Forever avec visuels officiels Blizzard
 - Chronologie interactive avec six illustrations panoramiques distinctes
 - Fiches narratives de quatre figures majeures
 - Banque de 65 questions, avec 50 questions aléatoires par partie et meilleur score local

@@ -1,8 +1,8 @@
 {
   "name": "chroniques-azeroth",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "private": true,
-  "description": "Chronologie interactive du lore de World of Warcraft",
+  "description": "Portail communautaire francophone pour les addons, astuces et chroniques de WoW: Forever",
   "scripts": {
     "start": "node server.js",
     "check": "node --check server.js && node --check app.js"
