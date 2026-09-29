@@ -90,6 +90,17 @@ test('les parcours utilisent les glyphes SVG du codex sans emoji',()=>{
   assert.doesNotMatch(html,/🗺️|⚔️|🖥️|🐞|🚀|🎭/u);
 });
 
+test('le héros conserve une atmosphère animée sans réglage utilisateur',()=>{
+  const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
+  const app=fs.readFileSync(path.join(__dirname,'app.js'),'utf8');
+  const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
+  const particles=html.match(/<div class="embers"[^>]*>(.*?)<\/div>/s)?.[1]||'';
+  assert.equal((particles.match(/<i><\/i>/g)||[]).length,14);
+  assert.doesNotMatch(html+app,/motion-toggle|renaissance-motion|Animations : activées/);
+  assert.match(theme,/@keyframes aether-rise/);
+  assert.match(theme,/prefers-reduced-motion:reduce/);
+});
+
 test('aucun tracker ou cookie marketing n’est présent',()=>{
   const files=['index.html','app.js','server.js','data.js'].map(file=>fs.readFileSync(path.join(__dirname,file),'utf8')).join('\n');
   assert.doesNotMatch(files,/google-analytics|googletagmanager|facebook pixel|document\.cookie/i);

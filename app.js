@@ -287,11 +287,7 @@
   });
   const progress=$('.scroll-progress i');
   addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;if(progress)progress.style.width=`${max?scrollY/max*100:0}%`;topbar?.classList.toggle('scrolled',scrollY>30);},{passive:true});
-  const motionToggle=$('#motion-toggle'),motionMedia=matchMedia('(prefers-reduced-motion: reduce)');
-  let motionDisabled=readPreference('renaissance-motion',false)===true;
-  const updateMotion=()=>{const disabled=motionDisabled||motionMedia.matches;document.body.classList.toggle('motion-paused',disabled);if(motionToggle){motionToggle.disabled=motionMedia.matches;motionToggle.setAttribute('aria-pressed',String(disabled));motionToggle.textContent=motionMedia.matches?'Animations réduites (système)':disabled?'Animations : désactivées':'Animations : activées';}};
-  motionToggle?.addEventListener('click',()=>{motionDisabled=!motionDisabled;savePreference('renaissance-motion',motionDisabled);updateMotion();});
-  motionMedia.addEventListener?.('change',updateMotion);updateMotion();
+  const motionMedia=matchMedia('(prefers-reduced-motion: reduce)');
   const presenceCount=$('#presence-count');
   if(presenceCount&&'EventSource' in window){
     const presence=new EventSource('/api/presence');
