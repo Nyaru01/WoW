@@ -173,7 +173,7 @@
   document.addEventListener('click',event=>{if(globalResults&&!event.target.closest('.hero-search')&&!event.target.closest('#global-search-results')){globalResults.hidden=true;globalInput?.setAttribute('aria-expanded','false');}});
 
   const troubleGrid=$('#troubleshooting-grid');
-  if(troubleGrid)troubleGrid.innerHTML=data.troubleshooting.map(item=>`<article class="content-card"><span>Dépannage</span><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${verified(item)}<a class="text-link" href="${typePath(item)}">Ouvrir la checklist →</a></article>`).join('');
+  if(troubleGrid)troubleGrid.innerHTML=data.troubleshooting.map((item,index)=>`<article class="content-card troubleshooting-card"><div class="troubleshooting-card-top"><span>Guide ${String(index+1).padStart(2,'0')}</span><b>${item.steps.length} étapes</b></div><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${tagList(item.tags)}<div class="troubleshooting-card-foot">${verified(item)}<a class="text-link" href="${typePath(item)}">Ouvrir la checklist →</a></div></article>`).join('');
 
   const commandShell=$('#commandes .section-shell');
   if(commandShell){

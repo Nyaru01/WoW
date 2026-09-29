@@ -189,6 +189,52 @@ body.page-inactive * { animation-play-state: paused!important; }
   .patch-client { grid-template-columns: 1fr; gap: 10px; }
   .news-lead { padding: 24px; }
 }
+
+/* Dépannage — même langage visuel que le codex sombre */
+.troubleshooting {
+  position: relative;
+  padding: 76px 0;
+  color: #ece8df;
+  background: radial-gradient(circle at 82% 8%,rgba(126,208,229,.1),transparent 32%),linear-gradient(145deg,#111a1e,#0b1215);
+  border-top: 1px solid #3a4548;
+}
+.troubleshooting:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(135deg,rgba(255,255,255,.012) 0 1px,transparent 1px 9px);
+}
+.troubleshooting .section-shell { position: relative; }
+.troubleshooting .section-intro .chapter { color: #d8b873; }
+.troubleshooting .section-intro h2 { color: #f2eee5; }
+.troubleshooting .section-intro p { color: #9faeb0; }
+.troubleshooting .content-grid { gap: 12px; }
+.troubleshooting .content-card {
+  position: relative;
+  min-height: 300px;
+  padding: 26px;
+  overflow: hidden;
+  border: 1px solid #39474b;
+  background: linear-gradient(145deg,#142127,#0d171b);
+  color: #e8e5dd;
+  box-shadow: none;
+}
+.troubleshooting .content-card:before { content:''; position:absolute; inset:0 auto 0 0; width:3px; background:linear-gradient(#d7ad58,#69b7c6); }
+.troubleshooting-card-top,.troubleshooting-card-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.troubleshooting-card-top span,.troubleshooting-card-top b { color:#c8ab70; font:700 .66rem var(--head); letter-spacing:.1em; text-transform:uppercase; }
+.troubleshooting-card-top b { color:#7f9498; }
+.troubleshooting .content-card h3 { margin:20px 0 2px; color:#f3ead8; font:700 1.7rem/1.05 var(--head); text-transform:uppercase; }
+.troubleshooting .content-card>p { color:#aab7b9; line-height:1.55; }
+.troubleshooting .tag-list { margin:4px 0; }
+.troubleshooting .tag-list span { border-color:#415055; color:#819397; }
+.troubleshooting-card-foot { margin-top:auto; padding-top:17px; border-top:1px solid #2e3b3f; }
+.troubleshooting .text-link { color:#e2bf79; white-space:nowrap; }
+@media(max-width:600px) {
+  .troubleshooting { padding:42px 0; }
+  .troubleshooting .content-card { min-height:0; padding:20px; }
+  .troubleshooting-card-foot { align-items:flex-start; flex-direction:column; }
+}
 @media(max-width:600px) {
   .hero-content { padding-bottom: 110px; }
   .faction-signature { gap: 10px; font-size: .7rem; }

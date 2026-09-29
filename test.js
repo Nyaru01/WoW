@@ -39,6 +39,14 @@ test('chaque astuce fournit une procédure concrète',()=>{
   assert.match(theme,/WoW_Camelot_AnnounceSupport_Alliance/);
 });
 
+test('la page dépannage utilise le thème sombre du codex',()=>{
+  const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
+  const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
+  assert.match(html,/id="depannage" class="troubleshooting"/);
+  assert.match(theme,/\.troubleshooting \.content-card/);
+  assert.match(theme,/\.troubleshooting-card-foot/);
+});
+
 test('toutes les routes publiques ont une page de métadonnées',()=>{
   for(const item of data.all)assert.ok(pageForPath(data.routeFor(item).split('#')[0]));
   for(const route of ['/','/addons','/astuces','/commandes','/commandes/presets','/depannage','/objets','/actualites','/favoris'])assert.ok(pageForPath(route));
