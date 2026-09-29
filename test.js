@@ -78,7 +78,10 @@ test('toutes les routes publiques ont une page de métadonnées',()=>{
 
 test('le client conserve les mécanismes de recherche, copie et migration des favoris',()=>{
   const app=fs.readFileSync(path.join(__dirname,'app.js'),'utf8');
-  for(const marker of ['renaissance-favorites-v2','renaissance-favorites','navigator.clipboard','renderGlobalSearch','compatibility-filter','clear-all-favorites'])assert.match(app,new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+  for(const marker of ['renaissance-favorites-v2','renaissance-favorites','navigator.clipboard','renderGlobalSearch','clear-all-favorites'])assert.match(app,new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+  assert.doesNotMatch(app,/compatibilityLabels|compatibility-filter/);
+  const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
+  assert.doesNotMatch(html,/Natif Forever|À retester/);
 });
 
 test('les parcours utilisent les glyphes SVG du codex sans emoji',()=>{

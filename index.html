@@ -10,13 +10,13 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/styles.css?v=9.1.1">
-  <link rel="stylesheet" href="/theme.css?v=9.1.1">
+  <link rel="stylesheet" href="/styles.css?v=9.1.2">
+  <link rel="stylesheet" href="/theme.css?v=9.1.2">
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
     <symbol id="journey-explore" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.2 13 13l-3.8 1.8L11 11zM12 1.8v2.1M12 20.1v2.1M1.8 12h2.1M20.1 12h2.1"/></symbol>
-    <symbol id="journey-dungeon" viewBox="0 0 24 24"><path d="M5 21V8l3-4h8l3 4v13M9 21v-6a3 3 0 0 1 6 0v6M4 21h16M8 8h8M12 4v4"/></symbol>
+    <symbol id="journey-dungeon" viewBox="0 0 24 24"><path d="m5 4 6.5 6.5-2 2L3 6V3h3Zm14 0-6.5 6.5 2 2L21 6V3h-3ZM8.5 13.5l-2 2M5 14l5 5M15.5 13.5l2 2M19 14l-5 5"/></symbol>
     <symbol id="journey-interface" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9h18M9 9v11M6 6.5h.01M12 13h6M12 16h4"/></symbol>
     <symbol id="journey-repair" viewBox="0 0 24 24"><path d="m14.8 14.8 5.4 5.4M10.5 17a6.5 6.5 0 1 1 6.5-6.5M8 8l2 2 2-3 2 2-1.5 3"/><circle cx="10.5" cy="10.5" r="1"/></symbol>
     <symbol id="journey-performance" viewBox="0 0 24 24"><path d="M3 14c2.5-5.7 5.5-8.7 9-9 3.5.3 6.5 3.3 9 9M5 17h14M8 20h8M12 14l4-5"/><circle cx="12" cy="14" r="1.2"/></symbol>
@@ -73,7 +73,7 @@
         <div class="essential-grid">
           <a href="https://www.curseforge.com/wow/addons/questie" target="_blank" rel="noopener noreferrer" class="essential-card quest"><span class="essential-number">01</span><span class="essential-tag">Quêtes</span><h3>Questie</h3><p>Objectifs et quêtes disponibles directement sur la carte.</p><b>Voir sur CurseForge ↗</b></a>
           <a href="https://www.curseforge.com/wow/addons/lootified" target="_blank" rel="noopener noreferrer" class="essential-card loot"><span class="essential-number">02</span><span class="essential-tag">Butin</span><h3>Lootified</h3><p>Journal de loot et assistant Best in Slot pour WoW: Forever.</p><b>Voir sur CurseForge ↗</b></a>
-          <a href="/addons/hunters-field-guide" class="essential-card debug"><span class="essential-number">03</span><span class="essential-tag">Natif Forever · Bêta</span><h3>Hunter's Field Guide</h3><p>Le journal des bêtes, capacités et emplacements pour chasseurs.</p><b>Ouvrir la fiche →</b></a>
+          <a href="/addons/hunters-field-guide" class="essential-card debug"><span class="essential-number">03</span><span class="essential-tag">Guide chasseur · Bêta</span><h3>Hunter's Field Guide</h3><p>Le journal des bêtes, capacités et emplacements pour chasseurs.</p><b>Ouvrir la fiche →</b></a>
         </div>
       </div>
     </section>
@@ -91,7 +91,6 @@
         <div class="collection-toolbar">
           <button id="favorites-filter" aria-pressed="false">☆ Mes favoris <span id="favorites-count">0</span></button>
           <div class="sort-control"><label for="addon-sort">Trier</label><select id="addon-sort"><option value="selection">Recommandés</option><option value="newest">Nouveaux</option><option value="verified">Récemment vérifiés</option><option value="name">Nom : A → Z</option></select></div>
-          <div class="sort-control"><label for="compatibility-filter">Compatibilité</label><select id="compatibility-filter"><option value="all">Tous</option><option value="native">Natif Forever</option><option value="compatible">Compatible</option><option value="partial">Partiel</option><option value="retest">À retester</option><option value="bug">Bug connu</option></select></div>
           <div class="view-switch" role="group" aria-label="Affichage du catalogue"><button data-view="cards" aria-pressed="true">Cartes</button><button data-view="list" aria-pressed="false">Liste</button></div>
         </div>
         <div class="catalogue-summary"><p id="catalogue-status" role="status"></p><button id="clear-filters" hidden>Effacer les filtres ×</button></div>
@@ -222,7 +221,7 @@
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site indépendant, non affilié à Blizzard. Lecture seule, sans compte, tracker, publicité ciblée ni cookie marketing.</p><nav aria-label="Informations"><a href="/sources">Sources</a><a href="/confidentialite">Confidentialité</a><a href="/a-propos">À propos</a><a href="/contribuer">Contribuer</a></nav></div></footer>
   <aside class="site-preferences section-shell" aria-label="Préférences d’affichage"><span>À votre rythme, en Azeroth.</span><button id="motion-toggle" aria-pressed="false">Animations : activées</button></aside>
-  <script src="/data.js?v=9.1.1"></script>
-  <script src="/app.js?v=9.1.1"></script>
+  <script src="/data.js?v=9.1.2"></script>
+  <script src="/app.js?v=9.1.2"></script>
 </body>
 </html>

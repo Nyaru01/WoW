@@ -8,7 +8,6 @@
   const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const normalize=value=>String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr');
   const formatDate=value=>value?new Intl.DateTimeFormat('fr-FR',{dateStyle:'long'}).format(new Date(`${value}T12:00:00`)):'Non vérifié';
-  const compatibilityLabels={native:'Natif Forever',compatible:'Compatible',partial:'Partiel',retest:'À retester',bug:'Bug connu',incompatible:'Non compatible'};
   const typeLabels={addon:'Addon',astuce:'Astuce',commande:'Commande',depannage:'Dépannage',objet:'Objet RP',actualite:'Actualité',preset:'Preset'};
   function readPreference(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}}
   function savePreference(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
@@ -74,7 +73,6 @@
   const addonGrid=$('.addon-grid');
   const addonSearch=$('#addon-search');
   const addonSort=$('#addon-sort');
-  const compatibilityFilter=$('#compatibility-filter');
   const count=$('#addon-count');
   const empty=$('.empty-state');
   const pagination=$('.catalogue-pagination');
@@ -95,23 +93,20 @@
     });
   }
   function addonCard(addon,index=0){
-    const compatibility=compatibilityLabels[addon.foreverCompatibility]||'À retester';
-    return `<article class="addon-card" style="--accent:${addon.foreverCompatibility==='native'?'#79d4a7':'#d7ad58'};--delay:${Math.min(index,8)*35}ms">
+    return `<article class="addon-card" style="--accent:#d7ad58;--delay:${Math.min(index,8)*35}ms">
       <div class="addon-top"><span class="addon-category">${escapeHtml(addon.categories.map(key=>categoryNames[key]).join(' · '))}</span>${favoriteButton(addon)}</div>
-      <div class="status-row"><span class="status-pill ${escapeHtml(addon.foreverCompatibility)}">${escapeHtml(compatibility)}</span>${addon.status==='beta'?'<span class="status-pill beta">Bêta</span>':''}</div>
+      ${addon.status==='beta'?'<div class="status-row"><span class="status-pill beta">Bêta</span></div>':''}
       <h2><a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h2><p>${escapeHtml(addon.description)}</p>
-      ${verified(addon)}
       <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Voir la fiche →</a></div>
     </article>`;
   }
   function renderAddons(){
     if(!addonGrid)return;
     const query=normalize(addonSearch?.value.trim());
-    const compatibility=compatibilityFilter?.value||'all';
     let matches=data.addons.filter(addon=>{
       const inCategory=activeFilter==='all'||addon.categories.includes(activeFilter);
       const haystack=normalize([addon.title,addon.description,...addon.tags,...addon.categories.map(key=>categoryNames[key])].join(' '));
-      return inCategory&&(compatibility==='all'||addon.foreverCompatibility===compatibility)&&(!favoritesOnly||isFavorite(addon))&&(!query||haystack.includes(query));
+      return inCategory&&(!favoritesOnly||isFavorite(addon))&&(!query||haystack.includes(query));
     });
     if(addonSort?.value==='name')matches.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
     if(addonSort?.value==='newest')matches.sort((a,b)=>b.slug==='hunters-field-guide'?1:a.slug==='hunters-field-guide'?-1:0);
@@ -129,12 +124,11 @@
       $('.page-status',pagination).textContent=`Page ${currentPage} sur ${totalPages}`;
       $('.page-numbers',pagination).innerHTML=Array.from({length:totalPages},(_,i)=>`<button data-page="${i+1}" ${i+1===currentPage?'aria-current="page" class="active"':''}>${String(i+1).padStart(2,'0')}</button>`).join('');
     }
-    const clear=$('#clear-filters');if(clear)clear.hidden=!query&&activeFilter==='all'&&compatibility==='all'&&!favoritesOnly;
+    const clear=$('#clear-filters');if(clear)clear.hidden=!query&&activeFilter==='all'&&!favoritesOnly;
     refreshFavoriteButtons();
   }
   addonSearch?.addEventListener('input',()=>{currentPage=1;renderAddons();});
   addonSort?.addEventListener('change',()=>{currentPage=1;renderAddons();});
-  compatibilityFilter?.addEventListener('change',()=>{currentPage=1;renderAddons();});
   pagination?.addEventListener('click',event=>{
     if(event.target.closest('.page-prev'))currentPage--;
     else if(event.target.closest('.page-next'))currentPage++;
@@ -146,7 +140,7 @@
   $('#clear-filters')?.addEventListener('click',resetAddons);
   $('#reset-catalogue')?.addEventListener('click',resetAddons);
   function resetAddons(){
-    if(addonSearch)addonSearch.value='';if(compatibilityFilter)compatibilityFilter.value='all';favoritesOnly=false;activeFilter='all';currentPage=1;
+    if(addonSearch)addonSearch.value='';favoritesOnly=false;activeFilter='all';currentPage=1;
     $$('[data-addon-filter]').forEach(button=>{const active=button.dataset.addonFilter==='all';button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
     renderAddons();
   }
@@ -165,7 +159,7 @@
     const query=normalize(globalInput.value.trim());
     if(!query){globalResults.hidden=true;return;}
     const matches=data.all.filter(item=>normalize([item.title,item.description,...(item.tags||[]),item.command||'',item.verificationStatus||''].join(' ')).includes(query)).slice(0,10);
-    globalResults.innerHTML=matches.length?matches.map(item=>`<a class="search-result" href="${escapeHtml(typePath(item))}"><span>${escapeHtml(typeLabels[item.type])}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small><em>${item.type==='addon'?`${escapeHtml(compatibilityLabels[item.foreverCompatibility])} · `:''}${escapeHtml((item.tags||[]).slice(0,3).join(' · '))} · ${escapeHtml(item.verificationStatus||'')} · ${escapeHtml(formatDate(item.verifiedDate))}</em></a>`).join(''):'<p>Aucun résultat. Essayez un terme plus court.</p>';
+    globalResults.innerHTML=matches.length?matches.map(item=>`<a class="search-result" href="${escapeHtml(typePath(item))}"><span>${escapeHtml(typeLabels[item.type])}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small><em>${escapeHtml((item.tags||[]).slice(0,3).join(' · '))}${item.type==='addon'?'':` · ${escapeHtml(item.verificationStatus||'')} · ${escapeHtml(formatDate(item.verifiedDate))}`}</em></a>`).join(''):'<p>Aucun résultat. Essayez un terme plus court.</p>';
     globalResults.hidden=false;
   }
   globalInput?.addEventListener('input',renderGlobalSearch);
@@ -219,9 +213,8 @@
     return items.length?`<section class="detail-block"><h2>${escapeHtml(title)}</h2><ul>${items.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul></section>`:'';
   }
   function renderDetail(item){
-    const compatibility=item.type==='addon'?compatibilityLabels[item.foreverCompatibility]:'';
     return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(typeLabels[item.type])}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${['addon','astuce','commande','objet'].includes(item.type)?favoriteButton(item):''}</header>
-      <div class="detail-status">${item.type==='addon'?`<span class="status-pill ${escapeHtml(item.foreverCompatibility)}">${escapeHtml(compatibility)}</span>${item.status==='beta'?'<span class="status-pill beta">Bêta</span>':''}`:''}${verified(item)}</div>
+      <div class="detail-status">${item.type==='addon'?(item.status==='beta'?'<span class="status-pill beta">Bêta</span>':''):verified(item)}</div>
       ${item.type==='addon'?`<dl class="fact-grid"><div><dt>Auteur</dt><dd>${escapeHtml(item.author)}</dd></div><div><dt>Version</dt><dd>${escapeHtml(item.version||'Non confirmée')}</dd></div><div><dt>Version du jeu</dt><dd>${escapeHtml(item.gameVersion||'Non confirmée')}</dd></div><div><dt>Test</dt><dd>${item.tested?'Testé':'Non présenté comme totalement testé'}</dd></div></dl>`:''}
       ${item.type==='addon'&&item.bestFor?`<section class="detail-block addon-guidance"><div><h2>Idéal pour</h2><p>${escapeHtml(item.bestFor)}</p></div><div><h2>Conseil de configuration</h2><p>${escapeHtml(item.setupAdvice)}</p></div></section>`:''}
       ${listBlock('Pourquoi l’utiliser ?',item.whyRecommended)}${listBlock('Fonctionnalités',item.features)}${listBlock('Découverte',item.discovery)}
