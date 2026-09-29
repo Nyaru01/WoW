@@ -11,7 +11,10 @@ Renaissance est un site indépendant, sans compte, publicité ciblée, tracker n
 - commandes copiables et presets Immersion, Performance et Cinématique ;
 - dépannage progressif pour les addons, erreurs Lua et resets d’interface ;
 - objets RP avec filtres et commandes `/way` quand les coordonnées sont connues ;
+- catalogue enrichi de 30 addons, 12 guides, 6 objets RP et 9 actualités ;
 - favoris locaux pour les addons, astuces, commandes et objets ;
+- compteur de visiteurs connectés en temps réel, éphémère et sans identifiant ;
+- animations légères respectant `prefers-reduced-motion` et images WebP optimisées ;
 - métadonnées canonical, OpenGraph, Twitter Cards et Schema.org ;
 - `robots.txt` et `sitemap.xml` générés depuis les contenus ;
 - conservation des anciennes ancres `#addons`, `#astuces`, `#commandes`, `#objets-rp` et `#nouvelles`.
@@ -22,7 +25,11 @@ Renaissance est un site indépendant, sans compte, publicité ciblée, tracker n
 npm start
 npm run check
 npm test
+npm run audit:a11y
+npm run audit:lighthouse
 ```
+
+L’audit d’accessibilité automatisé utilise axe sur les principales routes, en formats mobile et bureau. Lighthouse mesure Performance, Accessibilité, Bonnes pratiques, SEO, LCP, CLS, TBT et Speed Index. Chrome doit être installé ; son chemin peut être fourni avec `CHROME_PATH`.
 
 Le serveur écoute sur `PORT` ou, par défaut, sur [http://localhost:3000](http://localhost:3000).
 
@@ -31,8 +38,10 @@ Pour produire des URLs canonical absolues en production, définir `SITE_URL`. Su
 ## Architecture
 
 - `data.js` : contenus et modèle de données partagés entre serveur et navigateur ;
-- `server.js` : serveur statique, routes propres, métadonnées, sitemap et en-têtes de sécurité ;
+- `server.js` : serveur statique, routes propres, métadonnées, sitemap, présence éphémère et en-têtes de sécurité ;
 - `app.js` : recherche, filtres, favoris, copie et rendu des fiches ;
+- `audit.js` : audits Lighthouse et axe reproductibles ;
+- `scripts/optimize_images.py` : conversion reproductible des illustrations en WebP ;
 - `index.html`, `styles.css`, `theme.css` : structure et identité visuelle existantes.
 
 Les informations incertaines sont affichées comme telles. Une source communautaire n’est jamais présentée comme officielle et une valeur CVar non confirmée n’est jamais inventée.

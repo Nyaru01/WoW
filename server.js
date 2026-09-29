@@ -53,8 +53,9 @@ function jsonLd(page,canonical){
 function renderIndex(request,pathname,page){
   const origin=normalizeOrigin(request);
   const canonical=`${origin}${pathname==='/'?'':pathname}`;
-  const image=`${origin}/assets/azeroth-cosmique.png`;
+  const image=`${origin}/assets/azeroth-cosmique.webp`;
   let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  if(pathname==='/')html=html.replace('</head>','  <link rel="preload" as="image" href="/assets/hero-forever.webp" fetchpriority="high">\n</head>');
   html=html.replace(/<title>.*?<\/title>/s,`<title>${escapeHtml(page.title)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${escapeHtml(page.description)}">`)
     .replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${escapeHtml(page.title)}">`)
@@ -83,7 +84,7 @@ ${[...new Set(paths)].map(item=>`  <url><loc>${escapeHtml(origin+(item==='/'?'':
 }
 function securityHeaders(headers={}){
   return {...headers,
-    'Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://blz-contentstack-images.akamaized.net; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+    'Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://blz-contentstack-images.akamaized.net; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
     'Referrer-Policy':'strict-origin-when-cross-origin','X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY',
     'Permissions-Policy':'camera=(), microphone=(), geolocation=()'
   };
@@ -93,6 +94,11 @@ function send(response,status,headers,body,headOnly=false){
   response.end(headOnly?'':body);
 }
 function createServer(){
+  const presenceClients=new Set();
+  const broadcastPresence=()=>{
+    const payload=`data: ${JSON.stringify({count:presenceClients.size})}\n\n`;
+    for(const client of presenceClients){try{client.write(payload);}catch{presenceClients.delete(client);}}
+  };
   return http.createServer((request,response)=>{
     if(!['GET','HEAD'].includes(request.method))return send(response,405,{'Allow':'GET, HEAD','Content-Type':'text/plain; charset=utf-8'},'Method not allowed',request.method==='HEAD');
     let pathname;
@@ -103,6 +109,14 @@ Allow: /
 Sitemap: ${normalizeOrigin(request)}/sitemap.xml
 `,request.method==='HEAD');
     if(pathname==='/sitemap.xml')return send(response,200,{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=3600'},sitemap(request),request.method==='HEAD');
+    if(pathname==='/api/presence'){
+      if(request.method==='HEAD')return send(response,200,{'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-store'},'',true);
+      response.writeHead(200,securityHeaders({'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-store','Connection':'keep-alive','X-Accel-Buffering':'no'}));
+      response.write('retry: 5000\n\n');presenceClients.add(response);broadcastPresence();
+      const heartbeat=setInterval(()=>{if(!response.destroyed)response.write(': presence\n\n');},25000);
+      request.on('close',()=>{clearInterval(heartbeat);presenceClients.delete(response);broadcastPresence();});
+      return;
+    }
     const page=pageForPath(pathname);
     if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public, max-age=0, must-revalidate'},renderIndex(request,pathname,page),request.method==='HEAD');
     const requested=pathname.replace(/^\/+/, '');

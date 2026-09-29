@@ -10,8 +10,8 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/styles.css?v=9.0.3">
-  <link rel="stylesheet" href="/theme.css?v=9.0.3">
+  <link rel="stylesheet" href="/styles.css?v=9.1.0">
+  <link rel="stylesheet" href="/theme.css?v=9.1.0">
 </head>
 <body>
   <a class="skip-link" href="#addons">Aller aux addons</a>
@@ -20,6 +20,7 @@
     <a class="brand" href="/" aria-label="Renaissance — accueil"><span class="brand-rune">R</span><span><strong>Renaissance</strong><small>Codex communautaire</small></span></a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation"><span aria-hidden="true">☰</span> Menu</button>
     <nav id="main-navigation" aria-label="Navigation principale"><a href="/">Accueil</a><a href="/addons">Addons</a><a href="/astuces">Astuces</a><a href="/commandes">Commandes</a><a href="/depannage">Dépannage</a><a href="/objets">Objets RP</a><a href="/actualites">Actualités</a><a href="/favoris">Favoris</a></nav>
+    <div class="presence-badge" title="Compteur anonyme, sans cookie ni historique"><i aria-hidden="true"></i><strong id="presence-count">—</strong><span>en ligne</span></div>
   </header>
 
   <main id="top">
@@ -32,7 +33,7 @@
         <p class="hero-copy">Votre prochaine découverte. Votre interface idéale.<br>Tout pour vivre l’aventure, à votre façon.</p>
         <div class="faction-signature" aria-label="Pour les joueurs Alliance et Horde"><span class="alliance">Alliance</span><span aria-hidden="true">◆</span><span class="horde">Horde</span><small>Deux factions. Une même aventure.</small></div>
         <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#nouvelles">Voir les patch notes <span>→</span></a></div>
-        <form class="hero-search" role="search" aria-label="Recherche globale"><label for="home-search" class="sr-only">Rechercher dans tout le codex</label><span aria-hidden="true">⌕</span><input id="home-search" type="search" placeholder="Addon, commande, astuce, objet…" autocomplete="off" aria-controls="global-search-results" aria-expanded="false"><button type="submit" aria-label="Rechercher dans le codex">→</button></form>
+        <form class="hero-search" role="search" aria-label="Recherche globale"><label for="home-search" class="sr-only">Rechercher dans tout le codex</label><span aria-hidden="true">⌕</span><input id="home-search" type="search" placeholder="Addon, commande, astuce, objet…" autocomplete="off" aria-controls="global-search-results"><button type="submit" aria-label="Rechercher dans le codex">→</button></form>
         <div id="global-search-results" class="global-search-results" role="region" aria-label="Résultats de recherche" hidden></div>
         <span class="hero-credit">Un codex indépendant, créé par <strong>Nyaru</strong></span>
       </div>
@@ -64,7 +65,7 @@
 
     <section id="addons" class="catalogue" aria-labelledby="addons-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">02 — L’arsenal</span><h2 id="addons-title">Tous les addons</h2></div><p>Recherchez par nom ou par usage. Chaque fiche mène directement à la page CurseForge recommandée par la guilde.</p></div>
+        <div class="section-intro"><div><span class="chapter">02 — L’arsenal</span><h1 id="addons-title">Tous les addons</h1></div><p>Recherchez par nom ou par usage. Chaque fiche mène directement à la page CurseForge recommandée par la guilde.</p></div>
         <div class="catalogue-tools">
           <label class="search-box"><span aria-hidden="true">⌕</span><input id="addon-search" type="search" aria-label="Rechercher un addon ou une fonction" placeholder="Rechercher un addon ou une fonction…" autocomplete="off"><kbd>/</kbd></label>
           <div class="result-counter"><strong id="addon-count">29</strong><span>résultats</span></div>
@@ -93,28 +94,28 @@
 
     <section id="depannage" class="troubleshooting" aria-labelledby="troubleshooting-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">05 — Résoudre sans tout effacer</span><h2 id="troubleshooting-title">Dépannage</h2></div><p>Des diagnostics progressifs pour les addons, l’interface et les erreurs Lua.</p></div>
+        <div class="section-intro"><div><span class="chapter">05 — Résoudre sans tout effacer</span><h1 id="troubleshooting-title">Dépannage</h1></div><p>Des diagnostics progressifs pour les addons, l’interface et les erreurs Lua.</p></div>
         <div id="troubleshooting-grid" class="content-grid"></div>
       </div>
     </section>
 
     <section id="astuces" class="guidebook" aria-labelledby="tips-title">
       <div class="section-shell">
-        <div class="section-intro light"><div><span class="chapter">03 — Le carnet de campagne</span><h2 id="tips-title">Astuces de terrain</h2></div><p>Huit fiches brèves, avec le temps nécessaire, les outils utiles et une marche à suivre directement applicable en jeu.</p></div>
+        <div class="section-intro light"><div><span class="chapter">03 — Le carnet de campagne</span><h1 id="tips-title">Astuces de terrain</h1></div><p>Huit fiches brèves, avec le temps nécessaire, les outils utiles et une marche à suivre directement applicable en jeu.</p></div>
         <div class="guide-summary" aria-label="Résumé du carnet"><span><strong>08</strong> fiches</span><span><strong>3–10 min</strong> par préparation</span><span><strong>100 %</strong> consultable sans compte</span></div>
         <div class="guide-layout">
           <div class="guide-tabs" role="tablist" aria-label="Choisir une astuce"></div>
-          <article id="guide-panel" class="guide-card" role="tabpanel" tabindex="0" aria-live="polite">
+          <div id="guide-panel" class="guide-card" role="tabpanel" tabindex="0" aria-live="polite">
             <div class="guide-image"><span class="guide-category"></span><span class="guide-index"></span></div>
             <div class="guide-content"><span class="guide-kicker"></span><h3></h3><p class="guide-intro"></p><div class="guide-facts"></div><ol class="guide-steps"></ol><aside class="guide-note"><strong>À retenir</strong><span></span></aside></div>
-          </article>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="commandes" class="commands" aria-labelledby="commands-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">04 — Réglages avancés</span><h2 id="commands-title">Commandes utiles</h2></div><p>Des variables console testées dans la bêta de WoW: Forever, classées par effet et prêtes à copier. À utiliser comme réglages expérimentaux, pas comme des options officiellement recommandées.</p></div>
+        <div class="section-intro"><div><span class="chapter">04 — Réglages avancés</span><h1 id="commands-title">Commandes utiles</h1></div><p>Des variables console testées dans la bêta de WoW: Forever, classées par effet et prêtes à copier. À utiliser comme réglages expérimentaux, pas comme des options officiellement recommandées.</p></div>
         <div class="command-warning"><span>Avant toute modification</span><p>Sauvegardez <code>World of Warcraft/_classic_beta_/WTF/Config.wtf</code>. Saisissez les commandes dans le chat ou placez celles que vous gardez dans une macro.</p></div>
         <div class="command-layout">
           <aside class="command-index" aria-label="Sommaire des commandes"><a href="#cmd-light">Lumière & ombres <span>05</span></a><a href="#cmd-distance">Distance & détails <span>03</span></a><a href="#cmd-performance">Performance <span>02</span></a><a href="#cmd-weather">Météo <span>01</span></a></aside>
@@ -152,13 +153,13 @@
 
     <section id="objets-rp" class="rp-vault" aria-labelledby="rp-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">06 — Le cabinet de curiosités</span><h2 id="rp-title">Objets RP</h2></div><p>Des objets à garder pour leur apparence, leur ambiance ou les scènes qu’ils rendent possibles — avec une route claire pour les retrouver.</p></div>
+        <div class="section-intro"><div><span class="chapter">06 — Le cabinet de curiosités</span><h1 id="rp-title">Objets RP</h1></div><p>Des objets à garder pour leur apparence, leur ambiance ou les scènes qu’ils rendent possibles — avec une route claire pour les retrouver.</p></div>
         <div class="rp-grid">
           <article class="rp-feature">
-            <div class="torch-scene" aria-hidden="true"><img src="/assets/torch-rp.png" alt="" width="1024" height="1536" loading="lazy" decoding="async"></div>
+            <div class="torch-scene" aria-hidden="true"><img src="/assets/torch-rp.webp" alt="" width="1024" height="1536" loading="lazy" decoding="async"></div>
             <div class="rp-copy">
               <span class="status-pill beta">Découverte bêta · à confirmer au lancement</span>
-              <h3>La torche réutilisable de Veillebois</h3>
+              <h2>La torche réutilisable de Veillebois</h2>
               <p>Un objet d’ambiance récemment découvert dans la bêta. Il produit une vraie lumière autour du personnage et se réutilise après un court délai.</p>
               <ol class="route-list"><li><b>Rendez-vous à Veillebois</b><span>Montez par le chemin qui mène vers le boss dragon.</span></li><li><b>Cherchez un veilleur de nuit tombé</b><span>Le corps interactif se trouve au bord du chemin.</span></li><li><b>Ramassez la torche</b><span>Durée signalée : 5 minutes. Recharge : 30 secondes.</span></li></ol>
               <p class="source-note">Information observée par la communauté pendant la bêta ; emplacement et valeurs peuvent encore changer.</p>
@@ -168,7 +169,7 @@
           <article class="rp-secondary">
             <span class="status-pill stable">Récompense de quête vérifiée</span>
             <span class="item-level">Objet main gauche · niveau 21</span>
-            <h3>Torche de Grayson</h3>
+            <h2>Torche de Grayson</h2>
             <p>Une torche équipée, idéale pour une tenue d’explorateur, de garde ou de conteur au coin du feu.</p>
             <div class="quest-route"><span>Marche de l’Ouest</span><b>Phare de l’Ouest</b><span>Capitaine Grayson</span><b>Menace sur la côte</b></div>
             <p>Terrassez le Vieux Troubloeil sur le littoral, rapportez son écaille, puis choisissez la torche parmi les récompenses.</p>
@@ -180,18 +181,18 @@
 
     <section id="nouvelles" class="newsroom" aria-labelledby="news-title">
       <div class="section-shell">
-        <div class="section-intro"><div><span class="chapter">07 — Le journal d’Azeroth</span><h2 id="news-title">Patch notes & actualités</h2></div><p>Les mises à jour de la bêta, les changements en jeu et les annonces officielles. Sélection vérifiée le 28 septembre 2026.</p></div>
+        <div class="section-intro"><div><span class="chapter">07 — Le journal d’Azeroth</span><h1 id="news-title">Patch notes & actualités</h1></div><p>Les mises à jour de la bêta, les changements en jeu et les annonces officielles. Sélection vérifiée le 28 septembre 2026.</p></div>
         <div class="news-lead">
-          <div><span class="news-date">Notes de développement · <time datetime="2026-09-24">24 septembre 2026</time></span><h3>La bêta évolue.<br>Votre façon de jouer aussi.</h3><p>Équilibrage des classes, premiers tests du gestionnaire de temps de recharge et améliorations de la manette : les changements à connaître avant votre prochaine connexion.</p></div>
+          <div><span class="news-date">Notes de développement · <time datetime="2026-09-24">24 septembre 2026</time></span><h2>La bêta évolue.<br>Votre façon de jouer aussi.</h2><p>Équilibrage des classes, premiers tests du gestionnaire de temps de recharge et améliorations de la manette : les changements à connaître avant votre prochaine connexion.</p></div>
           <a href="https://eu.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-24-september/631316" target="_blank" rel="noopener noreferrer">Patch notes Blizzard · EN <span>↗</span></a>
         </div>
         <div class="patch-highlights" aria-label="Résumé du patch du 24 septembre">
-          <article><span>01 / Classes</span><h3>Des ajustements pour les neuf classes</h3><p>Colère du druide voit ses dégâts de base augmenter d’environ 50 %. Le coût de réinitialisation des talents redescend à une pièce d’argent après une heure, uniquement pendant la bêta.</p></article>
-          <article><span>02 / Interface</span><h3>Vos temps de recharge à portée de regard</h3><p>Le gestionnaire est testable pour druide, mage, prêtre, guerrier et démoniste. Activez-le dans les options d’amélioration du gameplay ; le suivi des rangs de sorts reste à venir.</p></article>
-          <article><span>03 / Confort</span><h3>Manette, performances et feu de camp</h3><p>Nouvelles options de ciblage et barre compacte à la manette. Une fuite mémoire est corrigée ; lancer des sorts ou fabriquer des objets n’interrompt plus l’attente des bonus du feu de camp.</p></article>
+          <article><span>01 / Classes</span><h2>Des ajustements pour les neuf classes</h2><p>Colère du druide voit ses dégâts de base augmenter d’environ 50 %. Le coût de réinitialisation des talents redescend à une pièce d’argent après une heure, uniquement pendant la bêta.</p></article>
+          <article><span>02 / Interface</span><h2>Vos temps de recharge à portée de regard</h2><p>Le gestionnaire est testable pour druide, mage, prêtre, guerrier et démoniste. Activez-le dans les options d’amélioration du gameplay ; le suivi des rangs de sorts reste à venir.</p></article>
+          <article><span>03 / Confort</span><h2>Manette, performances et feu de camp</h2><p>Nouvelles options de ciblage et barre compacte à la manette. Une fuite mémoire est corrigée ; lancer des sorts ou fabriquer des objets n’interrompt plus l’attente des bonus du feu de camp.</p></article>
         </div>
-        <div class="patch-client"><div><span class="news-date">Mise à jour du client · 23 septembre 2026</span><h3>Build 1.60.1.69977 : Mac et manette</h3><p>Correctifs d’affichage et de stabilité sur Mac, navigation à la manette dans la sélection des personnages et interaction avec les objets qui donnent des quêtes.</p></div><a class="lore-link" href="https://eu.forums.blizzard.com/en/wow/t/beta-client-update-23-september/630815" target="_blank" rel="noopener noreferrer">Note Blizzard · EN ↗</a></div>
-        <div class="news-subheading"><h3>À découvrir aussi</h3><span>Annonces & systèmes de jeu</span></div>
+        <div class="patch-client"><div><span class="news-date">Mise à jour du client · 23 septembre 2026</span><h2>Build 1.60.1.69977 : Mac et manette</h2><p>Correctifs d’affichage et de stabilité sur Mac, navigation à la manette dans la sélection des personnages et interaction avec les objets qui donnent des quêtes.</p></div><a class="lore-link" href="https://eu.forums.blizzard.com/en/wow/t/beta-client-update-23-september/630815" target="_blank" rel="noopener noreferrer">Note Blizzard · EN ↗</a></div>
+        <div class="news-subheading"><h2>À découvrir aussi</h2><span>Annonces & systèmes de jeu</span></div>
         <div class="news-grid">
           <a class="news-card" href="https://worldofwarcraft.blizzard.com/fr-fr/news/24307383" target="_blank" rel="noopener noreferrer"><time datetime="2026-09-23">23.09.26</time><span class="news-topic">Progression</span><h3>Le système d’héritage dévoilé</h3><p>65 défis, des points liés au compte et trois arbres d’avantages à spécialiser par personnage.</p><b>Annonce Blizzard ↗</b></a>
           <a class="news-card" href="https://worldofwarcraft.blizzard.com/fr-fr/news/24302071/d%C3%A9couvrez-les-%C3%A9olides-dans-wow-forever" target="_blank" rel="noopener noreferrer"><time datetime="2026-09-22">22.09.26</time><span class="news-topic">Nouvelle race</span><h3>Les Éolides prennent leur envol</h3><p>Une zone de départ du niveau 1 à 12 et un choix d’allégeance entre Horde et Alliance.</p><b>Annonce Blizzard ↗</b></a>
@@ -205,8 +206,8 @@
   </main>
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site indépendant, non affilié à Blizzard. Lecture seule, sans compte, tracker, publicité ciblée ni cookie marketing.</p><nav aria-label="Informations"><a href="/sources">Sources</a><a href="/confidentialite">Confidentialité</a><a href="/a-propos">À propos</a><a href="/contribuer">Contribuer</a></nav></div></footer>
-  <div class="site-preferences section-shell"><span>À votre rythme, en Azeroth.</span><button id="motion-toggle" aria-pressed="false">Animations : activées</button></div>
-  <script src="/data.js?v=9.0.3"></script>
-  <script src="/app.js?v=9.0.3"></script>
+  <aside class="site-preferences section-shell" aria-label="Préférences d’affichage"><span>À votre rythme, en Azeroth.</span><button id="motion-toggle" aria-pressed="false">Animations : activées</button></aside>
+  <script src="/data.js?v=9.1.0"></script>
+  <script src="/app.js?v=9.1.0"></script>
 </body>
 </html>

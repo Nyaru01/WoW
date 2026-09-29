@@ -35,8 +35,32 @@ test('chaque astuce fournit une procédure concrète',()=>{
     assert.ok(tip.note&&tip.image,tip.slug);
   }
   const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
-  assert.match(theme,/WoW_Camelot_AnnounceSupport_Horde/);
-  assert.match(theme,/WoW_Camelot_AnnounceSupport_Alliance/);
+  assert.match(theme,/hero-forever\.webp/);
+});
+
+test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
+  assert.ok(data.tips.length>=12);
+  assert.ok(data.items.length>=6);
+  assert.ok(data.news.length>=9);
+  const historical=data.addons.filter(addon=>addon.slug!=='hunters-field-guide');
+  assert.equal(historical.length,29);
+  for(const addon of historical){
+    assert.ok(addon.bestFor&&addon.setupAdvice,addon.slug);
+    assert.ok(addon.features.length>=3,addon.slug);
+    assert.ok(addon.whyRecommended.length>=2,addon.slug);
+    assert.equal(addon.tested,false,addon.slug);
+    assert.equal(addon.verificationStatus,'À retester',addon.slug);
+  }
+});
+
+test('les images actives sont optimisées en WebP',()=>{
+  const files=['index.html','styles.css','theme.css','data.js','server.js'];
+  const source=files.map(file=>fs.readFileSync(path.join(__dirname,file),'utf8')).join('\n');
+  assert.doesNotMatch(source,/assets\/[\w-]+\.png/i);
+  for(const file of ['horde-forever.webp','alliance-forever.webp','hero-forever.webp','azeroth-cosmique.webp','torch-rp.webp']){
+    const stat=fs.statSync(path.join(__dirname,'assets',file));
+    assert.ok(stat.size<350*1024,`${file} est trop lourd`);
+  }
 });
 
 test('la page dépannage utilise le thème sombre du codex',()=>{
@@ -74,6 +98,10 @@ test('le serveur répond aux routes, métadonnées, sitemap et erreurs',async t=
   for(const asset of ['/styles.css','/theme.css','/data.js','/app.js'])assert.equal((await fetch(base+asset)).status,200,asset);
   const sitemap=await fetch(base+'/sitemap.xml');assert.equal(sitemap.status,200);assert.match(await sitemap.text(),/\/addons\/hunters-field-guide/);
   const robots=await fetch(base+'/robots.txt');assert.match(await robots.text(),/Sitemap:/);
+  const home=await fetch(base+'/');assert.match(await home.text(),/rel="preload" as="image" href="\/assets\/hero-forever\.webp"/);
+  const presenceController=new AbortController();
+  const presence=await fetch(base+'/api/presence',{signal:presenceController.signal});assert.equal(presence.status,200);assert.match(presence.headers.get('content-type'),/text\/event-stream/);
+  const firstPresence=await presence.body.getReader().read();assert.match(new TextDecoder().decode(firstPresence.value),/retry:/);presenceController.abort();
   assert.equal((await fetch(base+'/inconnue')).status,404);
   assert.equal((await fetch(base+'/',{method:'POST'})).status,405);
 });

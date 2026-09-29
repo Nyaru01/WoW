@@ -99,7 +99,7 @@
     return `<article class="addon-card" style="--accent:${addon.foreverCompatibility==='native'?'#79d4a7':'#d7ad58'};--delay:${Math.min(index,8)*35}ms">
       <div class="addon-top"><span class="addon-category">${escapeHtml(addon.categories.map(key=>categoryNames[key]).join(' · '))}</span>${favoriteButton(addon)}</div>
       <div class="status-row"><span class="status-pill ${escapeHtml(addon.foreverCompatibility)}">${escapeHtml(compatibility)}</span>${addon.status==='beta'?'<span class="status-pill beta">Bêta</span>':''}</div>
-      <h3><a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h3><p>${escapeHtml(addon.description)}</p>
+      <h2><a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h2><p>${escapeHtml(addon.description)}</p>
       ${verified(addon)}
       <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Voir la fiche →</a></div>
     </article>`;
@@ -163,17 +163,17 @@
   function renderGlobalSearch(){
     if(!globalInput||!globalResults)return;
     const query=normalize(globalInput.value.trim());
-    if(!query){globalResults.hidden=true;globalInput.setAttribute('aria-expanded','false');return;}
+    if(!query){globalResults.hidden=true;return;}
     const matches=data.all.filter(item=>normalize([item.title,item.description,...(item.tags||[]),item.command||'',item.verificationStatus||''].join(' ')).includes(query)).slice(0,10);
     globalResults.innerHTML=matches.length?matches.map(item=>`<a class="search-result" href="${escapeHtml(typePath(item))}"><span>${escapeHtml(typeLabels[item.type])}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small><em>${item.type==='addon'?`${escapeHtml(compatibilityLabels[item.foreverCompatibility])} · `:''}${escapeHtml((item.tags||[]).slice(0,3).join(' · '))} · ${escapeHtml(item.verificationStatus||'')} · ${escapeHtml(formatDate(item.verifiedDate))}</em></a>`).join(''):'<p>Aucun résultat. Essayez un terme plus court.</p>';
-    globalResults.hidden=false;globalInput.setAttribute('aria-expanded','true');
+    globalResults.hidden=false;
   }
   globalInput?.addEventListener('input',renderGlobalSearch);
   $('.hero-search')?.addEventListener('submit',event=>{event.preventDefault();renderGlobalSearch();globalResults?.querySelector('a')?.focus();});
-  document.addEventListener('click',event=>{if(globalResults&&!event.target.closest('.hero-search')&&!event.target.closest('#global-search-results')){globalResults.hidden=true;globalInput?.setAttribute('aria-expanded','false');}});
+  document.addEventListener('click',event=>{if(globalResults&&!event.target.closest('.hero-search')&&!event.target.closest('#global-search-results'))globalResults.hidden=true;});
 
   const troubleGrid=$('#troubleshooting-grid');
-  if(troubleGrid)troubleGrid.innerHTML=data.troubleshooting.map((item,index)=>`<article class="content-card troubleshooting-card"><div class="troubleshooting-card-top"><span>Guide ${String(index+1).padStart(2,'0')}</span><b>${item.steps.length} étapes</b></div><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${tagList(item.tags)}<div class="troubleshooting-card-foot">${verified(item)}<a class="text-link" href="${typePath(item)}">Ouvrir la checklist →</a></div></article>`).join('');
+  if(troubleGrid)troubleGrid.innerHTML=data.troubleshooting.map((item,index)=>`<article class="content-card troubleshooting-card"><div class="troubleshooting-card-top"><span>Guide ${String(index+1).padStart(2,'0')}</span><b>${item.steps.length} étapes</b></div><h2><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.description)}</p>${tagList(item.tags)}<div class="troubleshooting-card-foot">${verified(item)}<a class="text-link" href="${typePath(item)}">Ouvrir la checklist →</a></div></article>`).join('');
 
   const commandShell=$('#commandes .section-shell');
   if(commandShell){
@@ -197,7 +197,7 @@
     const renderTip=index=>{
       const tip=data.tips[index];guide.setAttribute('aria-labelledby',`guide-tab-${index}`);
       guide.style.setProperty('--guide-image',`url('${tip.image}')`);
-      guide.innerHTML=`<div class="guide-image"><span class="guide-category">Astuce pratique</span><span class="guide-index">${String(index+1).padStart(2,'0')}</span></div><div class="guide-content"><span class="guide-kicker">✓ ${escapeHtml(tip.verificationStatus)} · ${escapeHtml(formatDate(tip.verifiedDate))}</span><h3>${escapeHtml(tip.title)}</h3><p class="guide-intro">${escapeHtml(tip.description)}</p><div class="guide-facts">${tip.facts.map((fact,factIndex)=>`<span><small>${['Temps','Moment','Outil'][factIndex]}</small><b>${escapeHtml(fact)}</b></span>`).join('')}</div><ol class="guide-steps">${tip.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol><aside class="guide-note"><strong>À retenir</strong><span>${escapeHtml(tip.note)}</span></aside><a class="tip-permalink" href="${typePath(tip)}">Ouvrir cette fiche seule →</a></div>`;
+      guide.innerHTML=`<div class="guide-image"><span class="guide-category">Astuce pratique</span><span class="guide-index">${String(index+1).padStart(2,'0')}</span></div><div class="guide-content"><span class="guide-kicker">✓ ${escapeHtml(tip.verificationStatus)} · ${escapeHtml(formatDate(tip.verifiedDate))}</span><h2>${escapeHtml(tip.title)}</h2><p class="guide-intro">${escapeHtml(tip.description)}</p><div class="guide-facts">${tip.facts.map((fact,factIndex)=>`<span><small>${['Temps','Moment','Outil'][factIndex]}</small><b>${escapeHtml(fact)}</b></span>`).join('')}</div><ol class="guide-steps">${tip.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol><aside class="guide-note"><strong>À retenir</strong><span>${escapeHtml(tip.note)}</span></aside><a class="tip-permalink" href="${typePath(tip)}">Ouvrir cette fiche seule →</a></div>`;
       $$('[data-tip]',tabList).forEach((button,i)=>{button.classList.toggle('active',i===index);button.setAttribute('aria-selected',String(i===index));button.tabIndex=i===index?0:-1;});
     };
     tabList.addEventListener('click',event=>{const button=event.target.closest('[data-tip]');if(button)renderTip(Number(button.dataset.tip));});
@@ -223,6 +223,7 @@
     return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(typeLabels[item.type])}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${['addon','astuce','commande','objet'].includes(item.type)?favoriteButton(item):''}</header>
       <div class="detail-status">${item.type==='addon'?`<span class="status-pill ${escapeHtml(item.foreverCompatibility)}">${escapeHtml(compatibility)}</span>${item.status==='beta'?'<span class="status-pill beta">Bêta</span>':''}`:''}${verified(item)}</div>
       ${item.type==='addon'?`<dl class="fact-grid"><div><dt>Auteur</dt><dd>${escapeHtml(item.author)}</dd></div><div><dt>Version</dt><dd>${escapeHtml(item.version||'Non confirmée')}</dd></div><div><dt>Version du jeu</dt><dd>${escapeHtml(item.gameVersion||'Non confirmée')}</dd></div><div><dt>Test</dt><dd>${item.tested?'Testé':'Non présenté comme totalement testé'}</dd></div></dl>`:''}
+      ${item.type==='addon'&&item.bestFor?`<section class="detail-block addon-guidance"><div><h2>Idéal pour</h2><p>${escapeHtml(item.bestFor)}</p></div><div><h2>Conseil de configuration</h2><p>${escapeHtml(item.setupAdvice)}</p></div></section>`:''}
       ${listBlock('Pourquoi l’utiliser ?',item.whyRecommended)}${listBlock('Fonctionnalités',item.features)}${listBlock('Découverte',item.discovery)}
       ${item.commands?.length?`<section class="detail-block"><h2>Commandes</h2>${item.commands.map(command=>`<h3>${escapeHtml(command.label)}</h3>${copyBlock(command.value)}`).join('')}</section>`:''}
       ${item.command?`<section class="detail-block"><h2>Commande</h2>${copyBlock(item.command)}<dl class="fact-grid"><div><dt>Impact FPS</dt><dd>${escapeHtml(item.impact)}</dd></div><div><dt>Valeur par défaut</dt><dd>${escapeHtml(item.defaultValue||'Voir restauration')}</dd></div><div><dt>Revenir en arrière</dt><dd>${escapeHtml(item.restore)}</dd></div></dl></section>`:''}
@@ -241,7 +242,7 @@
   function renderStaticPage(pathname){
     const pages={
       '/sources':['Sources','Chaque fiche technique affiche ses sources. Les données officielles, CurseForge et les observations communautaires sont clairement distinguées.'],
-      '/confidentialite':['Confidentialité','Renaissance ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur via localStorage.'],
+      '/confidentialite':['Confidentialité','Renaissance ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur via localStorage. Le compteur en ligne conserve seulement des connexions temporaires en mémoire, sans identifiant ni historique.'],
       '/a-propos':['À propos','Renaissance est un codex français indépendant tenu pour aider les joueurs de WoW: Forever. Il n’est ni affilié à Blizzard Entertainment ni à CurseForge.'],
       '/contribuer':['Contribuer','Vous pouvez signaler un addon cassé, proposer une commande ou corriger une information avec une issue GitHub préremplie.']
     };
@@ -264,11 +265,12 @@
     if(chapter){
       homeOnly.forEach(section=>section.hidden=true);
       const section=document.getElementById(chapter);if(section)section.hidden=false;
-      document.body.classList.add('chapter-view');return;
+      document.body.classList.add('chapter-view','route-ready');return;
     }
-    if(pathname==='/')return;
+    if(pathname==='/'){document.body.classList.add('route-ready');return;}
     homeOnly.forEach(section=>section.hidden=true);
     routeView.hidden=false;document.body.classList.add('chapter-view');
+    document.body.classList.add('route-ready');
     if(pathname==='/favoris')return renderFavorites();
     if(pathname==='/commandes/presets'){
       $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><a href="/commandes">Commandes</a><span>›</span><span aria-current="page">Presets</span></nav><header class="detail-header"><div><span class="chapter">Réglages groupés</span><h1>Presets graphiques</h1><p>Uniquement des CVars documentées, avec avertissement lorsque la valeur d’origine n’est pas confirmée.</p></div></header><div class="content-grid">${data.presets.map(item=>`<article class="content-card" id="${item.slug}"><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.description)}</p>${copyBlock(item.commands.join('\n'),'Copier toutes les commandes')}<small>${escapeHtml(item.restore)}</small></article>`).join('')}</div>`;return;
@@ -297,6 +299,24 @@
   const updateMotion=()=>{const disabled=motionDisabled||motionMedia.matches;document.body.classList.toggle('motion-paused',disabled);if(motionToggle){motionToggle.disabled=motionMedia.matches;motionToggle.setAttribute('aria-pressed',String(disabled));motionToggle.textContent=motionMedia.matches?'Animations réduites (système)':disabled?'Animations : désactivées':'Animations : activées';}};
   motionToggle?.addEventListener('click',()=>{motionDisabled=!motionDisabled;savePreference('renaissance-motion',motionDisabled);updateMotion();});
   motionMedia.addEventListener?.('change',updateMotion);updateMotion();
+  const presenceCount=$('#presence-count');
+  if(presenceCount&&'EventSource' in window){
+    const presence=new EventSource('/api/presence');
+    presence.onmessage=event=>{try{const count=JSON.parse(event.data).count;presenceCount.textContent=String(count);presenceCount.parentElement.setAttribute('aria-label',`${count} visiteur${count>1?'s':''} en ligne`);}catch{}};
+    presence.onerror=()=>{presenceCount.textContent='—';};
+  }
+  const revealSelector='.discovery-card,.essential-card,.addon-card,.content-card,.command-card,.news-card,.rp-feature,.rp-secondary';
+  if(!motionMedia.matches&&'IntersectionObserver' in window){
+    const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}}),{rootMargin:'0px 0px -8%'});
+    const observeReveals=root=>{
+      const elements=[];
+      if(root.matches?.(revealSelector)&&!root.classList.contains('reveal'))elements.push(root);
+      elements.push(...$$(`${revealSelector}:not(.reveal)`,root));
+      elements.forEach(element=>{element.classList.add('reveal');revealObserver.observe(element);});
+    };
+    observeReveals(document);
+    new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)observeReveals(node);}))).observe($('main'),{childList:true,subtree:true});
+  }
   const featured=data.news[0];
   if(featured){const title=$('#featured-patch-title'),summary=$('#featured-patch-summary'),date=$('#featured-patch-date');if(title)title.textContent=featured.title;if(summary)summary.textContent=featured.description;if(date){date.textContent=formatDate(featured.verifiedDate);date.dateTime=featured.verifiedDate;}}
   refreshFavoriteButtons();
