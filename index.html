@@ -10,10 +10,18 @@
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/styles.css?v=9.1.0">
-  <link rel="stylesheet" href="/theme.css?v=9.1.0">
+  <link rel="stylesheet" href="/styles.css?v=9.1.1">
+  <link rel="stylesheet" href="/theme.css?v=9.1.1">
 </head>
 <body>
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="journey-explore" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.2 13 13l-3.8 1.8L11 11zM12 1.8v2.1M12 20.1v2.1M1.8 12h2.1M20.1 12h2.1"/></symbol>
+    <symbol id="journey-dungeon" viewBox="0 0 24 24"><path d="M5 21V8l3-4h8l3 4v13M9 21v-6a3 3 0 0 1 6 0v6M4 21h16M8 8h8M12 4v4"/></symbol>
+    <symbol id="journey-interface" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9h18M9 9v11M6 6.5h.01M12 13h6M12 16h4"/></symbol>
+    <symbol id="journey-repair" viewBox="0 0 24 24"><path d="m14.8 14.8 5.4 5.4M10.5 17a6.5 6.5 0 1 1 6.5-6.5M8 8l2 2 2-3 2 2-1.5 3"/><circle cx="10.5" cy="10.5" r="1"/></symbol>
+    <symbol id="journey-performance" viewBox="0 0 24 24"><path d="M3 14c2.5-5.7 5.5-8.7 9-9 3.5.3 6.5 3.3 9 9M5 17h14M8 20h8M12 14l4-5"/><circle cx="12" cy="14" r="1.2"/></symbol>
+    <symbol id="journey-roleplay" viewBox="0 0 24 24"><path d="M5 20c4-1 7-4 9-8l4-8 2 2-8 9c-2.3 2.7-4.7 4.3-7 5ZM13 14l-3-3M15 11l-3-3M6 18l-2-1"/></symbol>
+  </svg>
   <a class="skip-link" href="#addons">Aller aux addons</a>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <header class="topbar">
@@ -48,7 +56,14 @@
           <a class="discovery-card discovery-interface" href="#addons" data-discovery-search="EllesmereUI"><span class="discovery-label">Focus addon</span><div><span class="chapter">Votre interface, votre style</span><h3>EllesmereUI</h3><p>Retrouvez la fiche, le site officiel et les versions Forever.</p><b>Découvrir l’interface <span aria-hidden="true">→</span></b></div></a>
           <a class="discovery-card discovery-rp" href="#objets-rp"><span class="discovery-label">Au-delà des quêtes</span><div><span class="chapter">Le goût de l’exploration</span><h3>Éclairez votre chemin</h3><p>Deux torches à dénicher pour vos aventures et vos scènes RP.</p><b>Voir les objets RP <span aria-hidden="true">→</span></b></div></a>
         </div>
-        <div class="journey-bar"><div><span class="chapter">Je cherche…</span><h3>Qu’avez-vous prévu aujourd’hui ?</h3></div><nav aria-label="Trouver une réponse par besoin"><a href="/addons?categorie=quetes">🗺️ Explorer Azeroth <span>↗</span></a><a href="/addons?categorie=donjons">⚔️ Partir en donjon <span>↗</span></a><a href="/addons?categorie=interface">🖥️ Refaire mon interface <span>↗</span></a><a href="/depannage">🐞 Résoudre un problème <span>↗</span></a><a href="/commandes/presets#performance">🚀 Améliorer les performances <span>↗</span></a><a href="/objets">🎭 Trouver des objets RP <span>↗</span></a></nav></div>
+        <div class="journey-bar"><div><span class="chapter">Je cherche…</span><h3>Qu’avez-vous prévu aujourd’hui ?</h3></div><nav aria-label="Trouver une réponse par besoin">
+          <a href="/addons?categorie=quetes"><svg class="journey-icon" aria-hidden="true"><use href="#journey-explore"/></svg><span class="journey-label">Explorer Azeroth</span><span class="journey-arrow" aria-hidden="true">↗</span></a>
+          <a href="/addons?categorie=donjons"><svg class="journey-icon" aria-hidden="true"><use href="#journey-dungeon"/></svg><span class="journey-label">Partir en donjon</span><span class="journey-arrow" aria-hidden="true">↗</span></a>
+          <a href="/addons?categorie=interface"><svg class="journey-icon" aria-hidden="true"><use href="#journey-interface"/></svg><span class="journey-label">Refaire mon interface</span><span class="journey-arrow" aria-hidden="true">↗</span></a>
+          <a href="/depannage"><svg class="journey-icon" aria-hidden="true"><use href="#journey-repair"/></svg><span class="journey-label">Résoudre un problème</span><span class="journey-arrow" aria-hidden="true">↗</span></a>
+          <a href="/commandes/presets#performance"><svg class="journey-icon" aria-hidden="true"><use href="#journey-performance"/></svg><span class="journey-label">Améliorer les performances</span><span class="journey-arrow" aria-hidden="true">↗</span></a>
+          <a href="/objets"><svg class="journey-icon" aria-hidden="true"><use href="#journey-roleplay"/></svg><span class="journey-label">Trouver des objets RP</span><span class="journey-arrow" aria-hidden="true">↗</span></a>
+        </nav></div>
       </div>
     </section>
 
@@ -207,7 +222,7 @@
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site indépendant, non affilié à Blizzard. Lecture seule, sans compte, tracker, publicité ciblée ni cookie marketing.</p><nav aria-label="Informations"><a href="/sources">Sources</a><a href="/confidentialite">Confidentialité</a><a href="/a-propos">À propos</a><a href="/contribuer">Contribuer</a></nav></div></footer>
   <aside class="site-preferences section-shell" aria-label="Préférences d’affichage"><span>À votre rythme, en Azeroth.</span><button id="motion-toggle" aria-pressed="false">Animations : activées</button></aside>
-  <script src="/data.js?v=9.1.0"></script>
-  <script src="/app.js?v=9.1.0"></script>
+  <script src="/data.js?v=9.1.1"></script>
+  <script src="/app.js?v=9.1.1"></script>
 </body>
 </html>

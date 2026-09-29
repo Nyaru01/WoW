@@ -81,6 +81,12 @@ test('le client conserve les mécanismes de recherche, copie et migration des fa
   for(const marker of ['renaissance-favorites-v2','renaissance-favorites','navigator.clipboard','renderGlobalSearch','compatibility-filter','clear-all-favorites'])assert.match(app,new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
 });
 
+test('les parcours utilisent les glyphes SVG du codex sans emoji',()=>{
+  const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
+  for(const icon of ['explore','dungeon','interface','repair','performance','roleplay'])assert.match(html,new RegExp(`id="journey-${icon}"`));
+  assert.doesNotMatch(html,/🗺️|⚔️|🖥️|🐞|🚀|🎭/u);
+});
+
 test('aucun tracker ou cookie marketing n’est présent',()=>{
   const files=['index.html','app.js','server.js','data.js'].map(file=>fs.readFileSync(path.join(__dirname,file),'utf8')).join('\n');
   assert.doesNotMatch(files,/google-analytics|googletagmanager|facebook pixel|document\.cookie/i);

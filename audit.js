@@ -39,7 +39,7 @@ async function accessibilityAudit(base){
   const AxeBuilder=require('@axe-core/playwright').default;
   const browser=await chromium.launch({executablePath:chromePath,headless:true,args:['--no-sandbox','--disable-gpu']});
   const routes=['/','/addons','/astuces','/commandes','/depannage','/objets','/actualites','/favoris','/addons/hunters-field-guide','/astuces/preparer-liste-butin','/commandes/reload','/depannage/erreur-lua','/objets/torche-de-veillebois','/actualites/systeme-heritage'];
-  const viewports=[{name:'mobile',width:390,height:844},{name:'desktop',width:1440,height:900}];
+  const viewports=[{name:'mobile-compact',width:320,height:720},{name:'mobile',width:390,height:844},{name:'desktop',width:1440,height:900}];
   const violations=[];
   try{
     for(const viewport of viewports){
@@ -50,6 +50,15 @@ async function accessibilityAudit(base){
         await page.waitForTimeout(250);
         const result=await new AxeBuilder({page}).analyze();
         for(const violation of result.violations)violations.push({route,viewport:viewport.name,id:violation.id,impact:violation.impact,nodes:violation.nodes.length,target:violation.nodes.map(node=>node.target.join(' ')).join(' | '),help:violation.help});
+        const overflow=await page.evaluate(()=>{
+          document.documentElement.style.overflowX='visible';
+          document.body.style.overflowX='visible';
+          const width=document.documentElement.clientWidth;
+          const hasScrollContainer=element=>{for(let parent=element.parentElement;parent&&parent!==document.body;parent=parent.parentElement){const overflowX=getComputedStyle(parent).overflowX;if(['auto','scroll','hidden','clip'].includes(overflowX))return true;}return false;};
+          const offenders=[...document.querySelectorAll('body *')].filter(element=>{const box=element.getBoundingClientRect();return !hasScrollContainer(element)&&(box.right>width+1||box.left<-1);}).slice(0,8).map(element=>`${element.tagName.toLowerCase()}${element.id?'#'+element.id:''}${element.classList.length?'.'+[...element.classList].join('.'):''}`);
+          return {scrollWidth:document.documentElement.scrollWidth,width,offenders};
+        });
+        if(overflow.scrollWidth>overflow.width+1||overflow.offenders.length)violations.push({route,viewport:viewport.name,id:'horizontal-overflow',impact:'serious',nodes:overflow.offenders.length,target:overflow.offenders.join(' | '),help:`Viewport ${overflow.width}px, document ${overflow.scrollWidth}px`});
       }
       await context.close();
     }

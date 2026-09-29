@@ -189,6 +189,25 @@ body.page-inactive * { animation-play-state: paused!important; }
   .patch-client { grid-template-columns: 1fr; gap: 10px; }
   .news-lead { padding: 24px; }
 }
+
+/* Glyphes originaux du sélecteur de parcours. */
+.icon-sprite { position:absolute; width:0; height:0; overflow:hidden; }
+.journey-bar a { display:grid; grid-template-columns:34px minmax(0,1fr) auto; }
+.journey-icon { width:27px; height:27px; padding:4px; overflow:visible; color:#d4b676; fill:none; stroke:currentColor; stroke-width:1.45; stroke-linecap:round; stroke-linejoin:round; border:1px solid #bda0644d; border-radius:50%; background:#d1b7770a; transition:color .2s,border-color .2s,transform .2s; }
+.journey-label { min-width:0; color:#d9d2c2!important; }
+.journey-arrow { color:#bfa168!important; }
+.journey-bar a:hover .journey-icon { color:#f0d499; border-color:#d8b66e; transform:rotate(-5deg) scale(1.06); }
+
+/* Les conteneurs peuvent rétrécir sans élargir le viewport mobile. */
+html,body { max-width:100%; overflow-x:hidden; overflow-x:clip; }
+main,header,footer,section,nav,.section-shell,.hero-content,.journey-bar,.journey-bar>* { min-width:0; }
+img,svg { max-width:100%; }
+pre,code { overflow-wrap:anywhere; word-break:break-word; }
+@media(max-width:600px) {
+  .journey-bar nav { grid-template-columns:1fr; gap:0; }
+  .journey-bar a { min-height:58px; padding:10px 0; }
+  .journey-icon { width:29px; height:29px; }
+}
 .addon-guidance { display:grid; grid-template-columns:1fr 1fr; gap:28px; }.addon-guidance>div+div { padding-left:28px; border-left:1px solid #ffffff17; }.addon-guidance p { color:#c5cece; }
 @media(max-width:600px) { .addon-guidance { grid-template-columns:1fr; }.addon-guidance>div+div { padding:20px 0 0; border-left:0; border-top:1px solid #ffffff17; } }
 
@@ -414,4 +433,21 @@ footer { background: #0b1215; }.footer-inner>div>strong { font-family: var(--edi
 @media(max-width:820px) {
   .hero-art { background-position: 30% center; }
   .hero-art:after { background:linear-gradient(90deg,rgba(7,12,14,.9),rgba(7,12,14,.48)),linear-gradient(0deg,#0d1518,transparent 55%); }
+}
+
+/* Derniers garde-fous étroits : aucune carte ni commande ne force la page. */
+.rp-grid,.rp-feature,.torch-scene,.rp-copy,.command-layout,.command-groups,.command-group,.collection-toolbar,.sort-control { min-width:0; }
+@media(max-width:760px) {
+  .command-index { overflow-x:auto; overflow-y:hidden; }
+  .rp-feature { width:100%; grid-template-columns:minmax(0,1fr); }
+  .torch-scene,.rp-copy { width:100%; }
+}
+@media(max-width:600px) {
+  .sort-control { flex:1 1 100%; min-width:0; }
+  .sort-control select { min-width:0; max-width:62%; flex:0 1 62%; }
+}
+@media(max-width:360px) {
+  .topbar .brand>span:last-child { display:none; }
+  .presence-badge { margin-left:auto; }
+  .menu-toggle { margin-left:8px; padding-inline:9px; }
 }
