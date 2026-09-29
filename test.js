@@ -28,6 +28,17 @@ test('la recherche de données couvre plusieurs types de contenu',()=>{
   assert.ok(search('chasseur').some(item=>item.slug==='hunters-field-guide'));
 });
 
+test('chaque astuce fournit une procédure concrète',()=>{
+  for(const tip of data.tips){
+    assert.equal(tip.facts.length,3,tip.slug);
+    assert.ok(tip.steps.length>=3,tip.slug);
+    assert.ok(tip.note&&tip.image,tip.slug);
+  }
+  const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
+  assert.match(theme,/WoW_Camelot_AnnounceSupport_Horde/);
+  assert.match(theme,/WoW_Camelot_AnnounceSupport_Alliance/);
+});
+
 test('toutes les routes publiques ont une page de métadonnées',()=>{
   for(const item of data.all)assert.ok(pageForPath(data.routeFor(item).split('#')[0]));
   for(const route of ['/','/addons','/astuces','/commandes','/commandes/presets','/depannage','/objets','/actualites','/favoris'])assert.ok(pageForPath(route));
