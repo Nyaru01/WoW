@@ -1,336 +1,301 @@
-const categories={
-  quetes:{label:'Quêtes & navigation',short:'Quêtes',color:'#67c5dd'},
-  donjons:{label:'Donjons & butin',short:'Donjons',color:'#d9ad54'},
-  combat:{label:'Combat & raid',short:'Combat',color:'#e06c5f'},
-  interface:{label:'Interface & lisibilité',short:'Interface',color:'#a58bdd'},
-  confort:{label:'Confort & économie',short:'Confort',color:'#69bc8b'},
-  support:{label:'Diagnostic & dépannage',short:'Diagnostic',color:'#d89152'}
-};
+(() => {
+  'use strict';
+  const data=globalThis.RenaissanceData;
+  if(!data)return;
 
-const addons=[
-  ['EllesmereUI','interface','Interface modulaire : barres d’action, cadres et styles. Une version WoW: Forever est disponible.','6,1 M','Ellesmere','ellesmereui'],
-  ['Forever PTR World Map','quetes','Une carte du monde adaptée au serveur WoW: Forever.','15,3 k','Lili','forever-ptr-server-world-map'],
-  ['Questie','quetes','Les quêtes disponibles et leurs objectifs directement sur la carte.','Communauté','Gô','questie'],
-  ['QuestTogether','quetes','Un suivi de quêtes plus simple lorsque vous jouez en groupe.','25,4 k','Apogée','questtogether'],
-  ['Azeroth Pilot Reloaded','quetes','Des itinéraires rapides et des étapes précises pour le leveling.','3,6 M','Lili','azeroth-pilot-reloaded'],
-  ['RestedXP Guide','quetes','Des guides de montée en niveau intégrés, étape par étape.','26,2 M','Lili','restedxp-guide'],
-  ['TomTom','quetes','Coordonnées, points de passage et flèche directionnelle.','89,8 M','Lili','tomtom'],
-  ['GuildMap','quetes','La position des membres de la guilde sur votre carte.','196,1 k','Lili','guildmap'],
-  ['DungeonJournal','donjons','Quêtes, emplacements et butins des boss pour chaque donjon.','1,8 k','Apogée','dungeonjournal'],
-  ['Atlas','donjons','Le navigateur classique de cartes d’instances.','22 M','Lili','atlas'],
-  ['Attune','donjons','La progression de vos accès et harmonisations.','12,3 M','Lili','attune'],
-  ['Nova Instance Tracker','donjons','Verrouillages, temps d’instance, or et XP reposée des rerolls.','18,5 M','Lili','nova-instance-tracker'],
-  ['Lootified','donjons','Journal de butin et assistant Best in Slot pour WoW: Forever.','188','Apogée','lootified'],
-  ['Forever Dungeon Scout','donjons','Un guide de donjons léger conçu pour WoW: Forever.','1,5 k','Apogée','forever-dungeon-scout'],
-  ['Cooldown Manager Centered','combat','Personnalisez icônes, améliorations et barres de recharge.','6,7 M','Lili','cooldown-manager-centered'],
-  ['MiniAuras','combat','Contrôles, défensifs et notifications de sorts importants.','5,9 M','Lili','minicc'],
-  ['NKThreat','combat','Menace, TPS en temps réel et alertes de provocation.','35,4 k','Lili','nkthreat'],
-  ['WhoDoesWhat','combat','Assignations de raid et bénédictions de paladins.','716','Lili','whodoeswhat'],
-  ['BlizzMove','interface','Déplacez les fenêtres Blizzard par simple glisser-déposer.','11,9 M','Lili','blizzmove'],
-  ['DarkMode','interface','Une interface et des fenêtres plus sombres.','3,5 M','Lili','darkmode'],
-  ['FontMagic','interface','Polices et tailles personnalisées pour les textes de combat.','293,7 k','Lili','fontmagic'],
-  ['Plumber','interface','Butin, difficulté d’instance et nombreuses améliorations UI.','19,2 M','Lili','plumber'],
-  ['WilduTools','interface','Améliorations Blizzard et automatisation des tâches courantes.','1,3 M','Lili','wildutools'],
-  ['Auctionator','confort','Un hôtel des ventes simple et un meilleur suivi des prix.','201,8 M','Lili','auctionator'],
-  ['Better Fishing','confort','Pêche au raccourci de ciblage et au double-clic.','5,7 M','Lili','better-fishing'],
-  ['Speedy AutoLoot','confort','La récupération automatique du butin à grande vitesse.','11,2 M','Lili','speedyautoloot'],
-  ['WIM v3','confort','Les chuchotements dans de vraies fenêtres de messagerie.','22,8 M','Lili','wim-3'],
-  ['BugGrabber','support','Capture les erreurs Lua sans interrompre votre partie.','18,6 M','Lili','bug-grabber'],
-  ['BugSack','support','Centralise les erreurs dans un journal facile à consulter.','16,4 M','Lili','bugsack']
-].map(([name,category,description,downloads,author,slug])=>({name,category,description,downloads,author,url:`https://www.curseforge.com/wow/addons/${slug}`}));
+  const $=(selector,scope=document)=>scope.querySelector(selector);
+  const $$=(selector,scope=document)=>[...scope.querySelectorAll(selector)];
+  const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const normalize=value=>String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr');
+  const formatDate=value=>value?new Intl.DateTimeFormat('fr-FR',{dateStyle:'long'}).format(new Date(`${value}T12:00:00`)):'Non vérifié';
+  const compatibilityLabels={native:'Natif Forever',compatible:'Compatible',partial:'Partiel',retest:'À retester',bug:'Bug connu',incompatible:'Non compatible'};
+  const typeLabels={addon:'Addon',astuce:'Astuce',commande:'Commande',depannage:'Dépannage',objet:'Objet RP',actualite:'Actualité',preset:'Preset'};
+  function readPreference(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}}
+  function savePreference(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
+  const favoriteKey='renaissance-favorites-v2';
+  const legacyFavorites=readPreference('renaissance-favorites',[]);
+  const migrated=Array.isArray(legacyFavorites)?legacyFavorites.map(url=>data.addons.find(addon=>addon.curseforgeUrl===url)).filter(Boolean).map(addon=>`addon:${addon.slug}`):[];
+  const favorites=new Set([...readPreference(favoriteKey,[]),...migrated]);
+  if(migrated.length)savePreference(favoriteKey,[...favorites]);
+  const favoriteId=item=>`${item.type}:${item.slug}`;
+  const isFavorite=item=>favorites.has(favoriteId(item));
+  const persistFavorites=()=>savePreference(favoriteKey,[...favorites]);
 
-const tips=[
-  {number:'01',category:'Installation',title:'Construire un pack propre',summary:'Partir sur une base stable',intro:'Ajoutez les outils progressivement pour identifier immédiatement un conflit ou une baisse de performances.',facts:['5 min','Avant connexion','BugSack'],steps:['Base — Installez d’abord BugGrabber et BugSack pour rendre les erreurs visibles.','Par lots — Ajoutez les addons par famille, puis rechargez l’interface entre chaque lot.','Tri — Conservez uniquement les fonctions réellement utiles à votre façon de jouer.'],note:'Avant une grosse mise à jour, sauvegardez toujours les dossiers Interface et WTF.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt50839e89a98e4d22/6aa09f512437ed84d9d48846/System_Revamps.jpg'},
-  {number:'02',category:'Butin',title:'Préparer sa liste de butin',summary:'Cibler les bons donjons',intro:'Un objectif de butin clair évite de parcourir des instances qui ne feront pas progresser votre personnage.',facts:['10 min','Avant instance','Lootified'],steps:['Cibles — Repérez trois améliorations prioritaires dans Lootified.','Sources — Croisez chaque objet avec DungeonJournal ou Forever Dungeon Scout.','Route — Placez l’entrée avec TomTom et contrôlez vos verrouillages avant le départ.'],note:'Une liste BiS reste un guide : adaptez-la à votre spécialisation, votre groupe et vos statistiques.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt4865ad3281f25cb8/6aa09df51deff31ac7439163/Explore_Untold_Stories.jpg'},
-  {number:'03',category:'Progression',title:'Quêter sans perdre le nord',summary:'Une route claire et flexible',intro:'Combinez la visibilité des objectifs avec un guide d’itinéraire, sans transformer l’aventure en pilote automatique.',facts:['3 min','Monde ouvert','Questie'],steps:['Carte — Affichez seulement les objectifs de votre zone avec Questie.','Cap — Choisissez un seul guide principal entre APR et RestedXP.','Liberté — Réservez TomTom aux coordonnées partagées et aux détours décidés par le groupe.'],note:'Désactivez les étapes automatiques lorsque vous souhaitez lire une suite de quêtes ou explorer librement.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt7a58f20dd8f6b2d9/6aa09f1c7ec8fef91000059e/Take_Unknown_Paths.jpg'},
-  {number:'04',category:'Instances',title:'Maîtriser ses verrouillages',summary:'Éviter les entrées inutiles',intro:'Le suivi des instances devient indispensable quand plusieurs personnages ou groupes tournent dans la même journée.',facts:['2 min','Avant départ','Nova Tracker'],steps:['Historique — Consultez Nova Instance Tracker avant de repartir.','Limites — Vérifiez le nombre d’entrées récentes et le mode prévu.','Journal — Notez l’objet ciblé et la durée réelle de la session pour comparer vos routes.'],note:'Le suivi dépend de votre historique local : sauvegardez les données de l’addon avant de les réinitialiser.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt848d2f0dbc2d2d1e/6aa09dd67ec8fedf4f00059c/Every_Journey_Matters.jpg'},
-  {number:'05',category:'Combat',title:'Lire sa menace',summary:'Frapper fort sans reprendre',intro:'Une bonne lecture de la menace protège le groupe et permet d’utiliser ses temps de recharge au bon moment.',facts:['4 min','Donjon & raid','NKThreat'],steps:['Placement — Gardez votre barre de menace dans l’axe entre personnage et cible.','Marge — Attendez une avance nette du tank avant un burst ou une ouverture agressive.','Signal — Rendez les provocations visibles, mais coupez les alertes qui ne changent aucune décision.'],note:'Un compteur informe ; il ne remplace ni la communication ni l’adaptation au rythme du tank.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt2dc686732f526be5/6aa09db81deff3540b439161/Claim_New_Power.jpg'},
-  {number:'06',category:'Dépannage',title:'Traquer une erreur Lua',summary:'Trouver le coupable rapidement',intro:'Quand une erreur apparaît, isolez sa source méthodiquement plutôt que de désactiver toute votre interface.',facts:['5 min','Après erreur','BugSack'],steps:['Indice — Ouvrez BugSack et relevez le premier addon cité dans la pile.','Isolation — Mettez-le à jour, puis testez-le seul avec ses dépendances.','Décision — Si l’erreur reste, désactivez-le et conservez le message complet pour le diagnostic.'],note:'Un journal peut contenir des chemins locaux : relisez-le toujours avant de le transmettre.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt491397daad992c6d/6aa09e0ec751e10dc30c50e0/Soak_in_Breathtaking_Expanses.jpg'},
-  {number:'07',category:'Groupe',title:'Partir sans perdre dix minutes',summary:'Le contrôle avant invocation',intro:'Une vérification commune de deux minutes évite les retours en ville, les attentes et les mauvaises surprises au premier boss.',facts:['2 min','Avant groupe','Checklist'],steps:['Rôles — Confirmez tank, soins, interruptions et contrôle avant le déplacement.','Sacs — Réparez, videz quelques emplacements et prenez composants, eau et projectiles.','Rendez-vous — Partagez une seule destination TomTom et annoncez immédiatement tout retard.'],note:'Le meilleur gain de temps reste une information claire donnée avant que tout le monde ne se mette en route.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt848d2f0dbc2d2d1e/6aa09dd67ec8fedf4f00059c/Every_Journey_Matters.jpg'},
-  {number:'08',category:'Lisibilité',title:'Garder un écran qui respire',summary:'Voir le jeu, pas ses cadres',intro:'Une bonne interface rapproche les informations décisives du centre sans masquer le monde ni répéter la même donnée.',facts:['8 min','Réglage unique','BlizzMove'],steps:['Centre — Conservez près du personnage la cible, la menace et les temps de recharge réellement décisifs.','Bords — Repoussez sacs, quêtes secondaires, chat et informations hors combat.','Épreuve — Testez en donjon, puis retirez tout élément que vous n’avez pas consulté pendant la session.'],note:'Commencez par déplacer les cadres Blizzard avant d’empiler des remplacements plus lourds.',image:'https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt50839e89a98e4d22/6aa09f512437ed84d9d48846/System_Revamps.jpg'}
-];
-
-const grid=document.querySelector('.addon-grid');
-document.querySelector('.hero-meter strong').textContent=addons.length;
-document.querySelectorAll('[data-addon-filter]').forEach(button=>{
-  button.querySelector('span').textContent=button.dataset.addonFilter==='all'?addons.length:addons.filter(addon=>addon.category===button.dataset.addonFilter).length;
-});
-const search=document.querySelector('#addon-search');
-const count=document.querySelector('#addon-count');
-const empty=document.querySelector('.empty-state');
-const pagination=document.querySelector('.catalogue-pagination');
-const pageNumbers=document.querySelector('.page-numbers');
-const pageStatus=document.querySelector('.page-status');
-const previousPage=document.querySelector('.page-prev');
-const nextPage=document.querySelector('.page-next');
-let activeFilter='all';
-let currentPage=1;
-const pageSize=8;
-const normalizeSearch=value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr');
-function readPreference(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}}
-function savePreference(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
-const savedFavorites=readPreference('renaissance-favorites',[]);
-const favorites=new Set(Array.isArray(savedFavorites)?savedFavorites.filter(url=>addons.some(addon=>addon.url===url)):[]);
-let favoritesOnly=false;
-const favoritesFilter=document.querySelector('#favorites-filter');
-const catalogueStatus=document.querySelector('#catalogue-status');
-const addonSort=document.querySelector('#addon-sort');
-const clearFilters=document.querySelector('#clear-filters');
-addonSort.addEventListener('change',()=>{currentPage=1;renderAddons();});
-clearFilters.addEventListener('click',()=>document.querySelector('#reset-catalogue').click());
-const initialView=readPreference('renaissance-view','cards');
-function setView(view){
-  grid.classList.toggle('list-view',view==='list');
-  document.querySelectorAll('[data-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.view===view)));
-}
-setView(initialView==='list'?'list':'cards');
-document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{setView(button.dataset.view);savePreference('renaissance-view',button.dataset.view);}));
-favoritesFilter.addEventListener('click',()=>{favoritesOnly=!favoritesOnly;currentPage=1;renderAddons();});
-grid.addEventListener('click',event=>{
-  const button=event.target.closest('[data-favorite]');
-  if(!button)return;
-  const url=button.dataset.favorite;
-  const adding=!favorites.has(url);
-  adding?favorites.add(url):favorites.delete(url);
-  const persisted=savePreference('renaissance-favorites',[...favorites]);
-  renderAddons();
-  catalogueStatus.textContent=`${adding?'Ajouté aux favoris.':'Retiré des favoris.'}${persisted?'':' Conservation indisponible : favoris limités à cette visite.'}`;
-  const replacement=[...grid.querySelectorAll('[data-favorite]')].find(candidate=>candidate.dataset.favorite===url);
-  (replacement||favoritesFilter).focus({preventScroll:true});
-});
-document.querySelector('#reset-catalogue').addEventListener('click',()=>{
-  search.value='';favoritesOnly=false;document.querySelector('[data-addon-filter="all"]').click();search.focus();
-});
-
-function renderAddons(){
-  const query=normalizeSearch(search.value.trim());
-  const matches=addons.filter(addon=>{
-    const inCategory=activeFilter==='all'||addon.category===activeFilter;
-    const haystack=normalizeSearch(`${addon.name} ${addon.description} ${categories[addon.category].label}`);
-    return inCategory&&(!favoritesOnly||favorites.has(addon.url))&&(!query||haystack.includes(query));
-  });
-  if(addonSort.value==='name')matches.sort((a,b)=>a.name.localeCompare(b.name,'fr'));
-  if(addonSort.value==='category')matches.sort((a,b)=>categories[a.category].label.localeCompare(categories[b.category].label,'fr')||a.name.localeCompare(b.name,'fr'));
-  clearFilters.hidden=!query&&activeFilter==='all'&&!favoritesOnly;
-  const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));
-  currentPage=Math.min(currentPage,totalPages);
-  const first=(currentPage-1)*pageSize;
-  const pageItems=matches.slice(first,first+pageSize);
-  grid.innerHTML=pageItems.map((addon,index)=>`<article class="addon-card" style="--accent:${categories[addon.category].color};--delay:${Math.min(index,8)*45}ms">
-    <div class="addon-top"><span class="addon-category">${categories[addon.category].label}</span><button class="favorite-button" data-favorite="${addon.url}" aria-pressed="${favorites.has(addon.url)}" aria-label="${favorites.has(addon.url)?'Retirer':'Ajouter'} ${addon.name} ${favorites.has(addon.url)?'des':'aux'} favoris">${favorites.has(addon.url)?'★':'☆'}</button></div>
-    <h3>${addon.name}</h3><p>${addon.description}</p>
-    ${addon.name==='EllesmereUI'?'<div class="addon-resources"><a href="https://ellesmereui.com/" target="_blank" rel="noopener">Site officiel ↗</a><a href="https://www.curseforge.com/wow/addons/ellesmereui/files/all" target="_blank" rel="noopener">Versions Forever ↗</a></div>':''}
-    <div class="addon-meta"><span><b>↓ ${addon.downloads}</b> · par ${addon.author}</span><a href="${addon.url}" target="_blank" rel="noopener" aria-label="Voir ${addon.name} sur CurseForge">Installer ↗</a></div>
-  </article>`).join('');
-  count.textContent=matches.length;
-  document.querySelector('#favorites-count').textContent=favorites.size;
-  favoritesFilter.setAttribute('aria-pressed',String(favoritesOnly));
-  catalogueStatus.textContent=matches.length?`${first+1}–${Math.min(first+pageSize,matches.length)} sur ${matches.length} addon${matches.length===1?'':'s'}${favoritesOnly?' favoris':''}`:'Aucun addon trouvé';
-  empty.querySelector('h3').textContent=favoritesOnly&&favorites.size===0?'Votre sac est encore vide':'Aucun résultat';
-  empty.querySelector('p').textContent=favoritesOnly&&favorites.size===0?'Ajoutez vos addons préférés avec l’étoile sur chaque fiche.':'Essayez un autre mot-clé ou réinitialisez les filtres.';
-  empty.hidden=matches.length>0;
-  pagination.hidden=matches.length===0;
-  previousPage.disabled=currentPage===1;
-  nextPage.disabled=currentPage===totalPages;
-  pageStatus.textContent=`Page ${currentPage} sur ${totalPages}`;
-  pageNumbers.innerHTML=Array.from({length:totalPages},(_,index)=>`<button class="${index+1===currentPage?'active':''}" data-page="${index+1}" aria-label="Page ${index+1}" ${index+1===currentPage?'aria-current="page"':''}>${String(index+1).padStart(2,'0')}</button>`).join('');
-  pageNumbers.querySelectorAll('[data-page]').forEach(button=>button.addEventListener('click',()=>changePage(Number(button.dataset.page))));
-}
-
-function changePage(page){
-  currentPage=page;
-  renderAddons();
-  document.querySelector('.catalogue-tools').scrollIntoView({behavior:'smooth',block:'start'});
-}
-previousPage.addEventListener('click',()=>changePage(currentPage-1));
-nextPage.addEventListener('click',()=>changePage(currentPage+1));
-
-document.querySelectorAll('[data-addon-filter]').forEach(button=>button.addEventListener('click',()=>{
-  activeFilter=button.dataset.addonFilter;
-  currentPage=1;
-  document.querySelectorAll('[data-addon-filter]').forEach(candidate=>{
-    candidate.classList.toggle('active',candidate===button);
-    candidate.setAttribute('aria-pressed',String(candidate===button));
-  });
-  renderAddons();
-}));
-search.addEventListener('input',()=>{currentPage=1;renderAddons();});
-document.querySelectorAll('[data-addon-filter]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.addonFilter===activeFilter)));
-document.addEventListener('keydown',event=>{
-  if(event.key!=='/'||event.ctrlKey||event.metaKey||event.altKey||event.target.closest('input,textarea,select,[contenteditable]')) return;
-  event.preventDefault();
-  if(document.querySelector('#addons').hidden){location.hash='addons';showSection();}
-  search.focus();
-});
-renderAddons();
-
-document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
-  const initial=button.textContent;
-  try{
-    let copied=false;
-    if(navigator.clipboard&&window.isSecureContext){
-      try{await navigator.clipboard.writeText(button.dataset.copy);copied=true;}catch{}
-    }
-    if(!copied){
-      const field=document.createElement('textarea');
-      field.value=button.dataset.copy;
-      field.style.position='fixed';
-      field.style.opacity='0';
-      document.body.appendChild(field);
-      field.select();
-      if(!document.execCommand('copy')) throw new Error('copy unavailable');
-      field.remove();
-      copied=true;
-    }
-    button.textContent='Copié !';
-    button.classList.add('copied');
-  }catch{
-    button.textContent='Copie impossible';
+  function sourceLinks(sources=[]){
+    if(!sources.length)return '<p class="source-note">Aucune source externe nécessaire pour cette fiche pratique.</p>';
+    return `<div class="source-list">${sources.map(source=>`<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.label)} ↗</a>`).join('')}</div>`;
   }
-  setTimeout(()=>{button.textContent=initial;button.classList.remove('copied');},1600);
-}));
+  function verified(item){
+    return `<span class="verified-date">✓ ${escapeHtml(item.verificationStatus||'Vérifié')} · ${escapeHtml(formatDate(item.verifiedDate))}</span>`;
+  }
+  function favoriteButton(item){
+    const active=isFavorite(item);
+    return `<button class="favorite-button" data-favorite-id="${escapeHtml(favoriteId(item))}" aria-pressed="${active}" aria-label="${active?'Retirer':'Ajouter'} ${escapeHtml(item.title)} ${active?'des':'aux'} favoris">${active?'★':'☆'}</button>`;
+  }
+  function copyBlock(value,label='Copier'){
+    return `<div class="command-block"><code>${escapeHtml(value)}</code><button data-copy="${escapeHtml(value)}" aria-label="${label}">${label}</button></div>`;
+  }
+  function tagList(tags=[]){return tags.length?`<div class="tag-list">${tags.map(tag=>`<span>${escapeHtml(tag)}</span>`).join('')}</div>`:'';}
+  function typePath(item){return data.routeFor(item);}
 
-const tabList=document.querySelector('.guide-tabs');
-const guide=document.querySelector('.guide-card');
-tips.forEach((tip,index)=>{
-  const button=document.createElement('button');
-  button.className='guide-tab';
-  button.role='tab';
-  button.id=`guide-tab-${index}`;
-  button.setAttribute('aria-controls','guide-panel');
-  button.innerHTML=`<span>${tip.number}</span><div><strong>${tip.category}</strong><small>${tip.summary}</small></div><b>→</b>`;
-  button.addEventListener('click',()=>renderTip(index));
-  tabList.appendChild(button);
-});
-
-function renderTip(index){
-  const tip=tips[index];
-  guide.setAttribute('aria-labelledby',`guide-tab-${index}`);
-  [...tabList.children].forEach((button,buttonIndex)=>{const selected=buttonIndex===index;button.classList.toggle('active',selected);button.setAttribute('aria-selected',selected);button.tabIndex=selected?0:-1;});
-  guide.classList.remove('guide-switch');
-  void guide.offsetWidth;
-  guide.classList.add('guide-switch');
-  guide.style.setProperty('--guide-image',`url('${tip.image}')`);
-  guide.querySelector('.guide-category').textContent=tip.category;
-  guide.querySelector('.guide-index').textContent=tip.number;
-  guide.querySelector('.guide-kicker').textContent=`Guide ${tip.number} · ${tip.summary}`;
-  guide.querySelector('h3').textContent=tip.title;
-  guide.querySelector('.guide-intro').textContent=tip.intro;
-  guide.querySelector('.guide-facts').innerHTML=tip.facts.map((fact,factIndex)=>`<span><small>${['Temps','Moment','Repère'][factIndex]}</small><b>${fact}</b></span>`).join('');
-  guide.querySelector('.guide-steps').innerHTML=tip.steps.map(step=>`<li>${step}</li>`).join('');
-  guide.querySelector('.guide-note span').textContent=tip.note;
-}
-renderTip(0);
-
-addEventListener('load',()=>{
-  if(!location.hash) return;
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    const target=document.getElementById(location.hash.slice(1));
-    if(!target) return;
-    document.documentElement.style.scrollBehavior='auto';
-    target.scrollIntoView({block:'start'});
-    requestAnimationFrame(()=>document.documentElement.style.removeProperty('scroll-behavior'));
-  }));
-});
-
-tabList.addEventListener('keydown',event=>{
-  if(!['ArrowDown','ArrowUp','ArrowRight','ArrowLeft'].includes(event.key)) return;
-  event.preventDefault();
-  const current=[...tabList.children].findIndex(button=>button.classList.contains('active'));
-  const direction=['ArrowDown','ArrowRight'].includes(event.key)?1:-1;
-  const next=(current+direction+tips.length)%tips.length;
-  renderTip(next);
-  tabList.children[next].focus();
-});
-
-const progress=document.querySelector('.scroll-progress i');
-const topbar=document.querySelector('.topbar');
-const menuToggle=document.querySelector('.menu-toggle');
-const mainNavigation=document.querySelector('#main-navigation');
-function closeMenu(restoreFocus=false){
-  topbar.classList.remove('menu-open');
-  menuToggle.setAttribute('aria-expanded','false');
-  if(restoreFocus)menuToggle.focus();
-}
-menuToggle.addEventListener('click',()=>{
-  const open=menuToggle.getAttribute('aria-expanded')!=='true';
-  menuToggle.setAttribute('aria-expanded',String(open));
-  topbar.classList.toggle('menu-open',open);
-});
-mainNavigation.addEventListener('click',event=>{if(event.target.closest('a'))closeMenu();});
-document.addEventListener('keydown',event=>{if(event.key==='Escape'&&topbar.classList.contains('menu-open'))closeMenu(true);});
-document.addEventListener('click',event=>{if(!topbar.contains(event.target))closeMenu();});
-topbar.addEventListener('focusout',event=>{if(!topbar.contains(event.relatedTarget))closeMenu();});
-matchMedia('(max-width: 820px)').addEventListener('change',()=>closeMenu());
-addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;topbar.classList.toggle('scrolled',scrollY>30);},{passive:true});
-
-const motionToggle=document.querySelector('#motion-toggle');
-const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
-let motionDisabled=readPreference('renaissance-motion',false)===true;
-function updateMotion(){
-  const disabled=motionDisabled||motionPreference.matches;
-  document.body.classList.toggle('motion-paused',disabled);
-  motionToggle.setAttribute('aria-pressed',String(disabled));
-  motionToggle.disabled=motionPreference.matches;
-  motionToggle.textContent=motionPreference.matches?'Animations réduites (système)':disabled?'Animations : désactivées':'Animations : activées';
-}
-motionToggle.addEventListener('click',()=>{motionDisabled=!motionDisabled;savePreference('renaissance-motion',motionDisabled);updateMotion();});
-motionPreference.addEventListener('change',updateMotion);
-updateMotion();
-document.addEventListener('visibilitychange',()=>document.body.classList.toggle('page-inactive',document.hidden));
-
-// Each chapter has its own short view; anchors and browser history remain usable.
-const chapters=[...document.querySelectorAll('main > section[id]')];
-document.querySelector('.hero-search').addEventListener('submit',event=>{
-  event.preventDefault();
-  search.value=document.querySelector('#home-search').value;
-  favoritesOnly=false;
-  document.querySelector('[data-addon-filter="all"]').click();
-  location.hash='addons';
-});
-// Reuse the editorial news source: the home feature never needs a second date update.
-const featuredNews=document.querySelector('.news-lead');
-const featuredDate=featuredNews.querySelector('time');
-document.querySelector('#featured-patch-title').textContent=featuredNews.querySelector('h3').innerText;
-document.querySelector('#featured-patch-summary').textContent=featuredNews.querySelector('p').textContent;
-document.querySelector('#featured-patch-date').textContent=featuredDate.textContent;
-document.querySelector('#featured-patch-date').dateTime=featuredDate.dateTime;
-document.querySelectorAll('[data-discovery-category],[data-discovery-search]').forEach(link=>link.addEventListener('click',()=>{
-  search.value=link.dataset.discoverySearch||'';
-  favoritesOnly=false;
-  addonSort.value='selection';
-  document.querySelector(`[data-addon-filter="${link.dataset.discoveryCategory||'all'}"]`).click();
-}));
-document.querySelectorAll('.command-group').forEach((group,index)=>{
-  const details=document.createElement('details');
-  const summary=document.createElement('summary');
-  const header=group.querySelector('header');
-  const total=group.querySelectorAll('.command-card').length;
-  summary.innerHTML=`<span>${header.querySelector('h3').textContent}</span><small>${total} réglage${total>1?'s':''}</small>`;
-  details.open=index===0;
-  details.append(summary,group.querySelector('.command-list'));
-  header.remove();group.append(details);
-});
-function showSection(){
-  const target=document.getElementById(location.hash.slice(1));
-  const chapter=target?.closest('main > section[id]');
-  const home=!chapter;
-  document.querySelector('.hero').hidden=!home;
-  document.querySelector('.essentials').hidden=!home;
-  document.querySelector('.discovery').hidden=!home;
-  chapters.forEach(section=>section.hidden=home||section!==chapter);
-  document.body.classList.toggle('chapter-view',!home);
-  document.querySelectorAll('.topbar nav a').forEach(link=>{
-    if(link.hash===(home?'#top':`#${chapter.id}`))link.setAttribute('aria-current','page');
-    else link.removeAttribute('aria-current');
+  document.addEventListener('click',async event=>{
+    const copy=event.target.closest('[data-copy]');
+    if(copy){
+      const initial=copy.textContent;
+      try{
+        if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(copy.dataset.copy);
+        else{
+          const field=document.createElement('textarea');field.value=copy.dataset.copy;field.style.cssText='position:fixed;opacity:0';
+          document.body.append(field);field.select();document.execCommand('copy');field.remove();
+        }
+        copy.textContent='Copié !';copy.classList.add('copied');
+      }catch{copy.textContent='Copie impossible';}
+      setTimeout(()=>{copy.textContent=initial;copy.classList.remove('copied');},1600);
+      return;
+    }
+    const favorite=event.target.closest('[data-favorite-id]');
+    if(favorite){
+      const id=favorite.dataset.favoriteId;
+      favorites.has(id)?favorites.delete(id):favorites.add(id);
+      persistFavorites();
+      refreshFavoriteButtons();
+      if(location.pathname==='/favoris')renderFavorites();
+      renderAddons();
+    }
   });
-  if(target?.classList.contains('command-group'))target.querySelector('details').open=true;
-}
-showSection();
-addEventListener('hashchange',()=>{
-  showSection();
-  const target=document.getElementById(location.hash.slice(1))||document.querySelector('main');
-  target.scrollIntoView({block:'start',behavior:'instant'});
-  const heading=target.querySelector('h1,h2,summary');
-  if(heading){if(heading.tagName!=='SUMMARY')heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});}
-});
+  function refreshFavoriteButtons(){
+    $$('[data-favorite-id]').forEach(button=>{
+      const active=favorites.has(button.dataset.favoriteId);
+      button.textContent=active?'★':'☆';button.setAttribute('aria-pressed',String(active));
+    });
+    const count=$('#favorites-count');if(count)count.textContent=favorites.size;
+  }
+
+  const addonGrid=$('.addon-grid');
+  const addonSearch=$('#addon-search');
+  const addonSort=$('#addon-sort');
+  const compatibilityFilter=$('#compatibility-filter');
+  const count=$('#addon-count');
+  const empty=$('.empty-state');
+  const pagination=$('.catalogue-pagination');
+  let activeFilter=new URLSearchParams(location.search).get('categorie')||'all';
+  let favoritesOnly=false;
+  let currentPage=1;
+  const pageSize=8;
+  const categoryOrder=['all','quetes','donjons','combat','interface','confort','support','hunter','map','rp'];
+  const categoryNames={all:'Tous',...data.categoryLabels};
+  const filterRow=$('.filter-row');
+  if(filterRow){
+    filterRow.innerHTML=categoryOrder.map(key=>`<button class="${key===activeFilter?'active':''}" data-addon-filter="${key}" aria-pressed="${key===activeFilter}">${escapeHtml(categoryNames[key])} <span>${key==='all'?data.addons.length:data.addons.filter(addon=>addon.categories.includes(key)).length}</span></button>`).join('');
+    filterRow.addEventListener('click',event=>{
+      const button=event.target.closest('[data-addon-filter]');if(!button)return;
+      activeFilter=button.dataset.addonFilter;currentPage=1;
+      $$('[data-addon-filter]',filterRow).forEach(candidate=>{const active=candidate===button;candidate.classList.toggle('active',active);candidate.setAttribute('aria-pressed',String(active));});
+      renderAddons();
+    });
+  }
+  function addonCard(addon,index=0){
+    const compatibility=compatibilityLabels[addon.foreverCompatibility]||'À retester';
+    return `<article class="addon-card" style="--accent:${addon.foreverCompatibility==='native'?'#79d4a7':'#d7ad58'};--delay:${Math.min(index,8)*35}ms">
+      <div class="addon-top"><span class="addon-category">${escapeHtml(addon.categories.map(key=>categoryNames[key]).join(' · '))}</span>${favoriteButton(addon)}</div>
+      <div class="status-row"><span class="status-pill ${escapeHtml(addon.foreverCompatibility)}">${escapeHtml(compatibility)}</span>${addon.status==='beta'?'<span class="status-pill beta">Bêta</span>':''}</div>
+      <h3><a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h3><p>${escapeHtml(addon.description)}</p>
+      ${verified(addon)}
+      <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Voir la fiche →</a></div>
+    </article>`;
+  }
+  function renderAddons(){
+    if(!addonGrid)return;
+    const query=normalize(addonSearch?.value.trim());
+    const compatibility=compatibilityFilter?.value||'all';
+    let matches=data.addons.filter(addon=>{
+      const inCategory=activeFilter==='all'||addon.categories.includes(activeFilter);
+      const haystack=normalize([addon.title,addon.description,...addon.tags,...addon.categories.map(key=>categoryNames[key])].join(' '));
+      return inCategory&&(compatibility==='all'||addon.foreverCompatibility===compatibility)&&(!favoritesOnly||isFavorite(addon))&&(!query||haystack.includes(query));
+    });
+    if(addonSort?.value==='name')matches.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
+    if(addonSort?.value==='newest')matches.sort((a,b)=>b.slug==='hunters-field-guide'?1:a.slug==='hunters-field-guide'?-1:0);
+    if(addonSort?.value==='verified')matches.sort((a,b)=>String(b.verifiedDate).localeCompare(String(a.verifiedDate)));
+    if(addonSort?.value==='selection')matches.sort((a,b)=>Number(b.recommended)-Number(a.recommended));
+    const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));currentPage=Math.min(currentPage,totalPages);
+    const first=(currentPage-1)*pageSize;
+    addonGrid.innerHTML=matches.slice(first,first+pageSize).map(addonCard).join('');
+    if(count)count.textContent=matches.length;
+    const status=$('#catalogue-status');if(status)status.textContent=matches.length?`${first+1}–${Math.min(first+pageSize,matches.length)} sur ${matches.length} addons`:'Aucun addon trouvé';
+    if(empty)empty.hidden=matches.length>0;
+    if(pagination){
+      pagination.hidden=matches.length===0;
+      $('.page-prev',pagination).disabled=currentPage===1;$('.page-next',pagination).disabled=currentPage===totalPages;
+      $('.page-status',pagination).textContent=`Page ${currentPage} sur ${totalPages}`;
+      $('.page-numbers',pagination).innerHTML=Array.from({length:totalPages},(_,i)=>`<button data-page="${i+1}" ${i+1===currentPage?'aria-current="page" class="active"':''}>${String(i+1).padStart(2,'0')}</button>`).join('');
+    }
+    const clear=$('#clear-filters');if(clear)clear.hidden=!query&&activeFilter==='all'&&compatibility==='all'&&!favoritesOnly;
+    refreshFavoriteButtons();
+  }
+  addonSearch?.addEventListener('input',()=>{currentPage=1;renderAddons();});
+  addonSort?.addEventListener('change',()=>{currentPage=1;renderAddons();});
+  compatibilityFilter?.addEventListener('change',()=>{currentPage=1;renderAddons();});
+  pagination?.addEventListener('click',event=>{
+    if(event.target.closest('.page-prev'))currentPage--;
+    else if(event.target.closest('.page-next'))currentPage++;
+    else if(event.target.closest('[data-page]'))currentPage=Number(event.target.closest('[data-page]').dataset.page);
+    else return;
+    renderAddons();$('.catalogue-tools')?.scrollIntoView({block:'start'});
+  });
+  $('#favorites-filter')?.addEventListener('click',event=>{favoritesOnly=!favoritesOnly;event.currentTarget.setAttribute('aria-pressed',String(favoritesOnly));currentPage=1;renderAddons();});
+  $('#clear-filters')?.addEventListener('click',resetAddons);
+  $('#reset-catalogue')?.addEventListener('click',resetAddons);
+  function resetAddons(){
+    if(addonSearch)addonSearch.value='';if(compatibilityFilter)compatibilityFilter.value='all';favoritesOnly=false;activeFilter='all';currentPage=1;
+    $$('[data-addon-filter]').forEach(button=>{const active=button.dataset.addonFilter==='all';button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
+    renderAddons();
+  }
+  $$('[data-view]').forEach(button=>button.addEventListener('click',()=>{
+    const view=button.dataset.view;addonGrid?.classList.toggle('list-view',view==='list');savePreference('renaissance-view',view);
+    $$('[data-view]').forEach(candidate=>candidate.setAttribute('aria-pressed',String(candidate===button)));
+  }));
+  if(readPreference('renaissance-view','cards')==='list')$('[data-view="list"]')?.click();
+  renderAddons();
+  const meter=$('.hero-meter strong');if(meter)meter.textContent=data.addons.length;
+
+  const globalInput=$('#home-search');
+  const globalResults=$('#global-search-results');
+  function renderGlobalSearch(){
+    if(!globalInput||!globalResults)return;
+    const query=normalize(globalInput.value.trim());
+    if(!query){globalResults.hidden=true;globalInput.setAttribute('aria-expanded','false');return;}
+    const matches=data.all.filter(item=>normalize([item.title,item.description,...(item.tags||[]),item.command||'',item.verificationStatus||''].join(' ')).includes(query)).slice(0,10);
+    globalResults.innerHTML=matches.length?matches.map(item=>`<a class="search-result" href="${escapeHtml(typePath(item))}"><span>${escapeHtml(typeLabels[item.type])}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small><em>${item.type==='addon'?`${escapeHtml(compatibilityLabels[item.foreverCompatibility])} · `:''}${escapeHtml((item.tags||[]).slice(0,3).join(' · '))} · ${escapeHtml(item.verificationStatus||'')} · ${escapeHtml(formatDate(item.verifiedDate))}</em></a>`).join(''):'<p>Aucun résultat. Essayez un terme plus court.</p>';
+    globalResults.hidden=false;globalInput.setAttribute('aria-expanded','true');
+  }
+  globalInput?.addEventListener('input',renderGlobalSearch);
+  $('.hero-search')?.addEventListener('submit',event=>{event.preventDefault();renderGlobalSearch();globalResults?.querySelector('a')?.focus();});
+  document.addEventListener('click',event=>{if(globalResults&&!event.target.closest('.hero-search')&&!event.target.closest('#global-search-results')){globalResults.hidden=true;globalInput?.setAttribute('aria-expanded','false');}});
+
+  const troubleGrid=$('#troubleshooting-grid');
+  if(troubleGrid)troubleGrid.innerHTML=data.troubleshooting.map(item=>`<article class="content-card"><span>Dépannage</span><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${verified(item)}<a class="text-link" href="${typePath(item)}">Ouvrir la checklist →</a></article>`).join('');
+
+  const commandShell=$('#commandes .section-shell');
+  if(commandShell){
+    const directory=document.createElement('section');directory.className='content-directory';directory.innerHTML=`<div class="section-intro"><div><span class="chapter">Fiches partageables</span><h2>Toutes les commandes</h2></div><p>Une URL stable par réglage, avec impact et restauration documentés.</p></div><div class="content-grid">${data.commands.map(item=>`<article class="content-card"><div class="addon-top"><span>Commande</span>${favoriteButton(item)}</div><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3>${copyBlock(item.command)}${verified(item)}</article>`).join('')}<article class="content-card"><span>Presets</span><h3><a href="/commandes/presets">Immersion, Performance et Cinématique</a></h3><p>Copiez un ensemble cohérent de CVars documentées.</p><a class="text-link" href="/commandes/presets">Voir les presets →</a></article></div>`;commandShell.append(directory);
+  }
+  const itemShell=$('#objets-rp .section-shell');
+  if(itemShell){
+    const directory=document.createElement('section');directory.className='content-directory';directory.innerHTML=`<div class="section-intro"><div><span class="chapter">Fiches partageables</span><h2>Toutes les trouvailles</h2></div><p>Torches, lumière, jouets, transformations, musique, cuisine, feu, objets équipables, insolites et secrets.</p></div><div class="filter-row item-filters" role="group" aria-label="Filtrer les objets RP"><button class="active" data-item-filter="all">Tous</button><button data-item-filter="Torches">Torches</button><button data-item-filter="Lumière">Lumière</button><button data-item-filter="Jouets">Jouets</button><button data-item-filter="Transformation">Transformation</button><button data-item-filter="Musique">Musique</button><button data-item-filter="Cuisine">Cuisine</button><button data-item-filter="Feu">Feu</button><button data-item-filter="Objets équipables">Objets équipables</button><button data-item-filter="Objets insolites">Objets insolites</button><button data-item-filter="Secrets">Secrets</button></div><div class="content-grid item-directory"></div>`;itemShell.append(directory);
+    const renderItems=filter=>{$('.item-directory',directory).innerHTML=data.items.filter(item=>filter==='all'||item.category===filter).map(item=>`<article class="content-card"><div class="addon-top"><span>${escapeHtml(item.category)}</span>${favoriteButton(item)}</div><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${item.way?copyBlock(item.way,'Copier /way'):''}${verified(item)}</article>`).join('')||'<p>Aucune trouvaille documentée dans cette catégorie pour le moment.</p>';refreshFavoriteButtons();};
+    $('.item-filters',directory).addEventListener('click',event=>{const button=event.target.closest('[data-item-filter]');if(!button)return;$$('[data-item-filter]',directory).forEach(item=>item.classList.toggle('active',item===button));renderItems(button.dataset.itemFilter);});renderItems('all');
+  }
+  const newsShell=$('#nouvelles .section-shell');
+  if(newsShell){
+    const directory=document.createElement('section');directory.className='content-directory';directory.innerHTML=`<div class="section-intro"><div><span class="chapter">Impacts documentés</span><h2>Fiches d’actualité</h2></div><p>Ce qui change réellement, pour qui, et la source officielle.</p></div><div class="content-grid">${data.news.map(item=>`<article class="content-card"><span>Actualité</span><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${tagList(item.tags)}${verified(item)}</article>`).join('')}</div>`;newsShell.append(directory);
+  }
+
+  const tabList=$('.guide-tabs');
+  const guide=$('#guide-panel');
+  if(tabList&&guide){
+    tabList.innerHTML=data.tips.map((tip,index)=>`<button class="guide-tab ${index===0?'active':''}" role="tab" id="guide-tab-${index}" aria-selected="${index===0}" tabindex="${index===0?'0':'-1'}" data-tip="${index}"><span>${String(index+1).padStart(2,'0')}</span><div><strong>${escapeHtml(tip.title)}</strong><small>${escapeHtml(tip.description)}</small></div><b>→</b></button>`).join('');
+    const renderTip=index=>{
+      const tip=data.tips[index];guide.setAttribute('aria-labelledby',`guide-tab-${index}`);
+      guide.innerHTML=`<div class="guide-image"><span class="guide-category">Astuce</span><span class="guide-index">${String(index+1).padStart(2,'0')}</span></div><div class="guide-content"><span class="guide-kicker">${verified(tip)}</span><h3>${escapeHtml(tip.title)}</h3><p class="guide-intro">${escapeHtml(tip.description)}</p>${tagList(tip.tags)}<a class="button primary" href="${typePath(tip)}">Lire la fiche →</a></div>`;
+      $$('[data-tip]',tabList).forEach((button,i)=>{button.classList.toggle('active',i===index);button.setAttribute('aria-selected',String(i===index));button.tabIndex=i===index?0:-1;});
+    };
+    tabList.addEventListener('click',event=>{const button=event.target.closest('[data-tip]');if(button)renderTip(Number(button.dataset.tip));});
+    renderTip(0);
+  }
+
+  $$('.command-group').forEach((group,index)=>{
+    if($('details',group))return;
+    const header=$('header',group),list=$('.command-list',group);if(!header||!list)return;
+    const details=document.createElement('details'),summary=document.createElement('summary');
+    summary.innerHTML=`<span>${escapeHtml($('h3',header).textContent)}</span><small>${$$('.command-card',list).length} réglages</small>`;details.open=index===0;details.append(summary,list);header.remove();group.append(details);
+  });
+
+  function breadcrumb(item){
+    const parent=item.type==='objet'?['Objets RP','/objets']:item.type==='actualite'?['Actualités','/actualites']:item.type==='astuce'?['Astuces','/astuces']:item.type==='commande'||item.type==='preset'?['Commandes','/commandes']:item.type==='depannage'?['Dépannage','/depannage']:['Addons','/addons'];
+    return `<nav class="breadcrumb" aria-label="Fil d’Ariane"><a href="/">Accueil</a><span>›</span><a href="${parent[1]}">${parent[0]}</a><span>›</span><span aria-current="page">${escapeHtml(item.title)}</span></nav>`;
+  }
+  function listBlock(title,items=[]){
+    return items.length?`<section class="detail-block"><h2>${escapeHtml(title)}</h2><ul>${items.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul></section>`:'';
+  }
+  function renderDetail(item){
+    const compatibility=item.type==='addon'?compatibilityLabels[item.foreverCompatibility]:'';
+    return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(typeLabels[item.type])}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${['addon','astuce','commande','objet'].includes(item.type)?favoriteButton(item):''}</header>
+      <div class="detail-status">${item.type==='addon'?`<span class="status-pill ${escapeHtml(item.foreverCompatibility)}">${escapeHtml(compatibility)}</span>${item.status==='beta'?'<span class="status-pill beta">Bêta</span>':''}`:''}${verified(item)}</div>
+      ${item.type==='addon'?`<dl class="fact-grid"><div><dt>Auteur</dt><dd>${escapeHtml(item.author)}</dd></div><div><dt>Version</dt><dd>${escapeHtml(item.version||'Non confirmée')}</dd></div><div><dt>Version du jeu</dt><dd>${escapeHtml(item.gameVersion||'Non confirmée')}</dd></div><div><dt>Test</dt><dd>${item.tested?'Testé':'Non présenté comme totalement testé'}</dd></div></dl>`:''}
+      ${listBlock('Pourquoi l’utiliser ?',item.whyRecommended)}${listBlock('Fonctionnalités',item.features)}${listBlock('Découverte',item.discovery)}
+      ${item.commands?.length?`<section class="detail-block"><h2>Commandes</h2>${item.commands.map(command=>`<h3>${escapeHtml(command.label)}</h3>${copyBlock(command.value)}`).join('')}</section>`:''}
+      ${item.command?`<section class="detail-block"><h2>Commande</h2>${copyBlock(item.command)}<dl class="fact-grid"><div><dt>Impact FPS</dt><dd>${escapeHtml(item.impact)}</dd></div><div><dt>Valeur par défaut</dt><dd>${escapeHtml(item.defaultValue||'Voir restauration')}</dd></div><div><dt>Revenir en arrière</dt><dd>${escapeHtml(item.restore)}</dd></div></dl></section>`:''}
+      ${item.steps?.length?listBlock('Procédure',item.steps):''}${item.impact?.length&&Array.isArray(item.impact)?listBlock('Ce qui change réellement',item.impact):''}
+      ${item.commands&&item.type==='preset'?`<section class="detail-block"><h2>Tout copier</h2>${copyBlock(item.commands.join('\n'),'Copier toutes les commandes')}<p>${escapeHtml(item.restore)}</p></section>`:''}
+      ${item.type==='objet'?`<dl class="fact-grid"><div><dt>Zone</dt><dd>${escapeHtml(item.zone)}</dd></div><div><dt>Coordonnées</dt><dd>${escapeHtml(item.coordinates||'Non confirmées')}</dd></div><div><dt>Prérequis</dt><dd>${escapeHtml(item.prerequisites)}</dd></div><div><dt>Combat</dt><dd>${escapeHtml(item.combat)}</dd></div><div><dt>Intérieur</dt><dd>${escapeHtml(item.indoors)}</dd></div><div><dt>Durée</dt><dd>${escapeHtml(item.duration)}</dd></div><div><dt>Recharge</dt><dd>${escapeHtml(item.cooldown)}</dd></div><div><dt>Lié au compte</dt><dd>${escapeHtml(item.accountBound)}</dd></div></dl>${item.way?copyBlock(item.way,'Copier /way'):''}<p class="source-note">${escapeHtml(item.notes)}</p>`:''}
+      ${listBlock('À savoir',item.warnings)}${tagList(item.tags)}<section class="detail-block"><h2>Sources</h2>${sourceLinks(item.sources)}</section>`;
+  }
+  function renderFavorites(){
+    const container=$('#route-content');if(!container)return;
+    const items=data.all.filter(item=>favorites.has(favoriteId(item)));
+    container.innerHTML=`<nav class="breadcrumb" aria-label="Fil d’Ariane"><a href="/">Accueil</a><span>›</span><span aria-current="page">Favoris</span></nav><header class="detail-header"><div><span class="chapter">Collection locale</span><h1>Mes favoris</h1><p>Conservés uniquement dans ce navigateur, sans compte.</p></div></header>${items.length?`<div class="content-grid">${items.map(item=>`<article class="content-card"><div class="addon-top"><span>${escapeHtml(typeLabels[item.type])}</span>${favoriteButton(item)}</div><h2><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.description)}</p></article>`).join('')}</div><button id="clear-all-favorites" class="button ghost">Tout effacer</button>`:'<div class="empty-state"><h2>Aucun favori</h2><p>Utilisez l’étoile sur une fiche pour la retrouver ici.</p></div>'}`;
+    $('#clear-all-favorites')?.addEventListener('click',()=>{if(confirm('Effacer tous les favoris de ce navigateur ?')){favorites.clear();persistFavorites();renderFavorites();}});
+  }
+  function renderStaticPage(pathname){
+    const pages={
+      '/sources':['Sources','Chaque fiche technique affiche ses sources. Les données officielles, CurseForge et les observations communautaires sont clairement distinguées.'],
+      '/confidentialite':['Confidentialité','Renaissance ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur via localStorage.'],
+      '/a-propos':['À propos','Renaissance est un codex français indépendant tenu pour aider les joueurs de WoW: Forever. Il n’est ni affilié à Blizzard Entertainment ni à CurseForge.'],
+      '/contribuer':['Contribuer','Vous pouvez signaler un addon cassé, proposer une commande ou corriger une information avec une issue GitHub préremplie.']
+    };
+    const page=pages[pathname];if(!page)return false;
+    $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><span aria-current="page">${page[0]}</span></nav><header class="detail-header"><div><span class="chapter">Renaissance</span><h1>${page[0]}</h1><p>${page[1]}</p></div></header>${pathname==='/contribuer'?'<a class="button primary" href="https://github.com/Nyaru01/WoW/issues/new?title=%5BRenaissance%5D%20Proposition" target="_blank" rel="noopener noreferrer">Ouvrir une issue GitHub ↗</a>':''}`;
+    return true;
+  }
+  function showRoute(){
+    const pathname=location.pathname.replace(/\/$/,'')||'/';
+    const routeView=$('#route-view');
+    const homeOnly=[$('.hero'),$('.discovery'),$('.essentials')].filter(Boolean);
+    const sections=$$('main > section[id]:not(#route-view)');
+    routeView.hidden=true;document.body.classList.remove('chapter-view');
+    homeOnly.forEach(section=>section.hidden=pathname!=='/');
+    sections.forEach(section=>{if(!homeOnly.includes(section))section.hidden=true;});
+    const hashMap={addons:'addons',astuces:'astuces',commandes:'commandes','objets-rp':'objets-rp',nouvelles:'nouvelles',depannage:'depannage'};
+    const pathMap={'/addons':'addons','/astuces':'astuces','/commandes':'commandes','/depannage':'depannage','/objets':'objets-rp','/actualites':'nouvelles'};
+    const legacy=pathname==='/'&&hashMap[location.hash.slice(1)];
+    const chapter=legacy||pathMap[pathname];
+    if(chapter){
+      homeOnly.forEach(section=>section.hidden=true);
+      const section=document.getElementById(chapter);if(section)section.hidden=false;
+      document.body.classList.add('chapter-view');return;
+    }
+    if(pathname==='/')return;
+    homeOnly.forEach(section=>section.hidden=true);
+    routeView.hidden=false;document.body.classList.add('chapter-view');
+    if(pathname==='/favoris')return renderFavorites();
+    if(pathname==='/commandes/presets'){
+      $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><a href="/commandes">Commandes</a><span>›</span><span aria-current="page">Presets</span></nav><header class="detail-header"><div><span class="chapter">Réglages groupés</span><h1>Presets graphiques</h1><p>Uniquement des CVars documentées, avec avertissement lorsque la valeur d’origine n’est pas confirmée.</p></div></header><div class="content-grid">${data.presets.map(item=>`<article class="content-card" id="${item.slug}"><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.description)}</p>${copyBlock(item.commands.join('\n'),'Copier toutes les commandes')}<small>${escapeHtml(item.restore)}</small></article>`).join('')}</div>`;return;
+    }
+    const item=data.all.find(candidate=>typePath(candidate).split('#')[0]===pathname);
+    if(item){$('#route-content').innerHTML=renderDetail(item);refreshFavoriteButtons();return;}
+    renderStaticPage(pathname);
+  }
+  showRoute();
+  addEventListener('hashchange',showRoute);
+
+  const topbar=$('.topbar'),menuToggle=$('.menu-toggle'),mainNavigation=$('#main-navigation');
+  const closeMenu=()=>{topbar?.classList.remove('menu-open');menuToggle?.setAttribute('aria-expanded','false');};
+  menuToggle?.addEventListener('click',()=>{const open=menuToggle.getAttribute('aria-expanded')!=='true';menuToggle.setAttribute('aria-expanded',String(open));topbar.classList.toggle('menu-open',open);});
+  mainNavigation?.addEventListener('click',closeMenu);
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){closeMenu();if(globalResults)globalResults.hidden=true;}
+    if(event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.target.closest('input,textarea,select,[contenteditable]')){
+      event.preventDefault();(location.pathname==='/'?globalInput:addonSearch)?.focus();
+    }
+  });
+  const progress=$('.scroll-progress i');
+  addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;if(progress)progress.style.width=`${max?scrollY/max*100:0}%`;topbar?.classList.toggle('scrolled',scrollY>30);},{passive:true});
+  const motionToggle=$('#motion-toggle'),motionMedia=matchMedia('(prefers-reduced-motion: reduce)');
+  let motionDisabled=readPreference('renaissance-motion',false)===true;
+  const updateMotion=()=>{const disabled=motionDisabled||motionMedia.matches;document.body.classList.toggle('motion-paused',disabled);if(motionToggle){motionToggle.disabled=motionMedia.matches;motionToggle.setAttribute('aria-pressed',String(disabled));motionToggle.textContent=motionMedia.matches?'Animations réduites (système)':disabled?'Animations : désactivées':'Animations : activées';}};
+  motionToggle?.addEventListener('click',()=>{motionDisabled=!motionDisabled;savePreference('renaissance-motion',motionDisabled);updateMotion();});
+  motionMedia.addEventListener?.('change',updateMotion);updateMotion();
+  const featured=data.news[0];
+  if(featured){const title=$('#featured-patch-title'),summary=$('#featured-patch-summary'),date=$('#featured-patch-date');if(title)title.textContent=featured.title;if(summary)summary.textContent=featured.description;if(date){date.textContent=formatDate(featured.verifiedDate);date.dateTime=featured.verifiedDate;}}
+  refreshFavoriteButtons();
+})();

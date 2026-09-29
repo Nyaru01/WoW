@@ -1,54 +1,126 @@
 const http=require('http');
 const fs=require('fs');
 const path=require('path');
+const data=require('./data.js');
 
 const root=__dirname;
-const port=Number(process.env.PORT)||3000;
-const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml'};
+const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.avif':'image/avif'};
+const typeLabels={addon:'Addons',astuce:'Astuces',commande:'Commandes',depannage:'Dépannage',objet:'Objets RP',actualite:'Actualités',preset:'Presets'};
+const staticPages={
+  '/':{title:'Renaissance — Le codex français pratique de WoW: Forever',description:'Addons, commandes, astuces, dépannage, objets RP et actualités utiles pour WoW: Forever.'},
+  '/addons':{title:'Addons pour WoW: Forever | Renaissance',description:'Addons utiles pour WoW: Forever, avec compatibilité et date de vérification.'},
+  '/astuces':{title:'Astuces WoW: Forever | Renaissance',description:'Guides pratiques et astuces vérifiées pour WoW: Forever.'},
+  '/commandes':{title:'Commandes WoW: Forever | Renaissance',description:'Commandes console copiables, impacts et procédures de restauration.'},
+  '/commandes/presets':{title:'Presets graphiques WoW: Forever | Renaissance',description:'Presets Immersion, Performance et Cinématique composés de CVars documentées.'},
+  '/depannage':{title:'Dépannage WoW: Forever | Renaissance',description:'Résoudre les erreurs Lua, addons non chargés et problèmes d’interface.'},
+  '/objets':{title:'Objets RP WoW: Forever | Renaissance',description:'Objets RP, trouvailles et commandes de waypoint documentées.'},
+  '/actualites':{title:'Actualités WoW: Forever | Renaissance',description:'Ce que les mises à jour changent concrètement pour les joueurs de WoW: Forever.'},
+  '/favoris':{title:'Mes favoris | Renaissance',description:'Vos addons, astuces, commandes et objets WoW: Forever enregistrés localement.'},
+  '/sources':{title:'Sources | Renaissance',description:'Sources officielles et communautaires utilisées par le codex Renaissance.'},
+  '/confidentialite':{title:'Confidentialité | Renaissance',description:'Renaissance ne contient ni compte, ni publicité ciblée, ni tracker, ni cookie marketing.'},
+  '/a-propos':{title:'À propos | Renaissance',description:'Renaissance est un codex français indépendant consacré à WoW: Forever.'},
+  '/contribuer':{title:'Contribuer | Renaissance',description:'Proposer une correction ou signaler une information à vérifier sur GitHub.'}
+};
 
-http.createServer((request,response)=>{
-  if(!['GET','HEAD'].includes(request.method)){
-    response.writeHead(405,securityHeaders({'Allow':'GET, HEAD'})).end('Method not allowed');
-    return;
-  }
-  let pathname;
-  try{
-    pathname=decodeURIComponent(new URL(request.url,'http://localhost').pathname);
-  }catch{
-    response.writeHead(400,securityHeaders({'Content-Type':'text/plain; charset=utf-8'})).end('Bad request');
-    return;
-  }
-  const requested=pathname==='/'?'index.html':pathname.replace(/^\/+/, '');
-  // Publish only the website, never repository metadata or server source.
-  if(!['index.html','styles.css','theme.css','app.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp)$/i.test(requested)){
-    response.writeHead(404,securityHeaders({'Content-Type':'text/plain; charset=utf-8'})).end('Not found');
-    return;
-  }
-  const filePath=path.resolve(root,requested);
-  if(!filePath.startsWith(root+path.sep)){
-    response.writeHead(403).end('Forbidden');
-    return;
-  }
-  fs.stat(filePath,(error,stats)=>{
-    if(error||!stats.isFile()){
-      response.writeHead(404,securityHeaders({'Content-Type':'text/plain; charset=utf-8'})).end('Not found');
-      return;
-    }
-    const cache=path.extname(filePath)==='.html'?'public, max-age=0, must-revalidate':'public, max-age=604800';
-    response.writeHead(200,securityHeaders({'Content-Type':types[path.extname(filePath).toLowerCase()]||'application/octet-stream','Cache-Control':cache}));
-    if(request.method==='HEAD'){response.end();return;}
-    const stream=fs.createReadStream(filePath);
-    stream.on('error',()=>response.destroy());
-    stream.pipe(response);
-  });
-}).listen(port,'0.0.0.0',()=>console.log(`Le Grimoire de Renaissance écoute sur le port ${port}`));
-
-function securityHeaders(headers){
-  return {
-    ...headers,
+function escapeHtml(value=''){
+  return String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+function normalizeOrigin(request){
+  const configured=process.env.SITE_URL?.replace(/\/$/,'');
+  if(configured)return configured;
+  if(process.env.RAILWAY_PUBLIC_DOMAIN)return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+  const protocol=request.headers['x-forwarded-proto']?.split(',')[0]||'http';
+  return `${protocol}://${request.headers.host||'localhost:3000'}`;
+}
+function itemForPath(pathname){
+  return data.all.find(item=>data.routeFor(item).split('#')[0]===pathname)||null;
+}
+function pageForPath(pathname){
+  if(staticPages[pathname])return staticPages[pathname];
+  const item=itemForPath(pathname);
+  if(item)return {
+    title:`${item.title} pour WoW Forever | Renaissance`,description:item.description,item,
+    breadcrumbs:[{name:'Accueil',path:'/'},{name:typeLabels[item.type],path:`/${item.type==='objet'?'objets':item.type==='actualite'?'actualites':item.type==='astuce'?'astuces':item.type==='commande'||item.type==='preset'?'commandes':item.type==='depannage'?'depannage':'addons'}`},{name:item.title,path:pathname}]
+  };
+  return null;
+}
+function jsonLd(page,canonical){
+  const blocks=[];
+  if(page.item)blocks.push({'@context':'https://schema.org','@type':'Article',headline:page.item.title,description:page.item.description,dateModified:page.item.verifiedDate,url:canonical,author:{'@type':'Organization',name:'Renaissance'}});
+  if(page.breadcrumbs)blocks.push({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:page.breadcrumbs.map((crumb,index)=>({'@type':'ListItem',position:index+1,name:crumb.name,item:new URL(crumb.path,canonical).href}))});
+  return blocks.map(block=>`<script type="application/ld+json">${JSON.stringify(block).replace(/</g,'\\u003c')}</script>`).join('\n  ');
+}
+function renderIndex(request,pathname,page){
+  const origin=normalizeOrigin(request);
+  const canonical=`${origin}${pathname==='/'?'':pathname}`;
+  const image=`${origin}/assets/azeroth-cosmique.png`;
+  let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  html=html.replace(/<title>.*?<\/title>/s,`<title>${escapeHtml(page.title)}</title>`)
+    .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${escapeHtml(page.description)}">`)
+    .replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${escapeHtml(page.title)}">`)
+    .replace(/<meta property="og:description" content="[^"]*">/,`<meta property="og:description" content="${escapeHtml(page.description)}">`)
+    .replace(/<meta property="og:type" content="[^"]*">/,`<meta property="og:type" content="${page.item?'article':'website'}">`)
+    .replace('</head>',`  <link rel="canonical" href="${escapeHtml(canonical)}">
+  <meta property="og:image" content="${escapeHtml(image)}">
+  <meta property="og:url" content="${escapeHtml(canonical)}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(page.title)}">
+  <meta name="twitter:description" content="${escapeHtml(page.description)}">
+  <meta name="twitter:image" content="${escapeHtml(image)}">
+  ${jsonLd(page,canonical)}
+</head>`)
+    .replace('<body>','<body data-route="'+escapeHtml(pathname)+'">');
+  return html;
+}
+function sitemap(request){
+  const origin=normalizeOrigin(request);
+  const excluded=['/favoris'];
+  const paths=[...Object.keys(staticPages).filter(item=>!excluded.includes(item)),...new Set(data.all.map(item=>data.routeFor(item).split('#')[0]))];
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${[...new Set(paths)].map(item=>`  <url><loc>${escapeHtml(origin+(item==='/'?'':item))}</loc></url>`).join('\n')}
+</urlset>`;
+}
+function securityHeaders(headers={}){
+  return {...headers,
     'Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://blz-contentstack-images.akamaized.net; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
-    'Referrer-Policy':'strict-origin-when-cross-origin',
-    'X-Content-Type-Options':'nosniff',
-    'X-Frame-Options':'DENY'
+    'Referrer-Policy':'strict-origin-when-cross-origin','X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY',
+    'Permissions-Policy':'camera=(), microphone=(), geolocation=()'
   };
 }
+function send(response,status,headers,body,headOnly=false){
+  response.writeHead(status,securityHeaders(headers));
+  response.end(headOnly?'':body);
+}
+function createServer(){
+  return http.createServer((request,response)=>{
+    if(!['GET','HEAD'].includes(request.method))return send(response,405,{'Allow':'GET, HEAD','Content-Type':'text/plain; charset=utf-8'},'Method not allowed',request.method==='HEAD');
+    let pathname;
+    try{pathname=decodeURIComponent(new URL(request.url,'http://localhost').pathname).replace(/\/$/,'')||'/';}
+    catch{return send(response,400,{'Content-Type':'text/plain; charset=utf-8'},'Bad request',request.method==='HEAD');}
+    if(pathname==='/robots.txt')return send(response,200,{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'public, max-age=3600'},`User-agent: *
+Allow: /
+Sitemap: ${normalizeOrigin(request)}/sitemap.xml
+`,request.method==='HEAD');
+    if(pathname==='/sitemap.xml')return send(response,200,{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=3600'},sitemap(request),request.method==='HEAD');
+    const page=pageForPath(pathname);
+    if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public, max-age=0, must-revalidate'},renderIndex(request,pathname,page),request.method==='HEAD');
+    const requested=pathname.replace(/^\/+/, '');
+    if(!['styles.css','theme.css','app.js','data.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
+      return send(response,404,{'Content-Type':'text/html; charset=utf-8'},'<!doctype html><html lang="fr"><title>Page introuvable | Renaissance</title><body><main><h1>Page introuvable</h1><p><a href="/">Retour au codex</a></p></main></body></html>',request.method==='HEAD');
+    }
+    const filePath=path.resolve(root,requested);
+    if(!filePath.startsWith(root+path.sep))return send(response,403,{'Content-Type':'text/plain; charset=utf-8'},'Forbidden',request.method==='HEAD');
+    fs.stat(filePath,(error,stats)=>{
+      if(error||!stats.isFile())return send(response,404,{'Content-Type':'text/plain; charset=utf-8'},'Not found',request.method==='HEAD');
+      response.writeHead(200,securityHeaders({'Content-Type':types[path.extname(filePath).toLowerCase()]||'application/octet-stream','Cache-Control':'public, max-age=604800'}));
+      if(request.method==='HEAD')return response.end();
+      fs.createReadStream(filePath).on('error',()=>response.destroy()).pipe(response);
+    });
+  });
+}
+if(require.main===module){
+  const port=Number(process.env.PORT)||3000;
+  createServer().listen(port,'0.0.0.0',()=>console.log(`Renaissance écoute sur le port ${port}`));
+}
+module.exports={createServer,pageForPath,itemForPath,staticPages};

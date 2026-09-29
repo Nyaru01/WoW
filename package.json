@@ -1,11 +1,12 @@
 {
   "name": "renaissance-wow-codex",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "private": true,
   "description": "Codex francophone en lecture seule pour les addons, astuces, objets RP et nouvelles de WoW: Forever",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check app.js"
+    "check": "node --check server.js && node --check data.js && node --check app.js && node --check test.js",
+    "test": "node --test test.js"
   },
   "engines": {
     "node": ">=20"
