@@ -19,6 +19,12 @@ REMOTE_IMAGES = {
     "horde-forever.webp": "https://blz-contentstack-images.akamaized.net/v3/assets/bltf408a0557f4e4998/bltcad7f503e583d5b7/6a91d0db2437ed959cd486b0/WoW_Camelot_AnnounceSupport_Horde_BnetShop_1920x1080_(1).png?imwidth=1920",
     "alliance-forever.webp": "https://blz-contentstack-images.akamaized.net/v3/assets/bltf408a0557f4e4998/bltd1d2ec1b4afa617f/6a91d0e7dee8843ceecba8ae/WoW_Camelot_AnnounceSupport_Alliance_BnetShop_ProductAssetGallery_1920x1080.png?imwidth=1920",
 }
+GUIDE_IMAGES = {
+    "torche-guetteur-nuit.webp": "https://www.mamytwink.com/upload/news/2026/septembre/28/wow-forever-guide-dobtention-du-jouet-torche-du-guetteur-de-nuit.jpg",
+    "garde-veilleurs.webp": "https://www.mamytwink.com/upload/news/2026/septembre/28/torche-du-guetteur-de-nuit-01.jpg",
+    "emplacement-garde-veilleurs.webp": "https://www.mamytwink.com/upload/news/2026/septembre/28/torche-du-guetteur-de-nuit.jpg",
+    "torche-jouet-forever.webp": "https://www.mamytwink.com/upload/news/2026/septembre/28/torche-du-guetteur-de-nuit-jouet-wow-forever.jpg",
+}
 
 
 def save_webp(image: Image.Image, target: Path, max_width: int = 1672) -> None:
@@ -51,3 +57,8 @@ for x in range(1600):
 hero = Image.composite(alliance, horde, mask)
 hero.save(ASSETS / "hero-forever.webp", "WEBP", quality=74, method=6)
 print(f"hero-forever.webp: {(ASSETS / 'hero-forever.webp').stat().st_size // 1024} KiB")
+
+for target_name, url in GUIDE_IMAGES.items():
+    request = Request(url, headers={"User-Agent": "Renaissance asset optimizer"})
+    with urlopen(request, timeout=30) as response:
+        save_webp(Image.open(BytesIO(response.read())), ASSETS / target_name, max_width=1400)

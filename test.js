@@ -53,6 +53,18 @@ test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
   }
 });
 
+test('la Torche du guetteur de nuit possède un guide illustré et sourcé',()=>{
+  const torch=data.items.find(item=>item.slug==='torche-de-veillebois');
+  assert.equal(torch.title,'Torche du guetteur de nuit');
+  assert.equal(torch.duration,'5 minutes');
+  assert.equal(torch.cooldown,'30 secondes');
+  assert.equal(torch.macro,'/tar Garde des Veilleurs');
+  assert.ok(torch.steps.length>=4);
+  assert.equal(torch.gallery.length,3);
+  assert.ok(torch.sources.some(source=>source.url.includes('mamytwink.com')));
+  for(const image of torch.gallery)assert.ok(fs.existsSync(path.join(__dirname,image.src.replace(/^\//,''))));
+});
+
 test('les images actives sont optimisées en WebP',()=>{
   const files=['index.html','styles.css','theme.css','data.js','server.js'];
   const source=files.map(file=>fs.readFileSync(path.join(__dirname,file),'utf8')).join('\n');
