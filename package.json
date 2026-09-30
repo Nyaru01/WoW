@@ -1,12 +1,12 @@
 {
   "name": "renaissance-wow-codex",
-  "version": "10.2.9",
+  "version": "10.3.2",
   "private": true,
-  "description": "Codex francophone en lecture seule pour les addons, astuces, objets RP et nouvelles de WoW: Forever",
+  "description": "Codex francophone communautaire pour les addons, astuces, objets RP et nouvelles de WoW: Forever",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check data.js && node --check app.js && node --check test.js && node --check audit.js",
-    "test": "node --test test.js",
+    "check": "node --check server.js && node --check community.js && node --check data.js && node --check app.js && node --check test.js && node --check audit.js",
+    "test": "node --test test.js community.test.js",
     "audit": "node audit.js",
     "audit:lighthouse": "node audit.js --lighthouse",
     "audit:a11y": "node audit.js --a11y"

@@ -2,6 +2,7 @@ const http=require('http');
 const fs=require('fs');
 const path=require('path');
 const data=require('./data.js');
+const {createCommunity}=require('./community.js');
 
 const root=__dirname;
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.avif':'image/avif'};
@@ -93,17 +94,42 @@ function send(response,status,headers,body,headOnly=false){
   response.writeHead(status,securityHeaders(headers));
   response.end(headOnly?'':body);
 }
-function createServer(){
+function createServer(options={}){
+  const community=createCommunity(data.addons.map(a=>a.slug),options.community);
+  const limits=new Map();
+  const api=(response,status,payload,headers={})=>send(response,status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers},JSON.stringify(payload));
   const presenceClients=new Set();
   const broadcastPresence=()=>{
     const payload=`data: ${JSON.stringify({count:presenceClients.size})}\n\n`;
     for(const client of presenceClients){try{client.write(payload);}catch{presenceClients.delete(client);}}
   };
-  return http.createServer((request,response)=>{
-    if(!['GET','HEAD'].includes(request.method))return send(response,405,{'Allow':'GET, HEAD','Content-Type':'text/plain; charset=utf-8'},'Method not allowed',request.method==='HEAD');
+  const server=http.createServer((request,response)=>{
     let pathname;
     try{pathname=decodeURIComponent(new URL(request.url,'http://localhost').pathname).replace(/\/$/,'')||'/';}
     catch{return send(response,400,{'Content-Type':'text/plain; charset=utf-8'},'Bad request',request.method==='HEAD');}
+    if(pathname==='/api/community'){
+      if(!['GET','POST'].includes(request.method))return api(response,405,{error:'Méthode non autorisée.'},{Allow:'GET, POST'});
+      if(!community.enabled)return api(response,503,{enabled:false,error:'Les votes sont momentanément indisponibles.'});
+      const identity=community.identity(request);
+      const headers=identity.cookie?{'Set-Cookie':identity.cookie}:{};
+      if(request.method==='GET')return api(response,200,community.snapshot(identity.id),headers);
+      if(request.headers.origin!==normalizeOrigin(request))return api(response,403,{error:'Origine non autorisée.'});
+      if(!String(request.headers['content-type']).startsWith('application/json'))return api(response,415,{error:'Format non autorisé.'});
+      if(identity.cookie)return api(response,403,{error:'Rechargez la page pour activer les votes.'});
+      const address=request.headers['x-forwarded-for']?.split(',')[0]||request.socket.remoteAddress;
+      const key=require('node:crypto').createHash('sha256').update(address).digest('hex');
+      const now=Date.now();for(const [k,v] of limits)if(now-v.start>60000)limits.delete(k);
+      const limit=limits.get(key)||{start:now,count:0};limits.set(key,limit);
+      if(++limit.count>40)return api(response,429,{error:'Trop de votes rapprochés. Réessayez dans une minute.'},{'Retry-After':'60'});
+      let body='',oversized=false;request.setTimeout(10000,()=>request.destroy());
+      request.on('data',chunk=>{if(oversized)return;body+=chunk;if(Buffer.byteLength(body)>2048){oversized=true;body='';api(response,413,{error:'Message trop long.'});}});
+      request.on('end',()=>{
+        if(oversized)return;
+        try{const vote=JSON.parse(body);if(!vote||typeof vote!=='object'||Array.isArray(vote)||!community.vote(vote.slug,identity.id,vote.value))return api(response,400,{error:'Vote invalide.'});api(response,200,community.snapshot(identity.id));}
+        catch(error){if(error instanceof SyntaxError)return api(response,400,{error:'Vote invalide.'});console.error('Vote non enregistré:',error.message);api(response,503,{error:'Le vote n’a pas été enregistré. Réessayez plus tard.'});}
+      });return;
+    }
+    if(!['GET','HEAD'].includes(request.method))return send(response,405,{'Allow':'GET, HEAD','Content-Type':'text/plain; charset=utf-8'},'Method not allowed',request.method==='HEAD');
     if(pathname==='/robots.txt')return send(response,200,{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'public, max-age=3600'},`User-agent: *
 Allow: /
 Sitemap: ${normalizeOrigin(request)}/sitemap.xml
@@ -132,6 +158,8 @@ Sitemap: ${normalizeOrigin(request)}/sitemap.xml
       fs.createReadStream(filePath).on('error',()=>response.destroy()).pipe(response);
     });
   });
+  server.on('close',()=>community.close());
+  return server;
 }
 if(require.main===module){
   const port=Number(process.env.PORT)||3000;

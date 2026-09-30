@@ -19,6 +19,56 @@
   const favoriteId=item=>`${item.type}:${item.slug}`;
   const isFavorite=item=>favorites.has(favoriteId(item));
   const persistFavorites=()=>savePreference(favoriteKey,[...favorites]);
+  let community={enabled:false,addons:{}};
+  let communityLoaded=false;
+  const voting=new Set();
+  function thumb(direction){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${direction===-1?'class="thumb-down"':''}><path d="M7 10v11H3V10h4Zm0 0 5-7c1-1 3 0 2 3l-1 4h6c2 0 2 1 2 2l-2 7c0 1-1 2-2 2H7"/></svg>`;}
+  function voteControls(item){
+    const votes=community.addons[item.slug]||{up:0,down:0,mine:0};
+    const disabled=!community.enabled||voting.has(item.slug);
+    return `<div class="community-votes" data-votes="${escapeHtml(item.slug)}" role="group" aria-label="Avis des visiteurs sur ${escapeHtml(item.title)}"><span class="vote-heading">Avis des joueurs</span><div class="vote-buttons">${[1,-1].map(value=>`<button type="button" data-vote-slug="${escapeHtml(item.slug)}" data-vote-value="${value}" aria-pressed="${votes.mine===value}" aria-label="${value===1?'Utile':'Pas convaincu'} : ${escapeHtml(item.title)}${votes.mine===value?' — cliquer pour annuler':''}" ${disabled?'disabled':''}>${thumb(value)}<span>${value===1?'Utile':'Pas convaincu'}</span><strong>${value===1?votes.up:votes.down}</strong></button>`).join('')}</div><small>${!communityLoaded?'Chargement des votes…':!community.enabled?'Votes momentanément indisponibles.':votes.mine?'Votre vote est enregistré · cliquez à nouveau pour l’annuler.':'Un vote par navigateur · modifiable à tout moment.'}</small></div>`;
+  }
+  function compatibility(item,detail=false){
+    const status=item.testedBy==='Nyaru'?'tested':item.foreverCompatibility==='native'?'announced':'unknown';
+    const label={tested:'Testé par Nyaru',announced:'Conçu pour Forever · non testé',unknown:'Compatibilité à vérifier'}[status];
+    return `<div class="compatibility-status ${status}"><span class="compatibility-dot" aria-hidden="true"></span><span>${label}</span></div>${detail?`<p class="compatibility-explanation">${status==='tested'?'Test en jeu réalisé par Nyaru.':status==='announced'?'L’auteur présente cet addon comme conçu pour WoW: Forever. Cela ne vaut pas un test en jeu par Nyaru.':'La présence dans le catalogue ne garantit pas le fonctionnement sur votre client. Vérifiez le fichier proposé par l’auteur ; cet addon n’a pas été testé en jeu par Nyaru.'}</p><p class="verified-date">Fiche consultée le ${escapeHtml(formatDate(item.verifiedDate))}</p>`:''}`;
+  }
+  function communityPanel(item){return `<section class="addon-community detail-block"><h2>L’avis de la communauté</h2><p>Ces votes reflètent l’utilité de l’addon pour les joueurs. Ils ne certifient pas sa compatibilité.</p>${voteControls(item)}<button class="report-link" type="button" data-report-slug="${escapeHtml(item.slug)}">Signaler un problème avec cet addon →</button></section>`;}
+  function refreshVotes(){
+    $$('[data-votes]').forEach(element=>{const item=data.addons.find(a=>a.slug===element.dataset.votes);if(item)element.outerHTML=voteControls(item);});
+  }
+  const communityFeedback=document.createElement('div');communityFeedback.className='community-feedback';communityFeedback.setAttribute('role','status');communityFeedback.setAttribute('aria-live','polite');document.body.append(communityFeedback);
+  let feedbackTimer;
+  function voteFeedback(message){communityFeedback.textContent=message;communityFeedback.classList.add('visible');clearTimeout(feedbackTimer);feedbackTimer=setTimeout(()=>communityFeedback.classList.remove('visible'),4500);}
+  document.addEventListener('click',async event=>{
+    const button=event.target.closest('[data-vote-slug]');
+    if(button){
+      const slug=button.dataset.voteSlug;if(voting.has(slug)||!community.enabled)return;
+      const selected=Number(button.dataset.voteValue),value=community.addons[slug]?.mine===selected?0:selected;
+      voting.add(slug);refreshVotes();
+      try{
+        const response=await fetch('/api/community',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug,value})});
+        const result=await response.json();if(!response.ok)throw new Error(result.error||'Le vote n’a pas été enregistré.');
+        community=result;voteFeedback(value?'Votre vote est enregistré.':'Votre vote est annulé.');
+      }catch(error){voteFeedback(error.message||'Connexion impossible. Réessayez plus tard.');}
+      finally{voting.delete(slug);refreshVotes();if(addonSort?.value==='rating')renderAddons();}
+    }
+    const report=event.target.closest('[data-report-slug]');if(report)openReport(report.dataset.reportSlug);
+  });
+  function openReport(slug){
+    const item=data.addons.find(a=>a.slug===slug);if(!item)return;
+    let dialog=$('#report-dialog');if(dialog)dialog.remove();
+    dialog=document.createElement('dialog');dialog.id='report-dialog';dialog.className='report-dialog';dialog.setAttribute('aria-labelledby','report-title');
+    dialog.innerHTML=`<form><button type="button" class="report-close" aria-label="Fermer le signalement">×</button><span class="chapter">Aider la communauté</span><h2 id="report-title">Signaler un problème</h2><p>${escapeHtml(item.title)}</p><label for="report-reason">Quel problème avez-vous rencontré ?</label><select id="report-reason" required><option>Incompatibilité avec WoW: Forever</option><option>Erreur ou dysfonctionnement</option><option>Lien de téléchargement cassé</option><option>Image incorrecte</option><option>Information à corriger</option></select><label for="report-version">Version du jeu et de l’addon <small>(facultatif)</small></label><input id="report-version" maxlength="120" placeholder="Ex. client Forever, version de l’addon…"><label for="report-details">Décrivez le problème</label><textarea id="report-details" required minlength="10" maxlength="2000" rows="4" placeholder="Ce que vous attendiez, ce qui se produit et comment le reproduire…"></textarea><p class="report-help">Le bouton ouvre un brouillon sur GitHub : relisez-le puis publiez-le avec votre compte. Votre signalement sera public ; évitez les données personnelles.</p><button class="button primary" type="submit">Préparer le signalement sur GitHub ↗</button></form>`;
+    document.body.append(dialog);
+    $('.report-close',dialog).addEventListener('click',()=>dialog.close());
+    $('form',dialog).addEventListener('submit',event=>{
+      event.preventDefault();
+      const reason=$('#report-reason',dialog).value,version=$('#report-version',dialog).value.trim(),details=$('#report-details',dialog).value.trim();
+      const params=new URLSearchParams({title:`[Addon] ${item.title} : ${reason}`,body:`Addon : ${item.title}\nFiche : ${location.origin}/addons/${item.slug}\nProblème : ${reason}\nVersion du jeu / addon : ${version||'Non précisée'}\n\n${details}`});
+      window.open(`https://github.com/Nyaru01/WoW/issues/new?${params}`,'_blank','noopener,noreferrer');
+    });dialog.showModal();
+  }
 
   function sourceLinks(sources=[]){
     if(!sources.length)return '<p class="source-note">Aucune source externe nécessaire pour cette fiche pratique.</p>';
@@ -99,9 +149,15 @@
       <div class="addon-top"><span class="addon-category">${escapeHtml(addon.categories.map(key=>categoryNames[key]).join(' · '))}</span>${favoriteButton(addon)}</div>
       ${addon.status==='beta'?'<div class="status-row"><span class="status-pill beta">Bêta</span></div>':''}
       <h2><a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h2><p>${escapeHtml(addon.description)}</p>
+      ${compatibility(addon)}
       <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Découvrir cet addon →</a></div>
       <a class="addon-download" href="${escapeHtml(addon.curseforgeUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(addon.title)} sur CurseForge">Versions sur CurseForge <span aria-hidden="true">↗</span></a>
+      ${voteControls(addon)}<button type="button" class="report-link" data-report-slug="${escapeHtml(addon.slug)}">Signaler un problème →</button>
     </article>`;
+  }
+  function voteRank(item){
+    const {up=0,down=0}=community.addons[item.slug]||{},n=up+down;if(!n)return -1;
+    const p=up/n,z=1.96;return (p+z*z/(2*n)-z*Math.sqrt((p*(1-p)+z*z/(4*n))/n))/(1+z*z/n);
   }
   function renderAddons(){
     if(!addonGrid)return;
@@ -115,6 +171,7 @@
     if(addonSort?.value==='newest')matches.sort((a,b)=>String(b.addedDate||'').localeCompare(String(a.addedDate||''))||a.title.localeCompare(b.title,'fr'));
     if(addonSort?.value==='verified')matches.sort((a,b)=>String(b.verifiedDate).localeCompare(String(a.verifiedDate)));
     if(addonSort?.value==='selection')matches.sort((a,b)=>Number(b.recommended)-Number(a.recommended));
+    if(addonSort?.value==='rating')matches.sort((a,b)=>voteRank(b)-voteRank(a)||(community.addons[b.slug]?.up||0)-(community.addons[a.slug]?.up||0)||a.title.localeCompare(b.title,'fr'));
     const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));currentPage=Math.min(currentPage,totalPages);
     const first=(currentPage-1)*pageSize;
     addonGrid.innerHTML=matches.slice(first,first+pageSize).map(addonCard).join('');
@@ -227,9 +284,9 @@
     return `<figure class="addon-preview"><img src="${escapeHtml(item.image)}" alt="Aperçu de ${escapeHtml(item.title)}" width="1000" height="640"><figcaption>${escapeHtml(item.imageCaption||'Capture de la présentation de l’auteur')} · <a href="${escapeHtml(item.imagePage||item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Voir cette capture sur CurseForge ↗</a></figcaption></figure>`;
   }
   function renderDetail(item){
-    if(item.type==='addon'&&item.addedDate)return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(item.categories.map(key=>categoryNames[key]).join(' · '))}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${favoriteButton(item)}</header>${addonPreview(item)}<a class="button primary" href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Choisir une version sur CurseForge ↗</a><div class="detail-status">${verified(item)}</div>${item.sourceNote?`<p class="source-note">${escapeHtml(item.sourceNote)}</p>`:''}${listBlock('À savoir',item.warnings)}${sourceLinks(item.sources)}<a class="detail-back" href="/addons">← Tous les addons</a>`;
+    if(item.type==='addon'&&item.addedDate)return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(item.categories.map(key=>categoryNames[key]).join(' · '))}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${favoriteButton(item)}</header>${addonPreview(item)}${compatibility(item,true)}${communityPanel(item)}<a class="button primary" href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Choisir une version sur CurseForge ↗</a><div class="detail-status">${verified(item)}</div>${item.sourceNote?`<p class="source-note">${escapeHtml(item.sourceNote)}</p>`:''}${listBlock('À savoir',item.warnings)}${sourceLinks(item.sources)}<a class="detail-back" href="/addons">← Tous les addons</a>`;
     return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(typeLabels[item.type])}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${['addon','astuce','commande','objet'].includes(item.type)?favoriteButton(item):''}</header>
-      ${item.type==='addon'?addonPreview(item):''}
+      ${item.type==='addon'?addonPreview(item)+compatibility(item,true)+communityPanel(item):''}
       ${item.type==='astuce'?tipFigure(item):''}
       <div class="detail-status">${item.type==='addon'?(item.status==='beta'?'<span class="status-pill beta">Bêta</span>':''):verified(item)}</div>
       ${item.type==='addon'?`<dl class="fact-grid"><div><dt>Auteur</dt><dd>${escapeHtml(item.author)}</dd></div><div><dt>Version</dt><dd>${escapeHtml(item.version||'Non confirmée')}</dd></div><div><dt>Version du jeu</dt><dd>${escapeHtml(item.gameVersion||'Non confirmée')}</dd></div><div><dt>Test</dt><dd>${item.tested?'Testé':'Non présenté comme totalement testé'}</dd></div></dl>`:''}
@@ -253,7 +310,7 @@
   function renderStaticPage(pathname){
     const pages={
       '/sources':['Sources','Chaque fiche technique affiche ses sources. Les données officielles, CurseForge et les observations communautaires sont clairement distinguées.'],
-      '/confidentialite':['Confidentialité','Renaissance ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur via localStorage. Le compteur en ligne conserve seulement des connexions temporaires en mémoire, sans identifiant ni historique.'],
+      '/confidentialite':['Confidentialité','Renaissance ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur. Un cookie fonctionnel anonyme, codex-voter, valable un an, permet de modifier ou annuler vos votes. Le serveur conserve uniquement son empreinte, l’addon, le choix du vote et sa date ; les adresses IP ne sont pas enregistrées dans la base des votes. Effacer ce cookie fait perdre l’accès à vos anciens votes. Le compteur en ligne conserve seulement des connexions temporaires en mémoire. Les signalements publiés sur GitHub sont publics et soumis aux règles de GitHub.'],
       '/a-propos':['À propos','Renaissance est un codex français indépendant tenu pour aider les joueurs de WoW: Forever. Il n’est ni affilié à Blizzard Entertainment ni à CurseForge.'],
       '/contribuer':['Contribuer','Vous pouvez signaler un addon cassé, proposer une commande ou corriger une information avec une issue GitHub préremplie.']
     };
@@ -332,5 +389,6 @@
   }
   const featured=data.news[0];
   if(featured){const title=$('#featured-patch-title'),summary=$('#featured-patch-summary'),date=$('#featured-patch-date');if(title)title.textContent=featured.title;if(summary)summary.textContent=featured.description;if(date){date.textContent=formatDate(featured.verifiedDate);date.dateTime=featured.verifiedDate;}}
+  fetch('/api/community',{signal:AbortSignal.timeout(10000)}).then(async response=>{const result=await response.json();community=response.ok?result:{enabled:false,addons:{}};}).catch(()=>{community={enabled:false,addons:{}};}).finally(()=>{communityLoaded=true;refreshVotes();if(addonSort?.value==='rating')renderAddons();});
   refreshFavoriteButtons();
 })();

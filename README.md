@@ -47,3 +47,7 @@ Pour produire des URLs canonical absolues en production, définir `SITE_URL`. Su
 Les informations incertaines sont affichées comme telles. Une source communautaire n’est jamais présentée comme officielle et une valeur CVar non confirmée n’est jamais inventée.
 
 > Projet non officiel. World of Warcraft et son univers appartiennent à Blizzard Entertainment.
+
+## Communauté
+
+Votes anonymes modifiables, tri par avis et signalements GitHub préremplis. La compatibilité est affichée indépendamment des votes. Voir [COMMUNITY.md](COMMUNITY.md) pour le volume Railway `/data`, la conservation des votes et le cookie fonctionnel.
