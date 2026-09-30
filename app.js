@@ -265,6 +265,12 @@
     const pathMap={'/addons':'addons','/astuces':'astuces','/commandes':'commandes','/depannage':'depannage','/objets':'objets-rp','/actualites':'nouvelles'};
     const legacy=pathname==='/'&&hashMap[location.hash.slice(1)];
     const chapter=legacy||pathMap[pathname];
+    const sectionPaths={addons:'/addons',astuces:'/astuces',commandes:'/commandes',depannage:'/depannage','objets-rp':'/objets',nouvelles:'/actualites'};
+    const activePath=legacy?sectionPaths[legacy]:pathname==='/'?'/':'/'+pathname.split('/')[1];
+    document.querySelectorAll('#main-navigation a').forEach(link=>{
+      if(link.getAttribute('href')===activePath)link.setAttribute('aria-current',pathname===activePath&&!legacy?'page':'location');
+      else link.removeAttribute('aria-current');
+    });
     if(chapter){
       homeOnly.forEach(section=>section.hidden=true);
       const section=document.getElementById(chapter);if(section)section.hidden=false;
