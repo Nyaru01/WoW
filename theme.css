@@ -565,6 +565,14 @@ footer { background: #0b1215; }.footer-inner>div>strong { font-family: var(--edi
 .addon-preview img { display:block; width:100%; height:auto; max-height:550px; object-fit:contain; }
 .addon-preview figcaption { padding:12px 16px; color:#bbccc7; font-size:.75rem; }
 .detail-status { margin-top:20px; }
+.content-card .command-block { grid-template-columns:minmax(0,1fr); min-width:0; }
+.command-block code { min-width:0; overflow-wrap:normal; word-break:normal; }
+.content-card .command-block code { white-space:pre; overflow-x:auto; }
+.content-card .command-block button { min-height:44px; padding:10px 16px; justify-self:start; }
+.preset-grid { grid-template-columns:minmax(0,1fr); margin-top:28px; align-items:start; }
+.route-view .preset-grid .content-card { width:100%; min-width:0; margin:0; scroll-margin-top:100px; }
+.preset-grid .content-card h2 { margin:0 0 12px; }
+.preset-grid .content-card small { display:block; margin-top:14px; line-height:1.6; }
 .catalogue-tools { padding:16px; border:1px solid #83aea735; border-radius:12px; background:#0c191e; }
 .filter-row { flex-wrap:wrap; gap:8px; overflow:visible; }
 .filter-row button { border-radius:20px; padding:10px 14px; }
