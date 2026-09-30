@@ -325,6 +325,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { 
 .discovery-card .discovery-label { border-radius:6px; }
 .journey-bar a { border-width:2px; border-radius:10px; }
 .button:hover,.addon-download:hover,.source-list a:hover { border-color:#e0b980; box-shadow:inset 0 1px #ffe7bc28,0 5px 16px #100a0740; }
+.curseforge-placeholder { background:radial-gradient(ellipse at center,#f1643612,transparent 65%),#201a17; }
+.addon-cover.curseforge-placeholder img,.addon-preview.curseforge-placeholder img { object-fit:contain; padding:48px; max-height:320px; }
 @media(max-width:1000px) {
  .guide-layout { grid-template-columns:250px minmax(0,1fr); gap:18px; }
  .guide-content { padding:24px; }

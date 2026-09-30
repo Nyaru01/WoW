@@ -93,11 +93,12 @@
     });
   }
   function addonCard(addon,index=0){
+    const preview=hasAddonPreview(addon);
     return `<article class="addon-card" style="--accent:#d7ad58;--delay:${Math.min(index,8)*35}ms">
-      ${addon.image&&addon.imageKind==='capture'?`<a class="addon-cover" href="/addons/${escapeHtml(addon.slug)}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(addon.image)}" alt="" width="500" height="320" loading="lazy" decoding="async"><span>Aperçu en jeu</span></a>`:''}
+      <a class="addon-cover ${preview?'':'curseforge-placeholder'}" href="/addons/${escapeHtml(addon.slug)}" tabindex="-1" aria-hidden="true"><img src="${preview?escapeHtml(addon.image):'/assets/curseforge-logo.svg'}" alt="" width="500" height="320" loading="lazy" decoding="async"><span>${preview?'Aperçu en jeu':'Aperçu non disponible'}</span></a>
       <div class="addon-top"><span class="addon-category">${escapeHtml(addon.categories.map(key=>categoryNames[key]).join(' · '))}</span>${favoriteButton(addon)}</div>
       ${addon.status==='beta'?'<div class="status-row"><span class="status-pill beta">Bêta</span></div>':''}
-      <h2>${addon.imageKind==='logo'?`<img class="addon-icon" src="${escapeHtml(addon.image)}" alt="" width="40" height="40" loading="lazy">`:''}<a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h2><p>${escapeHtml(addon.description)}</p>
+      <h2><a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h2><p>${escapeHtml(addon.description)}</p>
       <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Découvrir cet addon →</a></div>
       <a class="addon-download" href="${escapeHtml(addon.curseforgeUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(addon.title)} sur CurseForge">Versions sur CurseForge <span aria-hidden="true">↗</span></a>
     </article>`;
@@ -220,9 +221,9 @@
   function listBlock(title,items=[]){
     return items.length?`<section class="detail-block"><h2>${escapeHtml(title)}</h2><ul>${items.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul></section>`:'';
   }
+  function hasAddonPreview(item){return Boolean(item.image&&item.imageKind==='capture'&&item.slug!=='bug-grabber');}
   function addonPreview(item){
-    if(!item.image)return '';
-    if(item.imageKind==='logo')return `<p class="source-note"><img class="addon-icon" src="${escapeHtml(item.image)}" alt="Logo de ${escapeHtml(item.title)}" width="40" height="40"> Aucune capture publiée par l’auteur sur CurseForge.</p>`;
+    if(!hasAddonPreview(item))return `<figure class="addon-preview curseforge-placeholder"><img src="/assets/curseforge-logo.svg" alt="Logo CurseForge — aperçu de ${escapeHtml(item.title)} non disponible" width="1000" height="640"><figcaption>Aperçu de cet addon non disponible. <a href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Consulter ${escapeHtml(item.title)} sur CurseForge ↗</a></figcaption></figure>`;
     return `<figure class="addon-preview"><img src="${escapeHtml(item.image)}" alt="Aperçu de ${escapeHtml(item.title)}" width="1000" height="640"><figcaption>${escapeHtml(item.imageCaption||'Capture de la présentation de l’auteur')} · <a href="${escapeHtml(item.imagePage||item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Voir cette capture sur CurseForge ↗</a></figcaption></figure>`;
   }
   function renderDetail(item){

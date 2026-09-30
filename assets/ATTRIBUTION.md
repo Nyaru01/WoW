@@ -43,6 +43,8 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 
 ## Accueil Horde / Alliance et logo Forever
 
+- curseforge-logo.svg : emblème CurseForge, utilisé pour les addons sans capture. Tracé du logo du site officiel reproduit dans https://github.com/FortAwesome/Font-Awesome/issues/19724 ; marque CurseForge / Overwolf.
+
 - alliance-forever.webp : illustration officielle Blizzard de l’Alliance, utilisée dans la carte des actualités. Source fournie par l’utilisateur : https://blz-contentstack-images.akamaized.net/v3/assets/bltf408a0557f4e4998/bltd1d2ec1b4afa617f/6a91d0e7dee8843ceecba8ae/WoW_Camelot_AnnounceSupport_Alliance_BnetShop_ProductAssetGallery_1920x1080.png
 
 - hero-horde-alliance-e4bfd66ec7.webp : fusion réalisée avec l’outil intégré imagegen des deux illustrations Blizzard fournies par l’utilisateur. Horde à gauche, Alliance à droite, paysage central libre pour les titres, sans texte ni logo dans l’image.
