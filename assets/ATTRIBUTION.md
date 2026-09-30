@@ -31,3 +31,12 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 - Forever Thanks : https://media.forgecdn.net/avatars/thumbnails/2061/917/256/256/639256030144932371.png — https://www.curseforge.com/wow/addons/forever-thanks
 - Forever Fishing : https://media.forgecdn.net/avatars/thumbnails/2065/903/256/256/639257796822391159.png — https://www.curseforge.com/wow/addons/forever-fishing
 - Books Forever : https://media.forgecdn.net/avatars/thumbnails/2077/733/256/256/639262228076226961.png — https://www.curseforge.com/wow/addons/books-forever
+
+## Captures des galeries CurseForge
+- banterblocker : https://media.forgecdn.net/attachments/1990/208/banterblocker-png.png
+- books-forever : https://media.forgecdn.net/attachments/1986/729/screenshot_127-jpg.jpg
+- shotrange : https://media.forgecdn.net/attachments/1975/273/normal-jpeg.jpeg
+- loot-triage : https://media.forgecdn.net/attachments/1987/113/image-1790633376331-jpg.jpg
+- forever-field-journal : https://media.forgecdn.net/attachments/1988/287/fj-mob-png.png
+- foreverthreatplate : https://media.forgecdn.net/attachments/1981/724/screenshot_20260927_154836-png.png
+- forever-fishing : https://media.forgecdn.net/attachments/1988/632/fishing1-jpg.jpg

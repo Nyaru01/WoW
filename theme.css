@@ -550,7 +550,9 @@ footer { background: #0b1215; }.footer-inner>div>strong { font-family: var(--edi
 .addon-grid:not(.list-view) { grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
 .addon-grid:not(.list-view) .addon-card { display:flex; flex-direction:column; padding:22px; overflow:hidden; border-radius:12px; }
 .addon-cover { display:block; position:relative; margin:-22px -22px 20px; overflow:hidden; background:#0e1c23; }
-.addon-cover img { display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; transition:transform .3s; }
+.addon-cover img { display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:contain; background:#080e12; transition:transform .3s; }
+.addon-card h2:has(.addon-icon) { display:flex; align-items:center; gap:12px; }
+.addon-icon { width:40px; height:40px; flex:none; border-radius:6px; object-fit:contain; }
 .addon-cover span { position:absolute; bottom:10px; left:12px; padding:4px 9px; border:1px solid #a8c4c449; border-radius:20px; background:#071014e8; color:#dce8e5; font-size:.65rem; }
 .addon-cover-logo { background:radial-gradient(ellipse at center,#23343b,#101c22); }
 .addon-cover-logo img { object-fit:contain; padding:28px; }

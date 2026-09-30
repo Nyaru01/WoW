@@ -69,6 +69,11 @@ test('la sélection de septembre contient les 20 liens sans doublon et des image
     assert.ok(addon.imageSource?.startsWith('https://'),slug);
   }
   assert.match(data.addons.find(addon=>addon.slug==='shotrange').warnings[0],/compatibilité Forever reste à confirmer/);
+  for(const slug of ['banterblocker','books-forever','shotrange','loot-triage','forever-field-journal','foreverthreatplate','forever-fishing']){
+    const addon=data.addons.find(item=>item.slug===slug);
+    assert.equal(addon.imageKind,'capture',slug);
+    assert.match(addon.imageSource,/media\.forgecdn\.net\/attachments\//,slug);
+  }
 });
 
 test('la Torche du guetteur de nuit possède un guide illustré et sourcé',()=>{
