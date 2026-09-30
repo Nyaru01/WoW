@@ -7,7 +7,7 @@ Source : https://www.mamytwink.com/guides/wow-forever-guide-dobtention-du-jouet-
 World of Warcraft et les éléments du jeu représentés appartiennent à Blizzard Entertainment. Les captures restent créditées à Mamytwink / Melody sur les pages qui les affichent.
 
 ## Sélection du 30 septembre 2026
-Captures des auteurs, via leurs pages CurseForge ou le dépôt officiel Offhand. Les fiches affichent un lien vers leur source. Les visuels SVG marqués « Illustration » sont des pictogrammes créés pour Renaissance, pas des captures du jeu.
+Captures des auteurs, via leurs pages CurseForge ou le dépôt officiel Offhand. Les fiches affichent un lien vers leur source. Les captures et logos sont publiés par les auteurs sur CurseForge ; les logos sont présentés comme tels.
 - Forever Quest Tint : https://media.forgecdn.net/attachments/1985/75/screenshot-2026-09-20-121627-png.png — https://www.curseforge.com/wow/addons/forever-quest-tint
 - Offhand : https://raw.githubusercontent.com/N4UX-GIT/Offhand-DualMonitor/main/Website/assets/offhand-screenshot.jpg — https://www.curseforge.com/wow/addons/offhand
 - Reverse Engineering : https://media.forgecdn.net/attachments/1980/305/4-png.png — https://www.curseforge.com/wow/addons/reverse-engineering-by-chills
@@ -18,3 +18,16 @@ Captures des auteurs, via leurs pages CurseForge ou le dépôt officiel Offhand.
 - ShardSource : https://media.forgecdn.net/attachments/1958/84/68747470733a2f2f692e696d6775722e636f6d2f6752557657.png — https://www.curseforge.com/wow/addons/shard-source
 - Lorewalker : https://media.forgecdn.net/attachments/1858/594/reimagined.png — https://www.curseforge.com/wow/addons/lorewalker
 - QuestTogether : https://media.forgecdn.net/attachments/1579/765/qt-nameplates-png.png — https://www.curseforge.com/wow/addons/questtogether
+
+## Correction des visuels génériques
+Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN CurseForge.
+- DungeonJournal : https://media.forgecdn.net/attachments/description/1707971/description_bf74259f-a1a4-4982-9d43-b130b33a2630.png — https://www.curseforge.com/wow/addons/dungeonjournal
+- ShotRange : https://media.forgecdn.net/avatars/thumbnails/2068/461/256/256/639258880345610045.png — https://www.curseforge.com/wow/addons/shotrange
+- RoarForever : https://media.forgecdn.net/avatars/thumbnails/2059/464/256/256/639255079886676656.png — https://www.curseforge.com/wow/addons/roarforever
+- Loot Triage : https://media.forgecdn.net/avatars/thumbnails/2077/902/256/256/639262276693386984.png — https://www.curseforge.com/wow/addons/loot-triage
+- Forever Field Journal : https://media.forgecdn.net/avatars/thumbnails/2078/729/256/256/639262638271708416.png — https://www.curseforge.com/wow/addons/forever-field-journal
+- ForeverThreatPlate : https://media.forgecdn.net/avatars/thumbnails/2074/361/256/256/639261136472324090.png — https://www.curseforge.com/wow/addons/foreverthreatplate
+- BanterBlocker : https://media.forgecdn.net/avatars/thumbnails/2077/574/256/256/639262184451423549.jpg — https://www.curseforge.com/wow/addons/banterblocker
+- Forever Thanks : https://media.forgecdn.net/avatars/thumbnails/2061/917/256/256/639256030144932371.png — https://www.curseforge.com/wow/addons/forever-thanks
+- Forever Fishing : https://media.forgecdn.net/avatars/thumbnails/2065/903/256/256/639257796822391159.png — https://www.curseforge.com/wow/addons/forever-fishing
+- Books Forever : https://media.forgecdn.net/avatars/thumbnails/2077/733/256/256/639262228076226961.png — https://www.curseforge.com/wow/addons/books-forever

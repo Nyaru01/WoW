@@ -64,7 +64,9 @@ test('la sélection de septembre contient les 20 liens sans doublon et des image
     assert.ok(fs.existsSync(path.join(__dirname,addon.image)),slug);
     assert.ok(addon.description.length<200,slug);
     assert.equal(addon.tested,false);
-    assert.ok(['capture','illustration'].includes(addon.imageKind));
+    assert.ok(['capture','logo'].includes(addon.imageKind));
+    assert.match(addon.image,/\.webp$/);
+    assert.ok(addon.imageSource?.startsWith('https://'),slug);
   }
   assert.match(data.addons.find(addon=>addon.slug==='shotrange').warnings[0],/compatibilité Forever reste à confirmer/);
 });

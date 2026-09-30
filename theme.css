@@ -552,6 +552,9 @@ footer { background: #0b1215; }.footer-inner>div>strong { font-family: var(--edi
 .addon-cover { display:block; position:relative; margin:-22px -22px 20px; overflow:hidden; background:#0e1c23; }
 .addon-cover img { display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; transition:transform .3s; }
 .addon-cover span { position:absolute; bottom:10px; left:12px; padding:4px 9px; border:1px solid #a8c4c449; border-radius:20px; background:#071014e8; color:#dce8e5; font-size:.65rem; }
+.addon-cover-logo { background:radial-gradient(ellipse at center,#23343b,#101c22); }
+.addon-cover-logo img { object-fit:contain; padding:28px; }
+.addon-preview.addon-preview-logo img { height:300px; object-fit:contain; padding:24px; }
 .addon-card:hover .addon-cover img { transform:scale(1.03); }
 .addon-card .addon-meta { margin-top:auto; padding-top:16px; }
 .addon-download { display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding:11px 14px; border:1px solid #8cbcb34d; border-radius:6px; color:#c9eee5; background:#65b9a510; text-decoration:none; font-size:.8rem; }
