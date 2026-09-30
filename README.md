@@ -13,7 +13,7 @@ Renaissance est un site indépendant, sans compte, publicité ciblée, tracker n
 - objets RP avec filtres et commandes `/way` quand les coordonnées sont connues ;
 - catalogue enrichi de 30 addons, 12 guides, 6 objets RP et 9 actualités ;
 - favoris locaux pour les addons, astuces, commandes et objets ;
-- compteur de visiteurs connectés en temps réel, éphémère et sans identifiant ;
+- compteur de sessions connectées en temps réel : plusieurs onglets du même navigateur comptent une seule fois, grâce à un cookie de session anonyme ; aucun historique ni stockage en base ;
 - animations légères respectant `prefers-reduced-motion` et images WebP optimisées ;
 - métadonnées canonical, OpenGraph, Twitter Cards et Schema.org ;
 - `robots.txt` et `sitemap.xml` générés depuis les contenus ;

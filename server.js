@@ -102,10 +102,16 @@ function createServer(options={}){
   const community=createCommunity(data.addons.map(a=>a.slug),options.community);
   const limits=new Map();
   const api=(response,status,payload,headers={})=>send(response,status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers},JSON.stringify(payload));
-  const presenceClients=new Set();
+  const presenceClients=new Map();
+  const presenceIdentity=request=>{
+    const existing=String(request.headers.cookie||'').match(/(?:^|;\s*)codex-presence=([a-f0-9]{32})(?:;|$)/)?.[1];
+    const id=existing||require('node:crypto').randomBytes(16).toString('hex');
+    const secure=normalizeOrigin(request).startsWith('https:')?'; Secure':'';
+    return {id,headers:existing?{}:{'Set-Cookie':`codex-presence=${id}; Path=/; HttpOnly; SameSite=Strict${secure}`}};
+  };
   const broadcastPresence=()=>{
-    const payload=`data: ${JSON.stringify({count:presenceClients.size})}\n\n`;
-    for(const client of presenceClients){try{client.write(payload);}catch{presenceClients.delete(client);}}
+    const payload=`data: ${JSON.stringify({count:new Set(presenceClients.values()).size})}\n\n`;
+    for(const client of presenceClients.keys()){try{client.write(payload);}catch{presenceClients.delete(client);}}
   };
   const server=http.createServer((request,response)=>{
     let pathname;
@@ -141,14 +147,15 @@ Sitemap: ${normalizeOrigin(request)}/sitemap.xml
     if(pathname==='/sitemap.xml')return send(response,200,{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=3600'},sitemap(request),request.method==='HEAD');
     if(pathname==='/api/presence'){
       if(request.method==='HEAD')return send(response,200,{'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-store'},'',true);
-      response.writeHead(200,securityHeaders({'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-store','Connection':'keep-alive','X-Accel-Buffering':'no'}));
-      response.write('retry: 5000\n\n');presenceClients.add(response);broadcastPresence();
+      const identity=presenceIdentity(request);
+      response.writeHead(200,securityHeaders({'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-store','Connection':'keep-alive','X-Accel-Buffering':'no',...identity.headers}));
+      response.write('retry: 5000\n\n');presenceClients.set(response,identity.id);broadcastPresence();
       const heartbeat=setInterval(()=>{if(!response.destroyed)response.write(': presence\n\n');},25000);
       request.on('close',()=>{clearInterval(heartbeat);presenceClients.delete(response);broadcastPresence();});
       return;
     }
     const page=pageForPath(pathname);
-    if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public, max-age=0, must-revalidate'},renderIndex(request,pathname,page),request.method==='HEAD');
+    if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, max-age=0, must-revalidate',...(request.method==='GET'?presenceIdentity(request).headers:{})},renderIndex(request,pathname,page),request.method==='HEAD');
     const requested=pathname.replace(/^\/+/, '');
     if(!['styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
       return send(response,404,{'Content-Type':'text/html; charset=utf-8'},'<!doctype html><html lang="fr"><title>Page introuvable | Renaissance</title><body><main><h1>Page introuvable</h1><p><a href="/">Retour au codex</a></p></main></body></html>',request.method==='HEAD');

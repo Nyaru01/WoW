@@ -186,3 +186,40 @@ test('les 48 addons possèdent une image locale et une source identifiée',()=>{
   }
   assert.match(data.addons.find(a=>a.slug==='bug-grabber').imageCaption,/BugSack/);
 });
+
+
+test('la présence compte une session par navigateur malgré plusieurs onglets',async t=>{
+  const http=require('node:http');
+  const server=createServer();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  const base='http://127.0.0.1:'+server.address().port;
+  const connections=[];
+  t.after(async()=>{for(const c of connections)c.destroy();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));});
+  const page=await fetch(base+'/');
+  const cookie=page.headers.get('set-cookie').split(';')[0];
+  assert.match(cookie,/^codex-presence=[a-f0-9]{32}$/);
+  assert.doesNotMatch(page.headers.get('set-cookie'),/Max-Age|Expires/);
+  assert.match(page.headers.get('cache-control'),/private/);
+  const connect=cookie=>new Promise((resolve,reject)=>{
+    const request=http.get(base+'/api/presence',{headers:{Cookie:cookie}},response=>{
+      let buffer='',lastCount;
+      const listeners=[];
+      const client={destroy:()=>request.destroy(),waitCount:count=>new Promise((resolve,reject)=>{
+        if(lastCount===count)return resolve();
+        const timer=setTimeout(()=>reject(Error('compteur attendu : '+count)),2000);
+        listeners.push(value=>{if(value===count){clearTimeout(timer);resolve();}});
+      })};
+      connections.push(client);
+      response.on('data',chunk=>{
+        buffer+=chunk;
+        let end;
+        while((end=buffer.indexOf('\n\n'))>=0){const event=buffer.slice(0,end);buffer=buffer.slice(end+2);const line=event.split('\n').find(l=>l.startsWith('data: '));if(!line)continue;lastCount=JSON.parse(line.slice(6)).count;resolve({client,count:lastCount});for(const notify of listeners)notify(lastCount);}
+      });
+    });request.on('error',reject);
+  });
+  const first=await connect(cookie);assert.equal(first.count,1);
+  const second=await connect(cookie);assert.equal(second.count,1);
+  const other=await connect('codex-presence='+'b'.repeat(32));assert.equal(other.count,2);
+  first.client.destroy();await second.client.waitCount(2);
+  other.client.destroy();await second.client.waitCount(1);
+  const navigation=await connect(cookie);assert.equal(navigation.count,1);
+});

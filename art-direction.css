@@ -74,7 +74,7 @@ body[data-route]:not([data-route="/"]) main>section { padding-block:66px 80px; }
   background:radial-gradient(ellipse at 50% 0,#684c3426,transparent 70%),#211b19;
   color:var(--parchment); border-top:1px solid #b5945930; padding-block:80px;
 }
-.discovery { background:linear-gradient(180deg,#211b19b8,#211b19ed 80%,#211b19),url('/assets/horde-forever.webp') center 42%/cover; }
+.discovery { background:#211b19; }
 .section-intro,.discovery .section-intro { display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; gap:18px; border:0; padding:0 0 32px; margin-bottom:28px; }
 .section-intro:after,.section-intro.compact:after { display:block; position:static; content:''; width:80px; height:1px; margin-top:6px; background:linear-gradient(90deg,transparent,#dfbd78,transparent); }
 .section-intro h1,.section-intro h2,.section-intro.compact h2 { font:400 clamp(2rem,3.8vw,3.6rem)/1.2 var(--head); margin:10px 0 0; color:#f8ecd7; }
