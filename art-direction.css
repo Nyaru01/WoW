@@ -222,24 +222,32 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { 
 
 .brand-logo { display:block; width:74px; height:60px; flex:none; object-fit:contain; }
 @media(max-width:600px) { .brand-logo { width:62px; height:51px; }.brand { gap:9px; } }
-/* Current chapter: persistent glow, distinct from a hover state. */
+/* Un repère de chapitre précis, sans bloc lumineux derrière le lien. */
 .topbar nav a[aria-current] {
- color:#ffe3a3;
+ color:#ffe2a6;
  font-weight:600;
- background:linear-gradient(180deg,#e4bc7012,#e4bc7030);
- text-shadow:0 0 12px #ffcf7180;
- box-shadow:inset 0 -3px #efc57b,inset 0 -18px 24px -20px #ffd18c;
+ background:transparent;
+ text-shadow:none;
+ box-shadow:none;
 }
 .topbar nav a[aria-current]:after {
  transform:scaleX(1);
- height:2px;
- bottom:20px;
- background:#ffdfa0;
- box-shadow:0 0 10px #ffc763aa;
+ height:1px;
+ bottom:19px;
+ background:linear-gradient(90deg,transparent,#edc681 25%,#edc681 75%,transparent);
+ box-shadow:none;
 }
+.topbar nav a[aria-current]:before { content:''; position:absolute; width:5px; height:5px; left:calc(50% - 2.5px); bottom:17px; background:#ffdfa0; transform:rotate(45deg); }
+.topbar nav a:hover:not([aria-current]) { background:transparent; color:#f3dfbd; }
+.topbar nav a:hover:not([aria-current]):after { opacity:.4; }
+.topbar .presence-badge { border:0; border-left:1px solid #dcb57540; border-radius:0; background:transparent; padding:4px 0 4px 20px; gap:7px; color:#d7bb8f; font-size:.73rem; }
+.presence-icon { width:20px; height:20px; flex-shrink:0; color:#cfac77; }
+.topbar .presence-badge strong { font-size:.85rem; font-weight:600; color:#f6e5c9; font-variant-numeric:tabular-nums; }
+.topbar .presence-badge span { color:#c7af9f; }
 @media(max-width:1000px) {
- .topbar nav a[aria-current] { border:1px solid #e8bc75; box-shadow:inset 3px 0 #efc57b; }
- .topbar nav a[aria-current]:after { display:none; }
+ .topbar nav a[aria-current] { border:0; background:#dfb96c0d; box-shadow:inset 2px 0 #efc57b; }
+ .topbar nav a[aria-current]:before,.topbar nav a[aria-current]:after { display:none; }
+ .topbar .presence-badge { padding-left:12px; }
 }
 
 /* Particules décoratives, sans interaction ni coût de dessin JavaScript. */
