@@ -1005,7 +1005,209 @@
     else addons.push({type:"addon",recommended:false,version:null,gameVersion:null,sourceUrl:null,...entry});
   }
 
+  const catalogImages={
+  "atlas": {
+    "image": "/assets/atlas-catalog-40d612e27e.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/78/339/Screenshot_v1.15.0.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/atlas"
+  },
+  "attune": {
+    "image": "/assets/attune-catalog-3941e1f5ab.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1984/818/attune-new-ui-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/attune"
+  },
+  "auctionator": {
+    "image": "/assets/auctionator-catalog-029d8b19bf.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/721/368/2023-screenshot-classic-shopping-1.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/auctionator"
+  },
+  "azeroth-pilot-reloaded": {
+    "image": "/assets/azeroth-pilot-reloaded-catalog-70fe1fb541.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/754/667/currentframe.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/azeroth-pilot-reloaded"
+  },
+  "ellesmereui": {
+    "image": "/assets/ellesmereui-catalog-000040df68.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1664/341/1-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/ellesmereui"
+  },
+  "forever-ptr-server-world-map": {
+    "image": "/assets/forever-ptr-server-world-map-catalog-a261c66f13.webp",
+    "imageKind": "logo",
+    "imageSource": "https://media.forgecdn.net/avatars/thumbnails/2054/298/256/256/639253160518080768.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/forever-ptr-server-world-map"
+  },
+  "questie": {
+    "image": "/assets/questie-catalog-850c25ef32.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/258/916/4abi5yu.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/questie"
+  },
+  "restedxp-guide": {
+    "image": "/assets/restedxp-guide-catalog-e91b709850.webp",
+    "imageKind": "capture",
+    "imageSource": "https://community.restedxp.com/wp-content/uploads/2025/07/img-step-3-section.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://community.restedxp.com/start/"
+  },
+  "tomtom": {
+    "image": "/assets/tomtom-catalog-07aad5f0da.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1372/754/tomtom-crazyarrow-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/tomtom"
+  },
+  "guildmap": {
+    "image": "/assets/guildmap-catalog-21d8fa6b27.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/description/1149802/description_896d4db5-7558-4c73-87f8-8dd9f8315c28.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/guildmap"
+  },
+  "nova-instance-tracker": {
+    "image": "/assets/nova-instance-tracker-catalog-acfb564edc.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/300/531/log1.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/nova-instance-tracker"
+  },
+  "lootified": {
+    "image": "/assets/lootified-catalog-0a44925ffc.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1989/199/screenshot-2026-09-29-153813-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/lootified"
+  },
+  "forever-dungeon-scout": {
+    "image": "/assets/forever-dungeon-scout-catalog-daafe27ea4.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1989/42/wowb_zlv6l4a25f-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/forever-dungeon-scout"
+  },
+  "cooldown-manager-centered": {
+    "image": "/assets/cooldown-manager-centered-catalog-1e21ceab3f.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1536/53/image-3-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/cooldown-manager-centered"
+  },
+  "minicc": {
+    "image": "/assets/minicc-catalog-9cb29b2d90.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1860/789/testframes-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/minicc"
+  },
+  "nkthreat": {
+    "image": "/assets/nkthreat-catalog-44cdd25897.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1985/814/nkthreat-threat-meter-window-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/nkthreat"
+  },
+  "whodoeswhat": {
+    "image": "/assets/whodoeswhat-catalog-87f9470653.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1840/144/buffgrid-jpg.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/whodoeswhat"
+  },
+  "blizzmove": {
+    "image": "/assets/blizzmove-catalog-f664c05aaa.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/106/689/blizzmove.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/blizzmove"
+  },
+  "darkmode": {
+    "image": "/assets/darkmode-catalog-b6278dd327.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/609/233/playerframe.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/darkmode"
+  },
+  "fontmagic": {
+    "image": "/assets/fontmagic-catalog-8d12b54a18.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1244/726/fontmagic-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/fontmagic"
+  },
+  "plumber": {
+    "image": "/assets/plumber-catalog-707e420e3a.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1300/473/plumberlandingpage_7.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/plumber"
+  },
+  "wildutools": {
+    "image": "/assets/wildutools-catalog-2c99fc5858.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1486/351/wildu-tools-preview-small-jpg.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/wildutools"
+  },
+  "better-fishing": {
+    "image": "/assets/better-fishing-catalog-e33de933f6.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/524/140/softtargeting.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/better-fishing"
+  },
+  "speedyautoloot": {
+    "image": "/assets/speedyautoloot-catalog-f8853000e7.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1642/584/speedyautoloot-display-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/speedyautoloot"
+  },
+  "wim-3": {
+    "image": "/assets/wim-3-catalog-1b7d3a06e5.webp",
+    "imageKind": "capture",
+    "imageSource": "https://cdn-wow.mmoui.com/preview/pvw3863.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.wowinterface.com/downloads/info5342-3.10.9.html"
+  },
+  "bug-grabber": {
+    "image": "/assets/bug-grabber-catalog-32366a1116.webp",
+    "imageKind": "capture",
+    "imageSource": "https://cdn-wow.mmoui.com/preview/pvw69047.jpg",
+    "imageCaption": "Interface de BugSack, compagnon de BugGrabber pour afficher les erreurs collectées.",
+    "imagePage": "https://www.wowinterface.com/downloads/info5995-BugSack.html"
+  },
+  "bugsack": {
+    "image": "/assets/bugsack-catalog-32366a1116.webp",
+    "imageKind": "capture",
+    "imageSource": "https://cdn-wow.mmoui.com/preview/pvw69047.jpg",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.wowinterface.com/downloads/info5995-BugSack.html"
+  },
+  "hunters-field-guide": {
+    "image": "/assets/hunters-field-guide-catalog-de3b472544.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1983/145/hunters-field-guide-png.png",
+    "imageCaption": "Capture de la présentation de l’auteur",
+    "imagePage": "https://www.curseforge.com/wow/addons/hunters-field-guide"
+  }
+};
+  addons.forEach(addon=>{if(catalogImages[addon.slug])Object.assign(addon,catalogImages[addon.slug]);});
+
   const all=[...addons,...tips,...commands,...troubleshooting,...items,...news,...presets];
   const routeFor=item=>item.type==='addon'?`/addons/${item.slug}`:item.type==='astuce'?`/astuces/${item.slug}`:item.type==='commande'?`/commandes/${item.slug}`:item.type==='depannage'?`/depannage/${item.slug}`:item.type==='objet'?`/objets/${item.slug}`:item.type==='actualite'?`/actualites/${item.slug}`:`/commandes/presets#${item.slug}`;
   return {verifiedDate,categoryLabels,addons,tips,commands,troubleshooting,items,news,presets,all,routeFor};
 });
+
+

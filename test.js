@@ -163,3 +163,14 @@ test('le serveur répond aux routes, métadonnées, sitemap et erreurs',async t=
   assert.equal((await fetch(base+'/inconnue')).status,404);
   assert.equal((await fetch(base+'/',{method:'POST'})).status,405);
 });
+
+test('les 48 addons possèdent une image locale et une source identifiée',()=>{
+  assert.equal(data.addons.length,48);
+  for(const addon of data.addons){
+    assert.ok(['capture','logo'].includes(addon.imageKind),addon.slug);
+    assert.ok(fs.existsSync(path.join(__dirname,addon.image)),addon.slug);
+    assert.match(addon.imageSource,/^https:\/\//,addon.slug);
+    assert.doesNotMatch(addon.imageSource,/patreon|discord/i,addon.slug);
+  }
+  assert.match(data.addons.find(a=>a.slug==='bug-grabber').imageCaption,/BugSack/);
+});
