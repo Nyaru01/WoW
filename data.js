@@ -95,19 +95,472 @@
   });
 
   const tips=[
-    {slug:'construire-pack-propre',title:'Construire un pack propre',description:'Ajoutez les outils progressivement afin d’identifier immédiatement un conflit ou une baisse de performances.',facts:['5 min','Avant connexion','BugSack'],steps:['Installez d’abord BugGrabber et BugSack afin de rendre les erreurs visibles.','Ajoutez ensuite les addons par famille, puis utilisez /reload entre chaque lot.','Testez quelques minutes en jeu avant d’installer le lot suivant.','Retirez les fonctions en doublon et conservez uniquement ce qui sert réellement.'],note:'Avant une grosse mise à jour, sauvegardez toujours les dossiers Interface et WTF.',tags:['installation','addons','bugsack'],image:'/assets/azeroth-cosmique.webp'},
-    {slug:'preparer-liste-butin',title:'Préparer sa liste de butin',description:'Ciblez les bons donjons et comparez vos améliorations avant de partir.',facts:['10 min','Avant instance','Lootified'],steps:['Repérez trois améliorations prioritaires dans Lootified.','Croisez chaque objet avec DungeonJournal ou Forever Dungeon Scout pour identifier le boss et le donjon.','Classez les donjons selon le nombre d’améliorations possibles pour votre groupe.','Placez l’entrée avec TomTom et contrôlez vos verrouillages avant le départ.'],note:'Une liste BiS reste un guide : adaptez-la à votre spécialisation, votre groupe et vos statistiques.',tags:['butin','donjon','lootified'],image:'/assets/citadelle-glace.webp'},
-    {slug:'queter-sans-perdre-nord',title:'Quêter sans perdre le nord',description:'Combinez objectifs visibles et itinéraire sans transformer l’aventure en pilote automatique.',facts:['3 min','Monde ouvert','Questie'],steps:['Affichez uniquement les objectifs de votre zone avec Questie.','Choisissez un seul guide principal entre APR et RestedXP afin d’éviter les indications contradictoires.','Réservez TomTom aux coordonnées partagées et aux détours décidés par le groupe.','Désactivez temporairement le guidage lorsque vous souhaitez lire ou explorer librement.'],note:'Moins de marqueurs rend souvent la carte plus utile : masquez les objectifs qui ne concernent pas votre session.',tags:['quête','questie','tomtom'],image:'/assets/mont-hyjal.webp'},
-    {slug:'maitriser-verrouillages',title:'Maîtriser ses verrouillages',description:'Consultez vos entrées récentes et préparez votre route d’instances.',facts:['2 min','Avant départ','Nova Tracker'],steps:['Ouvrez Nova Instance Tracker avant de rejoindre le groupe.','Vérifiez le nombre d’entrées récentes, le personnage concerné et le mode prévu.','Annoncez immédiatement au groupe une limite proche ou un verrouillage incompatible.','Notez l’objet ciblé et la durée réelle de la session pour améliorer vos prochaines routes.'],note:'Le suivi dépend de votre historique local : sauvegardez les données de l’addon avant de les réinitialiser.',tags:['donjon','verrouillage'],image:'/assets/citadelle-glace.webp'},
-    {slug:'lire-menace',title:'Lire sa menace',description:'Placez les informations de menace là où elles guident réellement vos décisions.',facts:['4 min','Donjon & raid','NKThreat'],steps:['Placez la barre de menace entre votre personnage et votre cible, sans masquer les mécaniques.','Attendez une avance nette du tank avant un burst ou une ouverture agressive.','Rendez les provocations visibles et gardez une alerte uniquement si elle change votre décision.','Après le combat, réduisez les notifications que vous n’avez pas utilisées.'],note:'Un compteur informe ; il ne remplace ni la communication ni l’adaptation au rythme du tank.',tags:['combat','menace'],image:'/assets/chute-arthas.webp'},
-    {slug:'traquer-erreur-lua',title:'Traquer une erreur Lua',description:'Isolez méthodiquement l’addon responsable et conservez la pile complète.',facts:['5 min','Après erreur','BugSack'],steps:['Ouvrez BugSack et relevez le premier addon cité dans la pile.','Mettez cet addon et ses dépendances à jour, puis reproduisez l’action.','Désactivez tous les autres addons et testez de nouveau.','Si l’erreur reste, conservez la pile complète et la version de l’addon pour le signalement.'],note:'Une trace peut contenir des chemins locaux : relisez-la toujours avant de la transmettre.',tags:['lua','dépannage','bugsack'],image:'/assets/porte-tenebres.webp'},
-    {slug:'preparer-groupe',title:'Partir sans perdre dix minutes',description:'Vérifiez rôles, consommables et point de rendez-vous avant le départ.',facts:['2 min','Avant groupe','Checklist'],steps:['Confirmez tank, soins, interruptions et contrôles avant le déplacement.','Réparez, videz quelques emplacements de sac et prenez composants, eau et projectiles.','Partagez une seule destination TomTom à tout le groupe.','Annoncez immédiatement un retard ou un changement de rôle.'],note:'Le meilleur gain de temps reste une information claire donnée avant que tout le monde ne se mette en route.',tags:['groupe','donjon'],image:'/assets/kaldorei-puits-eternite.webp'},
-    {slug:'interface-lisible',title:'Garder un écran qui respire',description:'Rapprochez les informations décisives du centre sans masquer le monde.',facts:['8 min','Réglage unique','BlizzMove'],steps:['Gardez près du personnage la cible, la menace et les temps de recharge réellement décisifs.','Repoussez sacs, quêtes secondaires, chat et informations hors combat vers les bords.','Évitez d’afficher la même information dans plusieurs addons.','Testez en donjon puis retirez tout élément que vous n’avez pas consulté pendant la session.'],note:'Commencez par déplacer les cadres Blizzard avant d’empiler des remplacements plus lourds.',tags:['interface','hud','lisibilité'],image:'/assets/azeroth-cosmique.webp'},
-    {slug:'sauvegarder-interface',title:'Sauvegarder son interface avant une mise à jour',description:'Créez une copie restaurable de vos réglages avant de modifier le client ou les addons.',facts:['5 min','Avant mise à jour','Interface + WTF'],steps:['Quittez complètement le jeu pour que les réglages soient écrits sur le disque.','Copiez les dossiers Interface et WTF vers un dossier daté hors du répertoire du jeu.','Ajoutez la version du client et la date au nom de la sauvegarde.','Après la mise à jour, restaurez uniquement les données de l’addon concerné si un problème apparaît.'],note:'Ne partagez jamais un dossier WTF sans vérifier qu’il ne contient pas de noms de compte, de personnage ou de serveur.',tags:['sauvegarde','mise à jour','wtf'],image:'/assets/porte-tenebres.webp'},
-    {slug:'diagnostiquer-baisse-fps',title:'Diagnostiquer une baisse de FPS',description:'Séparez le coût du rendu, des addons et d’un réglage récemment modifié.',facts:['10 min','Après ralentissement','Test comparatif'],steps:['Reproduisez la baisse au même endroit et notez la fréquence d’images observée.','Désactivez tous les addons, rechargez l’interface et comparez dans les mêmes conditions.','Réactivez les addons par lots jusqu’à retrouver la baisse.','Si le problème reste sans addon, remettez les options graphiques modifiées à leur valeur précédente une par une.'],note:'Une comparaison utile conserve la même zone, la même caméra et une activité similaire.',tags:['fps','performance','diagnostic'],image:'/assets/chute-arthas.webp'},
-    {slug:'partager-point-passage',title:'Partager un point de passage proprement',description:'Donnez au groupe une destination unique, explicite et facile à remplacer.',facts:['2 min','Monde ouvert','TomTom'],steps:['Vérifiez le nom exact de la zone et les coordonnées avant de les envoyer.','Partagez une commande /way accompagnée d’une courte raison.','Demandez au groupe de supprimer l’ancien point si la destination change.','Une fois arrivé, effacez le point pour éviter qu’une flèche obsolète reste affichée.'],note:'Un seul point actif et nommé évite davantage d’erreurs qu’une série de coordonnées sans contexte.',tags:['tomtom','waypoint','groupe'],image:'/assets/mont-hyjal.webp'},
-    {slug:'preparer-familier-chasseur',title:'Préparer sa prochaine découverte de familier',description:'Utilisez le Hunter’s Field Guide comme carnet de terrain sans révéler plus que nécessaire.',facts:['5 min','Chasseur','Field Guide'],steps:['Ouvrez le journal avec /fg et choisissez une famille adaptée à votre objectif.','Gardez la révélation automatique désactivée si vous souhaitez préserver l’exploration.','Ciblez la bête puis utilisez Beast Lore pour compléter les capacités lorsque cette fonction est disponible.','Notez la zone et comparez les rangs avant de remplacer votre familier actuel.'],note:'La partie Beast Lore est encore signalée comme incomplètement testée par l’auteur : vérifiez le résultat en jeu.',tags:['chasseur','familier','beast lore'],image:'/assets/kaldorei-puits-eternite.webp'}
-  ].map(tip=>({type:'astuce',...tip,verifiedDate,verificationStatus:'Vérifié',sources:[]}));
+  {
+    "type": "astuce",
+    "slug": "construire-pack-propre",
+    "title": "Installer ses addons sans les empiler",
+    "description": "Commencez avec les outils dont vous avez besoin, puis ajoutez une fonction à la fois. Vous pourrez retrouver plus facilement l’origine d’un problème.",
+    "facts": [
+      "10 min",
+      "Avant connexion",
+      "Dossier AddOns"
+    ],
+    "steps": [
+      "Quittez le jeu et choisissez un fichier annoncé compatible avec WoW: Forever ; une version Retail ou Classic ne garantit pas cette compatibilité.",
+      "Placez les dossiers de l’addon dans Interface/AddOns du client utilisé. Vérifiez qu’ils ne sont pas enfermés dans un deuxième dossier issu de l’archive.",
+      "Relancez le jeu, activez l’addon à la sélection des personnages et testez une action simple avant d’en ajouter un autre.",
+      "Si deux addons remplissent le même rôle, commencez avec un seul. Gardez BugGrabber et BugSack si vous souhaitez consulter les erreurs."
+    ],
+    "note": "Un nouvel addon demande un redémarrage du jeu. /reload sert à recharger les addons déjà reconnus, pas à découvrir une nouvelle installation.",
+    "tags": [
+      "installation",
+      "addons",
+      "bugsack"
+    ],
+    "image": "/assets/bugsack-catalog-32366a1116.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "Wowhead · installation et entretien des addons",
+        "url": "https://www.wowhead.com/guide/addons-how-to-install-and-maintain-1998"
+      },
+      {
+        "label": "BugSack · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/bugsack"
+      }
+    ],
+    "category": "Installation",
+    "imageAlt": "Fenêtre de BugSack affichant une erreur Lua et sa pile",
+    "imageCaption": "Capture publiée par l’auteur de BugSack sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/bugsack",
+    "relatedAddon": "bugsack"
+  },
+  {
+    "type": "astuce",
+    "slug": "preparer-liste-butin",
+    "title": "Choisir un donjon pour son butin",
+    "description": "Repérez quelques objets utiles et les quêtes associées avant de proposer une sortie au groupe.",
+    "facts": [
+      "10 min",
+      "Avant instance",
+      "Lootified"
+    ],
+    "steps": [
+      "Ouvrez Lootified avec /lf et consultez les donjons adaptés au niveau de votre personnage.",
+      "Dans le butin, filtrez les objets utilisables ou les améliorations, puis retenez deux ou trois objectifs accessibles.",
+      "Consultez les boss et les quêtes du donjon : certaines récompenses demandent une suite de quêtes à préparer.",
+      "Partagez vos objectifs et les règles de butin avec le groupe avant de partir."
+    ],
+    "note": "Le classement BiS de Lootified dépend des pondérations de statistiques. Comparez aussi votre équipement et votre rôle ; ce classement n’est pas une promesse de gain.",
+    "tags": [
+      "butin",
+      "donjon",
+      "lootified"
+    ],
+    "image": "/assets/lootified-catalog-0a44925ffc.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "Lootified · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/lootified"
+      },
+      {
+        "label": "Lootified · présentation par son créateur à la communauté",
+        "url": "https://www.reddit.com/r/wowforever/comments/1wrs5yi/lootified_i_made_an_addon_so_i_dont_need_10/"
+      }
+    ],
+    "category": "Donjons",
+    "imageAlt": "Journal de butin et recherche d’objets dans Lootified",
+    "imageCaption": "Capture publiée par l’auteur de Lootified sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/lootified",
+    "relatedAddon": "lootified"
+  },
+  {
+    "type": "astuce",
+    "slug": "queter-sans-perdre-nord",
+    "title": "Quêter avec une carte lisible",
+    "description": "Utilisez les marqueurs comme des repères, tout en gardant le texte des quêtes et votre itinéraire au premier plan.",
+    "facts": [
+      "5 min",
+      "Monde ouvert",
+      "Questie"
+    ],
+    "steps": [
+      "Installez une version de Questie compatible Forever et ouvrez la carte de votre zone.",
+      "Dans les options, réduisez les catégories de marqueurs inutiles à votre session plutôt que de tout afficher.",
+      "Regroupez les objectifs proches et lisez le journal si un marqueur manque ou si la quête demande une action particulière.",
+      "Ajoutez TomTom si vous voulez une flèche de navigation ; Questie ne fournit pas cette flèche à lui seul."
+    ],
+    "note": "La documentation de Questie distingue les marqueurs de quête et la flèche TomTom. Une absence de marqueur ne prouve pas qu’une quête est impossible.",
+    "tags": [
+      "quête",
+      "questie",
+      "tomtom"
+    ],
+    "image": "/assets/questie-catalog-850c25ef32.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "Questie · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/questie"
+      },
+      {
+        "label": "Questie · wiki officiel du projet",
+        "url": "https://github.com/Questie/Questie/wiki/"
+      }
+    ],
+    "category": "Exploration",
+    "imageAlt": "Carte de WoW avec les marqueurs de quête de Questie",
+    "imageCaption": "Capture publiée par l’auteur de Questie sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/questie",
+    "relatedAddon": "questie"
+  },
+  {
+    "type": "astuce",
+    "slug": "maitriser-verrouillages",
+    "title": "Vérifier ses accès aux instances",
+    "description": "Consultez votre historique et les informations du jeu avant de rejoindre une nouvelle sortie.",
+    "facts": [
+      "2 min",
+      "Avant départ",
+      "Nova Instance Tracker"
+    ],
+    "steps": [
+      "Ouvrez Nova Instance Tracker avec /nit pour retrouver vos passages récents en instance.",
+      "Vérifiez le personnage et le donjon concernés, puis consultez les informations de verrouillage affichées par le jeu.",
+      "Prévenez le groupe si un accès est bloqué ou si vous avez déjà participé à l’instance prévue.",
+      "Après un changement de client ou une réinitialisation des données, contrôlez le suivi sur une première sortie."
+    ],
+    "note": "Les limites documentées pour Classic ne doivent pas être reprises comme des règles Forever. L’historique de l’addon aide au suivi ; les restrictions du jeu font foi.",
+    "tags": [
+      "donjon",
+      "verrouillage"
+    ],
+    "image": "/assets/nova-instance-tracker-catalog-acfb564edc.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "Nova Instance Tracker · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/nova-instance-tracker"
+      }
+    ],
+    "category": "Donjons",
+    "imageAlt": "Historique des instances dans Nova Instance Tracker",
+    "imageCaption": "Capture publiée par l’auteur de Nova Instance Tracker sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/nova-instance-tracker",
+    "relatedAddon": "nova-instance-tracker"
+  },
+  {
+    "type": "astuce",
+    "slug": "lire-menace",
+    "title": "Lire la menace disponible sur Forever",
+    "description": "Réagissez aux états de menace visibles et au rythme du tank, sans attendre des chiffres que le client peut masquer.",
+    "facts": [
+      "5 min",
+      "En groupe",
+      "NKThreat"
+    ],
+    "steps": [
+      "Installez la version Forever de NKThreat et placez son indicateur sans couvrir votre cible ni le sol.",
+      "Repérez les états de menace disponibles sur votre cible : situation sûre, danger ou cible qui vous attaque.",
+      "Si la situation devient dangereuse, adaptez vos dégâts et utilisez une réduction de menace si votre classe en possède une.",
+      "Convenez avec le tank d’un rythme d’ouverture et signalez une reprise de cible."
+    ],
+    "note": "L’auteur indique que Forever peut masquer les chiffres de menace et limiter les annonces ou le suivi de provocations. Un indicateur absent ne signifie pas une menace nulle.",
+    "tags": [
+      "combat",
+      "menace"
+    ],
+    "image": "/assets/nkthreat-catalog-44cdd25897.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "NKThreat · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/nkthreat"
+      }
+    ],
+    "category": "Combat",
+    "imageAlt": "Indicateurs de menace de NKThreat",
+    "imageCaption": "Capture publiée par l’auteur de NKThreat sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/nkthreat",
+    "relatedAddon": "nkthreat"
+  },
+  {
+    "type": "astuce",
+    "slug": "traquer-erreur-lua",
+    "title": "Isoler une erreur Lua",
+    "description": "Conservez le message complet et cherchez une reproduction simple avant d’accuser un addon.",
+    "facts": [
+      "10 min",
+      "Après une erreur",
+      "BugGrabber + BugSack"
+    ],
+    "steps": [
+      "Installez BugGrabber et BugSack ensemble : le premier collecte les erreurs, le second les affiche.",
+      "Reproduisez une seule action, puis copiez le message et la pile complète dans BugSack.",
+      "Mettez à jour l’addon suspect et ses dépendances. Testez ensuite avec ce petit ensemble activé.",
+      "Réactivez les autres addons par lots. Notez les versions et l’action déclenchante si vous ouvrez un rapport chez l’auteur."
+    ],
+    "note": "Le premier nom dans la pile est une piste, pas une preuve. Une bibliothèque partagée ou un conflit peut faire apparaître un autre addon.",
+    "tags": [
+      "lua",
+      "dépannage",
+      "bugsack"
+    ],
+    "image": "/assets/bugsack-catalog-32366a1116.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "BugSack · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/bugsack"
+      },
+      {
+        "label": "Wowhead · installation et entretien des addons",
+        "url": "https://www.wowhead.com/guide/addons-how-to-install-and-maintain-1998"
+      }
+    ],
+    "category": "Dépannage",
+    "imageAlt": "Fenêtre de BugSack affichant une erreur Lua et sa pile",
+    "imageCaption": "Capture publiée par l’auteur de BugSack sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/bugsack",
+    "relatedAddon": "bugsack"
+  },
+  {
+    "type": "astuce",
+    "slug": "preparer-groupe",
+    "title": "Préparer une sortie en groupe",
+    "description": "Un rendez-vous précis et quelques vérifications évitent de découvrir les problèmes à l’entrée du donjon.",
+    "facts": [
+      "5 min",
+      "Avant groupe",
+      "Groupe + TomTom"
+    ],
+    "steps": [
+      "Confirmez le donjon, les rôles et les règles de butin avec les autres joueurs.",
+      "Réparez votre équipement, libérez des places dans les sacs et vérifiez les consommables ou composants utiles à votre classe.",
+      "Envoyez la zone et les coordonnées de l’entrée, avec un repère compréhensible par ceux qui n’utilisent pas TomTom.",
+      "Annoncez votre temps de trajet et vérifiez les accès ou prérequis avant que le groupe ne parte."
+    ],
+    "note": "TomTom aide à rejoindre un point ; sa flèche ne garantit pas un chemin praticable. Une montagne, une grotte ou une entrée à un autre niveau peut demander un détour.",
+    "tags": [
+      "groupe",
+      "donjon"
+    ],
+    "image": "/assets/tomtom-catalog-07aad5f0da.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "TomTom · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/tomtom"
+      }
+    ],
+    "category": "Donjons",
+    "imageAlt": "Repère et flèche de navigation de TomTom",
+    "imageCaption": "Capture publiée par l’auteur de TomTom sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/tomtom",
+    "relatedAddon": "tomtom"
+  },
+  {
+    "type": "astuce",
+    "slug": "interface-lisible",
+    "title": "Aménager une interface lisible",
+    "description": "Gardez la cible et les informations utiles visibles, puis ajustez les fenêtres qui gênent votre lecture.",
+    "facts": [
+      "10 min",
+      "Hors combat",
+      "BlizzMove"
+    ],
+    "steps": [
+      "Commencez par les options du jeu pour régler l’échelle et les éléments disponibles sur votre client.",
+      "Avec BlizzMove, faites glisser le titre d’une fenêtre compatible pour la déplacer.",
+      "Utilisez Ctrl + molette sur son titre pour ajuster son échelle. Testez un changement à la fois.",
+      "Ouvrez carte, livre de sorts et sacs pour vérifier les chevauchements, puis testez votre disposition en jeu."
+    ],
+    "note": "BlizzMove déplace des fenêtres Blizzard compatibles ; ce n’est pas un remplacement complet du HUD. Maj + clic droit réinitialise la position, Ctrl + clic droit l’échelle.",
+    "tags": [
+      "interface",
+      "hud",
+      "lisibilité"
+    ],
+    "image": "/assets/blizzmove-catalog-f664c05aaa.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "BlizzMove · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/blizzmove"
+      }
+    ],
+    "category": "Interface",
+    "imageAlt": "Fenêtres Blizzard déplacées avec BlizzMove",
+    "imageCaption": "Capture publiée par l’auteur de BlizzMove sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/blizzmove",
+    "relatedAddon": "blizzmove"
+  },
+  {
+    "type": "astuce",
+    "slug": "sauvegarder-interface",
+    "title": "Sauvegarder ses réglages avant une mise à jour",
+    "description": "Gardez une copie datée des addons et de leurs réglages avant un changement important.",
+    "facts": [
+      "5 min",
+      "Jeu fermé",
+      "Interface + WTF"
+    ],
+    "steps": [
+      "Quittez complètement WoW pour que les réglages de la session soient enregistrés.",
+      "Ouvrez le dossier du client avec lequel vous jouez, puis copiez Interface et WTF dans un dossier de sauvegarde extérieur.",
+      "Nommez la copie avec la date et la version du client. Vérifiez que les deux dossiers et leurs fichiers sont présents.",
+      "Pour revenir à cette copie, fermez le jeu et conservez d’abord les dossiers actuels sous un autre nom. Restaurez une sauvegarde compatible avec votre client."
+    ],
+    "note": "Interface contient les addons ; WTF contient notamment leurs réglages. Copier les addons seuls ne sauvegarde donc pas toute votre configuration.",
+    "tags": [
+      "sauvegarde",
+      "mise à jour",
+      "wtf"
+    ],
+    "image": "/assets/blizzmove-catalog-f664c05aaa.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "Wowhead · installation et entretien des addons",
+        "url": "https://www.wowhead.com/guide/addons-how-to-install-and-maintain-1998"
+      }
+    ],
+    "category": "Interface",
+    "imageAlt": "Fenêtres Blizzard déplacées avec BlizzMove",
+    "imageCaption": "Exemple de fenêtres déplacées avec BlizzMove : leurs réglages font partie de la configuration à préserver. Cette capture ne représente pas la procédure de copie des dossiers.",
+    "imagePage": "https://www.curseforge.com/wow/addons/blizzmove",
+    "relatedAddon": "blizzmove"
+  },
+  {
+    "type": "astuce",
+    "slug": "diagnostiquer-baisse-fps",
+    "title": "Comparer les FPS avant de changer les réglages",
+    "description": "Cherchez si le ralentissement vient des addons ou du rendu avec deux essais aussi comparables que possible.",
+    "facts": [
+      "10 min",
+      "Après ralentissement",
+      "Test comparatif"
+    ],
+    "steps": [
+      "Notez les FPS dans une zone précise avec une caméra et une activité faciles à reproduire.",
+      "À la sélection des personnages, désactivez les addons, reconnectez-vous au même endroit et comparez.",
+      "Si la situation s’améliore, réactivez les addons par lots pour identifier le groupe concerné.",
+      "Si elle ne change pas, comparez une option graphique à la fois. Notez sa valeur initiale pour pouvoir revenir en arrière."
+    ],
+    "note": "Une mesure en ville vide et une mesure en combat chargé ne sont pas comparables. La mémoire occupée par un addon ne mesure pas, à elle seule, son coût en FPS.",
+    "tags": [
+      "fps",
+      "performance",
+      "diagnostic"
+    ],
+    "image": "/assets/cooldown-manager-centered-catalog-1e21ceab3f.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "Wowhead · installation et entretien des addons",
+        "url": "https://www.wowhead.com/guide/addons-how-to-install-and-maintain-1998"
+      },
+      {
+        "label": "Blizzard · diagnostic des ressources et de l’interface",
+        "url": "https://eu.support.blizzard.com/en/article/6926"
+      }
+    ],
+    "category": "Dépannage",
+    "imageAlt": "Interface de jeu avec des indicateurs de recharge centrés",
+    "imageCaption": "Exemple d’interface personnalisée avec Cooldown Manager Centered. Cette capture illustre des éléments affichés en jeu ; elle ne constitue pas une mesure de performances.",
+    "imagePage": "https://www.curseforge.com/wow/addons/cooldown-manager-centered",
+    "relatedAddon": "cooldown-manager-centered"
+  },
+  {
+    "type": "astuce",
+    "slug": "partager-point-passage",
+    "title": "Partager des coordonnées avec TomTom",
+    "description": "Envoyez une destination avec sa zone et son objectif, plutôt qu’une paire de nombres sans contexte.",
+    "facts": [
+      "2 min",
+      "Monde ouvert",
+      "TomTom"
+    ],
+    "steps": [
+      "Dans la zone concernée, utilisez par exemple /way 45 50 Rendez-vous pour placer un repère nommé.",
+      "Pour un point dans une autre zone, indiquez aussi le nom de la zone reconnu par votre client.",
+      "Si /way est utilisé par un autre addon, employez /tway, l’alias de TomTom.",
+      "Une fois le trajet terminé, retirez le repère devenu inutile. /tway reset all efface tous les points : utilisez cette commande uniquement si c’est votre intention."
+    ],
+    "note": "Les coordonnées décimales utilisent un point, par exemple 45.5. Le nom de zone dépend de la langue du client ; accompagnez toujours les coordonnées d’un repère en clair.",
+    "tags": [
+      "tomtom",
+      "waypoint",
+      "groupe"
+    ],
+    "image": "/assets/tomtom-catalog-07aad5f0da.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "TomTom · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/tomtom"
+      },
+      {
+        "label": "TomTom · commandes dans le dépôt du projet",
+        "url": "https://github.com/MURPHYENGINEERING/tomtom"
+      }
+    ],
+    "category": "Exploration",
+    "imageAlt": "Repère et flèche de navigation de TomTom",
+    "imageCaption": "Capture publiée par l’auteur de TomTom sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/tomtom",
+    "relatedAddon": "tomtom"
+  },
+  {
+    "type": "astuce",
+    "slug": "preparer-familier-chasseur",
+    "title": "Tenir son carnet de familiers",
+    "description": "Documentez les bêtes rencontrées et les capacités qui vous intéressent sans révéler toute la carte.",
+    "facts": [
+      "5 min",
+      "En exploration",
+      "Hunter’s Field Guide"
+    ],
+    "steps": [
+      "Ouvrez le journal avec /fg et choisissez une famille ou une capacité à rechercher.",
+      "Gardez la révélation générale désactivée si vous préférez découvrir les bêtes en voyageant.",
+      "Ciblez une bête domptable pour enregistrer sa découverte. Lancez Connaissance des bêtes pour révéler les capacités prises en charge.",
+      "Comparez les rangs, le niveau requis du familier et les emplacements indiqués avant de préparer votre prochaine capture."
+    ],
+    "note": "L’auteur signale que Connaissance des bêtes n’a pas encore été entièrement testée pendant la bêta Forever. Si une donnée semble manquer, vérifiez en jeu avant de changer de familier.",
+    "tags": [
+      "chasseur",
+      "familier",
+      "beast lore"
+    ],
+    "image": "/assets/hunters-field-guide-catalog-de3b472544.webp",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Sources consultées",
+    "sources": [
+      {
+        "label": "Hunter’s Field Guide · documentation de l’auteur",
+        "url": "https://www.curseforge.com/wow/addons/hunters-field-guide"
+      }
+    ],
+    "category": "Chasseur",
+    "imageAlt": "Journal des bêtes et capacités de Hunter’s Field Guide",
+    "imageCaption": "Capture publiée par l’auteur de Hunter's Field Guide sur CurseForge. L’apparence peut varier selon le client et la version.",
+    "imagePage": "https://www.curseforge.com/wow/addons/hunters-field-guide",
+    "relatedAddon": "hunters-field-guide"
+  }
+];
 
   const commands=[
     ['giquality','Éclairage secondaire minimal','/console giquality 0','Réduit l’éclairage indirect.','Gain possible','Valeur par défaut non confirmée.'],

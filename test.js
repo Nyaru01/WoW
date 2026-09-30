@@ -53,6 +53,17 @@ test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
   }
 });
 
+test('les astuces ont des captures locales attribuées et des sources consultées',()=>{
+  for(const tip of data.tips){
+    assert.equal(tip.verificationStatus,'Sources consultées');
+    assert.ok(tip.sources.length>0,tip.slug);
+    assert.ok(tip.imageAlt&&tip.imageCaption&&tip.imagePage,tip.slug);
+    assert.ok(fs.existsSync(path.join(__dirname,tip.image)),tip.image);
+    assert.ok(data.addons.some(addon=>addon.slug===tip.relatedAddon),tip.slug);
+    assert.doesNotMatch(tip.image,/azeroth-cosmique|mont-hyjal|citadelle-glace|chute-arthas|porte-tenebres|kaldorei/);
+  }
+});
+
 test('la sélection de septembre contient les 20 liens sans doublon et des images locales',()=>{
   const expected='forever-quest-tint offhand shotrange reverse-engineering-by-chills roarforever loot-triage dungeonjournal trainerspells forever-field-journal foreverthreatplate banterblocker the-fishing-log immersion coloured-enemy-nameplates forever-thanks shard-source lorewalker forever-fishing questtogether books-forever'.split(' ');
   assert.equal(data.addons.length,48);
