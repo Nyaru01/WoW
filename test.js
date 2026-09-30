@@ -73,6 +73,9 @@ test('la sélection de septembre contient les 20 liens sans doublon et des image
     const addon=data.addons.find(item=>item.slug===slug);
     assert.equal(addon.imageKind,'capture',slug);
     assert.match(addon.imageSource,/media\.forgecdn\.net\/attachments\//,slug);
+    const bytes=fs.readFileSync(path.join(__dirname,addon.image));
+    const digest=require('node:crypto').createHash('sha256').update(bytes).digest('hex').slice(0,10);
+    assert.ok(addon.image.endsWith(`-${digest}.webp`),`URL versionnée : ${slug}`);
   }
 });
 
