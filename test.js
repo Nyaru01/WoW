@@ -42,8 +42,8 @@ test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
   assert.ok(data.tips.length>=12);
   assert.ok(data.items.length>=6);
   assert.ok(data.news.length>=9);
-  const historical=data.addons.filter(addon=>addon.slug!=='hunters-field-guide');
-  assert.equal(historical.length,29);
+  const historical=data.addons.filter(addon=>addon.slug!=='hunters-field-guide'&&!addon.addedDate);
+  assert.equal(historical.length,27);
   for(const addon of historical){
     assert.ok(addon.bestFor&&addon.setupAdvice,addon.slug);
     assert.ok(addon.features.length>=3,addon.slug);
@@ -51,6 +51,22 @@ test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
     assert.equal(addon.tested,false,addon.slug);
     assert.equal(addon.verificationStatus,'À retester',addon.slug);
   }
+});
+
+test('la sélection de septembre contient les 20 liens sans doublon et des images locales',()=>{
+  const expected='forever-quest-tint offhand shotrange reverse-engineering-by-chills roarforever loot-triage dungeonjournal trainerspells forever-field-journal foreverthreatplate banterblocker the-fishing-log immersion coloured-enemy-nameplates forever-thanks shard-source lorewalker forever-fishing questtogether books-forever'.split(' ');
+  assert.equal(data.addons.length,48);
+  for(const slug of expected){
+    const matches=data.addons.filter(addon=>addon.slug===slug);
+    assert.equal(matches.length,1,slug);
+    const addon=matches[0];
+    assert.equal(addon.curseforgeUrl,`https://www.curseforge.com/wow/addons/${slug}`);
+    assert.ok(fs.existsSync(path.join(__dirname,addon.image)),slug);
+    assert.ok(addon.description.length<200,slug);
+    assert.equal(addon.tested,false);
+    assert.ok(['capture','illustration'].includes(addon.imageKind));
+  }
+  assert.match(data.addons.find(addon=>addon.slug==='shotrange').warnings[0],/compatibilité Forever reste à confirmer/);
 });
 
 test('la Torche du guetteur de nuit possède un guide illustré et sourcé',()=>{

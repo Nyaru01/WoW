@@ -157,6 +157,854 @@
     {type:'preset',slug:'cinematique',title:'Preset Cinématique',description:'Météo, distance et ambiance destinées aux captures.',commands:['/console weatherdensity 3','/console horizonstart 4000','/console shadowNumCascades 4','/console groundEffectDensity 128'],restore:'Les valeurs d’origine n’étant pas toutes confirmées, sauvegardez Config.wtf avant application.',tags:['graphismes','capture'],verifiedDate,verificationStatus:'Information bêta',sources:commands.find(c=>c.slug==='weather-density').sources}
   ];
 
+  // Sélection du 30 septembre : mise à jour par slug, sans doublons.
+  const septemberAddons=[
+  {
+    "slug": "forever-quest-tint",
+    "title": "Forever Quest Tint",
+    "name": "Forever Quest Tint",
+    "category": "quetes",
+    "categories": [
+      "quetes"
+    ],
+    "description": "Colore les nouvelles quêtes de Forever en turquoise pour les distinguer des quêtes classiques.",
+    "author": "xanastar",
+    "image": "/assets/addon-forever-quest-tint.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1985/75/screenshot-2026-09-20-121627-png.png",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "quetes",
+      "sélection septembre",
+      "Forever Quest Tint"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/forever-quest-tint"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/forever-quest-tint"
+  },
+  {
+    "slug": "offhand",
+    "title": "Offhand",
+    "name": "Offhand",
+    "category": "interface",
+    "categories": [
+      "interface"
+    ],
+    "description": "Déplace cartes, sacs et fenêtres sur un second écran tout en gardant le jeu centré sur le principal.",
+    "author": "N4UX",
+    "image": "/assets/addon-offhand.webp",
+    "imageKind": "capture",
+    "imageSource": "https://raw.githubusercontent.com/N4UX-GIT/Offhand-DualMonitor/main/Website/assets/offhand-screenshot.jpg",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "beta",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "interface",
+      "sélection septembre",
+      "Offhand"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/offhand"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/offhand"
+  },
+  {
+    "slug": "shotrange",
+    "title": "ShotRange",
+    "name": "ShotRange",
+    "category": "combat",
+    "categories": [
+      "combat"
+    ],
+    "description": "Affiche sur les plaques ennemies un indicateur de portée pour la capacité de votre choix.",
+    "author": "axetowers",
+    "image": "/assets/addon-shotrange.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Classic Era",
+      "Classic TBC"
+    ],
+    "tags": [
+      "combat",
+      "sélection septembre",
+      "ShotRange"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "L’auteur indique des tests sur Classic Era et TBC ; la compatibilité Forever reste à confirmer."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/shotrange"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/shotrange"
+  },
+  {
+    "slug": "reverse-engineering-by-chills",
+    "title": "Reverse Engineering",
+    "name": "Reverse Engineering",
+    "category": "confort",
+    "categories": [
+      "confort"
+    ],
+    "description": "Calcule les matières premières nécessaires à vos crafts, en tenant compte des composants déjà possédés.",
+    "author": "IAmChills",
+    "image": "/assets/addon-reverse-engineering-by-chills.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1980/305/4-png.png",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "confort",
+      "sélection septembre",
+      "Reverse Engineering"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/reverse-engineering-by-chills"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/reverse-engineering-by-chills"
+  },
+  {
+    "slug": "roarforever",
+    "title": "RoarForever",
+    "name": "RoarForever",
+    "category": "rp",
+    "categories": [
+      "rp"
+    ],
+    "description": "Rétablit les voix des emotes, comme /roar, avec les sons déjà présents dans le jeu.",
+    "author": "BabuniGaming",
+    "image": "/assets/addon-roarforever.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "rp",
+      "sélection septembre",
+      "RoarForever"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/roarforever"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/roarforever"
+  },
+  {
+    "slug": "loot-triage",
+    "title": "Loot Triage",
+    "name": "Loot Triage",
+    "category": "confort",
+    "categories": [
+      "confort"
+    ],
+    "description": "Quand vos sacs sont pleins, repère le butin intéressant et les objets les moins rentables à retirer.",
+    "author": "Krelock",
+    "image": "/assets/addon-loot-triage.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "confort",
+      "sélection septembre",
+      "Loot Triage"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/loot-triage"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/loot-triage"
+  },
+  {
+    "slug": "dungeonjournal",
+    "title": "DungeonJournal",
+    "name": "DungeonJournal",
+    "category": "donjons",
+    "categories": [
+      "donjons"
+    ],
+    "description": "Retrouvez les quêtes, les emplacements et le butin des boss pour préparer vos donjons.",
+    "author": "ExehnTV",
+    "image": "/assets/addon-dungeonjournal.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "donjons",
+      "sélection septembre",
+      "DungeonJournal"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/dungeonjournal"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/dungeonjournal"
+  },
+  {
+    "slug": "trainerspells",
+    "title": "TrainerSpells",
+    "name": "TrainerSpells",
+    "category": "confort",
+    "categories": [
+      "confort"
+    ],
+    "description": "Liste les sorts et recettes que vous pouvez apprendre auprès des maîtres de classe et de métier.",
+    "author": "D4KiR",
+    "image": "/assets/addon-trainerspells.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1967/261/1-jpg.jpg",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "confort",
+      "sélection septembre",
+      "TrainerSpells"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/trainerspells"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/trainerspells"
+  },
+  {
+    "slug": "forever-field-journal",
+    "title": "Forever Field Journal",
+    "name": "Forever Field Journal",
+    "category": "rp",
+    "categories": [
+      "rp"
+    ],
+    "description": "Un carnet de découverte qui raconte votre parcours, les créatures étudiées et les lieux explorés.",
+    "author": "Mangzane",
+    "image": "/assets/addon-forever-field-journal.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Source communautaire",
+    "sourceNote": "Présentation communautaire consultée ; page CurseForge indisponible lors de la vérification.",
+    "tested": false,
+    "status": "beta",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "rp",
+      "sélection septembre",
+      "Forever Field Journal"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/forever-field-journal"
+      },
+      {
+        "label": "Présentation communautaire",
+        "url": "https://www.reddit.com/r/wowforever/comments/1wthraq/collection_of_neat_new_addons_from_reddit_users/"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/forever-field-journal"
+  },
+  {
+    "slug": "foreverthreatplate",
+    "title": "ForeverThreatPlate",
+    "name": "ForeverThreatPlate",
+    "category": "combat",
+    "categories": [
+      "combat"
+    ],
+    "description": "Ajoute des couleurs de menace aux plaques Blizzard en conservant leur apparence d’origine.",
+    "author": "Maks31",
+    "image": "/assets/addon-foreverthreatplate.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "combat",
+      "sélection septembre",
+      "ForeverThreatPlate"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/foreverthreatplate"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/foreverthreatplate"
+  },
+  {
+    "slug": "banterblocker",
+    "title": "BanterBlocker",
+    "name": "BanterBlocker",
+    "category": "confort",
+    "categories": [
+      "confort"
+    ],
+    "description": "Filtre les messages du chat selon les sujets et les termes que vous choisissez de bloquer.",
+    "author": "Smellikat",
+    "image": "/assets/addon-banterblocker.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Source communautaire",
+    "sourceNote": "Présentation communautaire consultée ; page CurseForge indisponible lors de la vérification.",
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "confort",
+      "sélection septembre",
+      "BanterBlocker"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/banterblocker"
+      },
+      {
+        "label": "Présentation communautaire",
+        "url": "https://www.reddit.com/r/wowforever/comments/1wthraq/collection_of_neat_new_addons_from_reddit_users/"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/banterblocker"
+  },
+  {
+    "slug": "the-fishing-log",
+    "title": "The Fishing Log",
+    "name": "The Fishing Log",
+    "category": "confort",
+    "categories": [
+      "confort"
+    ],
+    "description": "Gardez un journal de vos prises, battez des records et organisez des concours de pêche.",
+    "author": "Boomflex",
+    "image": "/assets/addon-the-fishing-log.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1959/731/wowb_3vhwud0pev-png.png",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "confort",
+      "sélection septembre",
+      "The Fishing Log",
+      "pêche"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/the-fishing-log"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/the-fishing-log"
+  },
+  {
+    "slug": "immersion",
+    "title": "Immersion",
+    "name": "Immersion",
+    "category": "quetes",
+    "categories": [
+      "quetes"
+    ],
+    "description": "Présente les quêtes et dialogues dans une interface immersive avec des raccourcis personnalisables.",
+    "author": "MunkDev",
+    "image": "/assets/addon-immersion.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/308/437/pvw69981.jpg",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "quetes",
+      "sélection septembre",
+      "Immersion"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/immersion"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/immersion"
+  },
+  {
+    "slug": "coloured-enemy-nameplates",
+    "title": "Coloured Enemy Nameplates",
+    "name": "Coloured Enemy Nameplates",
+    "category": "combat",
+    "categories": [
+      "combat"
+    ],
+    "description": "Colore les plaques ennemies pour repérer les cibles prioritaires, les lanceurs de sorts et la menace.",
+    "author": "retromojo",
+    "image": "/assets/addon-coloured-enemy-nameplates.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1534/624/wowscrnshot_021526_154748-png.png",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "combat",
+      "sélection septembre",
+      "Coloured Enemy Nameplates"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/coloured-enemy-nameplates"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/coloured-enemy-nameplates"
+  },
+  {
+    "slug": "forever-thanks",
+    "title": "Forever Thanks",
+    "name": "Forever Thanks",
+    "category": "confort",
+    "categories": [
+      "confort"
+    ],
+    "description": "Remercie automatiquement les joueurs qui vous offrent des améliorations de plus de deux minutes.",
+    "author": "Sinestro",
+    "image": "/assets/addon-forever-thanks.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "confort",
+      "sélection septembre",
+      "Forever Thanks"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/forever-thanks"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/forever-thanks"
+  },
+  {
+    "slug": "shard-source",
+    "title": "ShardSource",
+    "name": "ShardSource",
+    "category": "rp",
+    "categories": [
+      "rp"
+    ],
+    "description": "Garde la trace des créatures à l’origine des fragments d’âme de votre démoniste.",
+    "author": "Blueteak",
+    "image": "/assets/addon-shard-source.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1958/84/68747470733a2f2f692e696d6775722e636f6d2f6752557657.png",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "rp",
+      "sélection septembre",
+      "ShardSource"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/shard-source"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/shard-source"
+  },
+  {
+    "slug": "lorewalker",
+    "title": "Lorewalker",
+    "name": "Lorewalker",
+    "category": "quetes",
+    "categories": [
+      "quetes"
+    ],
+    "description": "Modernise les dialogues de quête avec des bulles immersives et une interface déplaçable.",
+    "author": "AdaptiveX",
+    "image": "/assets/addon-lorewalker.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1858/594/reimagined.png",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "quetes",
+      "sélection septembre",
+      "Lorewalker"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/lorewalker"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/lorewalker"
+  },
+  {
+    "slug": "forever-fishing",
+    "title": "Forever Fishing",
+    "name": "Forever Fishing",
+    "category": "confort",
+    "categories": [
+      "confort"
+    ],
+    "description": "Réunit raccourci de pêche, aide au repérage du bouchon, gestion des appâts et suivi des prises.",
+    "author": "Hamish336",
+    "image": "/assets/addon-forever-fishing.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Source communautaire",
+    "sourceNote": "Présentation communautaire consultée ; page CurseForge indisponible lors de la vérification.",
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "confort",
+      "sélection septembre",
+      "Forever Fishing",
+      "pêche"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/forever-fishing"
+      },
+      {
+        "label": "Présentation communautaire",
+        "url": "https://www.reddit.com/r/wowforever/comments/1wthraq/collection_of_neat_new_addons_from_reddit_users/"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/forever-fishing"
+  },
+  {
+    "slug": "questtogether",
+    "title": "QuestTogether",
+    "name": "QuestTogether",
+    "category": "quetes",
+    "categories": [
+      "quetes"
+    ],
+    "description": "Comparez les quêtes du groupe, partagez les objectifs et suivez la progression de vos compagnons.",
+    "author": "ChevCast",
+    "image": "/assets/addon-questtogether.webp",
+    "imageKind": "capture",
+    "imageSource": "https://media.forgecdn.net/attachments/1579/765/qt-nameplates-png.png",
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Fiche CurseForge consultée",
+    "sourceNote": null,
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "quetes",
+      "sélection septembre",
+      "QuestTogether"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/questtogether"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/questtogether"
+  },
+  {
+    "slug": "books-forever",
+    "title": "Books Forever",
+    "name": "Books Forever",
+    "category": "quetes",
+    "categories": [
+      "quetes"
+    ],
+    "description": "Suivez les livres de bibliothèque collectés ou remis, avec des repères TomTom optionnels.",
+    "author": "mr_blank",
+    "image": "/assets/addon-books-forever.svg",
+    "imageKind": "illustration",
+    "imageSource": null,
+    "addedDate": "2026-09-30",
+    "verifiedDate": "2026-09-30",
+    "verificationStatus": "Source communautaire",
+    "sourceNote": "Présentation communautaire consultée ; page CurseForge indisponible lors de la vérification.",
+    "tested": false,
+    "status": "unknown",
+    "foreverCompatibility": "retest",
+    "wowFlavor": [
+      "Forever"
+    ],
+    "tags": [
+      "quetes",
+      "sélection septembre",
+      "Books Forever"
+    ],
+    "features": [],
+    "commands": [],
+    "warnings": [
+      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+    ],
+    "sources": [
+      {
+        "label": "CurseForge",
+        "url": "https://www.curseforge.com/wow/addons/books-forever"
+      },
+      {
+        "label": "Présentation communautaire",
+        "url": "https://www.reddit.com/r/wowforever/comments/1wthraq/collection_of_neat_new_addons_from_reddit_users/"
+      }
+    ],
+    "curseforgeUrl": "https://www.curseforge.com/wow/addons/books-forever"
+  }
+];
+  for(const entry of septemberAddons){
+    const existing=addons.find(addon=>addon.slug===entry.slug);
+    if(existing)Object.assign(existing,entry,{features:existing.features,whyRecommended:existing.whyRecommended});
+    else addons.push({type:"addon",recommended:false,version:null,gameVersion:null,sourceUrl:null,...entry});
+  }
+
   const all=[...addons,...tips,...commands,...troubleshooting,...items,...news,...presets];
   const routeFor=item=>item.type==='addon'?`/addons/${item.slug}`:item.type==='astuce'?`/astuces/${item.slug}`:item.type==='commande'?`/commandes/${item.slug}`:item.type==='depannage'?`/depannage/${item.slug}`:item.type==='objet'?`/objets/${item.slug}`:item.type==='actualite'?`/actualites/${item.slug}`:`/commandes/presets#${item.slug}`;
   return {verifiedDate,categoryLabels,addons,tips,commands,troubleshooting,items,news,presets,all,routeFor};

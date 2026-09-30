@@ -79,7 +79,7 @@
   let activeFilter=new URLSearchParams(location.search).get('categorie')||'all';
   let favoritesOnly=false;
   let currentPage=1;
-  const pageSize=8;
+  const pageSize=12;
   const categoryOrder=['all','quetes','donjons','combat','interface','confort','support','hunter','map','rp'];
   const categoryNames={all:'Tous',...data.categoryLabels};
   const filterRow=$('.filter-row');
@@ -94,10 +94,12 @@
   }
   function addonCard(addon,index=0){
     return `<article class="addon-card" style="--accent:#d7ad58;--delay:${Math.min(index,8)*35}ms">
+      ${addon.image?`<a class="addon-cover" href="/addons/${escapeHtml(addon.slug)}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(addon.image)}" alt="" width="500" height="320" loading="lazy" decoding="async"><span>${addon.imageKind==='capture'?'Aperçu en jeu':'Illustration'}</span></a>`:''}
       <div class="addon-top"><span class="addon-category">${escapeHtml(addon.categories.map(key=>categoryNames[key]).join(' · '))}</span>${favoriteButton(addon)}</div>
       ${addon.status==='beta'?'<div class="status-row"><span class="status-pill beta">Bêta</span></div>':''}
       <h2><a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h2><p>${escapeHtml(addon.description)}</p>
       <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Voir la fiche →</a></div>
+      <a class="addon-download" href="${escapeHtml(addon.curseforgeUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(addon.title)} sur CurseForge">CurseForge <span aria-hidden="true">↗</span></a>
     </article>`;
   }
   function renderAddons(){
@@ -109,7 +111,7 @@
       return inCategory&&(!favoritesOnly||isFavorite(addon))&&(!query||haystack.includes(query));
     });
     if(addonSort?.value==='name')matches.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
-    if(addonSort?.value==='newest')matches.sort((a,b)=>b.slug==='hunters-field-guide'?1:a.slug==='hunters-field-guide'?-1:0);
+    if(addonSort?.value==='newest')matches.sort((a,b)=>String(b.addedDate||'').localeCompare(String(a.addedDate||''))||a.title.localeCompare(b.title,'fr'));
     if(addonSort?.value==='verified')matches.sort((a,b)=>String(b.verifiedDate).localeCompare(String(a.verifiedDate)));
     if(addonSort?.value==='selection')matches.sort((a,b)=>Number(b.recommended)-Number(a.recommended));
     const totalPages=Math.max(1,Math.ceil(matches.length/pageSize));currentPage=Math.min(currentPage,totalPages);
@@ -213,6 +215,7 @@
     return items.length?`<section class="detail-block"><h2>${escapeHtml(title)}</h2><ul>${items.map(item=>`<li>${escapeHtml(item)}</li>`).join('')}</ul></section>`:'';
   }
   function renderDetail(item){
+    if(item.type==='addon'&&item.addedDate)return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(item.categories.map(key=>categoryNames[key]).join(' · '))}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${favoriteButton(item)}</header><figure class="addon-preview"><img src="${escapeHtml(item.image)}" alt="${item.imageKind==='capture'?'Aperçu de':'Illustration pour'} ${escapeHtml(item.title)}" width="1000" height="640"><figcaption>${item.imageKind==='capture'?'Capture de la présentation de l’auteur':'Illustration Renaissance · pas une capture du jeu'} · par ${escapeHtml(item.author)}</figcaption></figure><a class="button primary" href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Voir sur CurseForge ↗</a><div class="detail-status">${verified(item)}</div>${item.sourceNote?`<p class="source-note">${escapeHtml(item.sourceNote)}</p>`:''}${listBlock('À savoir',item.warnings)}${sourceLinks(item.sources)}<a class="detail-back" href="/addons">← Tous les addons</a>`;
     return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(typeLabels[item.type])}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${['addon','astuce','commande','objet'].includes(item.type)?favoriteButton(item):''}</header>
       <div class="detail-status">${item.type==='addon'?(item.status==='beta'?'<span class="status-pill beta">Bêta</span>':''):verified(item)}</div>
       ${item.type==='addon'?`<dl class="fact-grid"><div><dt>Auteur</dt><dd>${escapeHtml(item.author)}</dd></div><div><dt>Version</dt><dd>${escapeHtml(item.version||'Non confirmée')}</dd></div><div><dt>Version du jeu</dt><dd>${escapeHtml(item.gameVersion||'Non confirmée')}</dd></div><div><dt>Test</dt><dd>${item.tested?'Testé':'Non présenté comme totalement testé'}</dd></div></dl>`:''}
