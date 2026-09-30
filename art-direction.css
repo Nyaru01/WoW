@@ -347,3 +347,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { 
  .guide-summary span { flex-basis:100%; border-bottom:1px solid #95764840; }
  .guide-steps li { font-size:.9rem; }
 }
+
+/* Emblèmes officiels, dans le même ordre que les personnages du décor. */
+.faction-signature { gap:24px; }
+.faction-signature img { display:block; width:43px; height:56px; object-fit:contain; filter:drop-shadow(0 2px 3px #000b); }
+.faction-signature>span:nth-child(2) { font-size:.55rem; opacity:.75; }
+@media(max-width:640px) { .faction-signature { gap:20px; } .faction-signature img { width:37px; height:48px; } }
