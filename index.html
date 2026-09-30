@@ -4,14 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Le codex Renaissance : addons, astuces de terrain, objets RP et nouvelles vérifiées pour WoW: Forever.">
-  <meta name="theme-color" content="#071014">
+  <meta name="theme-color" content="#571725">
   <meta property="og:title" content="Renaissance — Le Codex de WoW: Forever">
   <meta property="og:description" content="Addons, guides pratiques, objets RP à dénicher et dernières nouvelles officielles de WoW: Forever.">
   <meta property="og:type" content="website">
   <title>Renaissance — Addons & astuces WoW: Forever</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23071014' stroke='%23d7ad58' stroke-width='3'/%3E%3Cpath d='M18 18h28v28H18z' fill='none' stroke='%237ed0e5' stroke-width='2' transform='rotate(45 32 32)'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23f7dda1' font-size='22' font-family='serif'%3ER%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/styles.css?v=9.3.0">
-  <link rel="stylesheet" href="/theme.css?v=9.3.0">
+  <link rel="stylesheet" href="/styles.css?v=10.0.4">
+  <link rel="stylesheet" href="/theme.css?v=10.0.4">
+  <link rel="stylesheet" href="/art-direction.css?v=10.0.4">
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
@@ -37,12 +38,12 @@
       <div class="embers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="hero-content">
         <span class="hero-kicker">Le guide communautaire de WoW: Forever</span>
-        <h1 id="hero-title">Azeroth<br><em>vous attend.</em></h1>
+        <h1 id="hero-title">Renaissance<em>Le codex d’Azeroth</em></h1>
         <p class="hero-copy">Votre prochaine découverte. Votre interface idéale.<br>Tout pour vivre l’aventure, à votre façon.</p>
         <div class="faction-signature" aria-label="Pour les joueurs Alliance et Horde"><span class="alliance">Alliance</span><span aria-hidden="true">◆</span><span class="horde">Horde</span><small>Deux factions. Une même aventure.</small></div>
         <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#nouvelles">Voir les patch notes <span>→</span></a></div>
-        <form class="hero-search" role="search" aria-label="Recherche globale"><label for="home-search" class="sr-only">Rechercher dans tout le codex</label><span aria-hidden="true">⌕</span><input id="home-search" type="search" placeholder="Addon, commande, astuce, objet…" autocomplete="off" aria-controls="global-search-results"><button type="submit" aria-label="Rechercher dans le codex">→</button></form>
-        <div id="global-search-results" class="global-search-results" role="region" aria-label="Résultats de recherche" hidden></div>
+        <div class="hero-search-wrap"><form class="hero-search" role="search" aria-label="Recherche globale"><label for="home-search" class="sr-only">Rechercher dans tout le codex</label><span aria-hidden="true">⌕</span><input id="home-search" type="search" placeholder="Addon, commande, astuce, objet…" autocomplete="off" aria-controls="global-search-results"><button type="submit" aria-label="Rechercher dans le codex">→</button></form>
+        <div id="global-search-results" class="global-search-results" role="region" aria-label="Résultats de recherche" hidden></div></div>
         <span class="hero-credit">Un codex indépendant, créé par <strong>Nyaru</strong></span>
       </div>
       <nav class="hero-meter" aria-label="Accès rapides"><a href="#addons"><strong>48</strong><span><b>Trouver un addon</b><small>Recherche et filtres</small></span><i>→</i></a><a href="#astuces"><strong>08</strong><span><b>Bien démarrer</b><small>Guides pratiques</small></span><i>→</i></a><a href="#objets-rp"><strong>02</strong><span><b>Partir en quête</b><small>Objets à dénicher</small></span><i>→</i></a></nav>
@@ -71,9 +72,9 @@
       <div class="section-shell">
         <div class="section-intro compact"><div><span class="chapter">01 — Démarrage rapide</span><h2 id="essentials-title">Les indispensables</h2></div><p>Trois bases solides pour partir en quête, comprendre son butin et garder une interface saine.</p></div>
         <div class="essential-grid">
-          <a href="https://www.curseforge.com/wow/addons/questie" target="_blank" rel="noopener noreferrer" class="essential-card quest"><span class="essential-number">01</span><span class="essential-tag">Quêtes</span><h3>Questie</h3><p>Objectifs et quêtes disponibles directement sur la carte.</p><b>Voir sur CurseForge ↗</b></a>
-          <a href="https://www.curseforge.com/wow/addons/lootified" target="_blank" rel="noopener noreferrer" class="essential-card loot"><span class="essential-number">02</span><span class="essential-tag">Butin</span><h3>Lootified</h3><p>Journal de loot et assistant Best in Slot pour WoW: Forever.</p><b>Voir sur CurseForge ↗</b></a>
-          <a href="/addons/hunters-field-guide" class="essential-card debug"><span class="essential-number">03</span><span class="essential-tag">Guide chasseur · Bêta</span><h3>Hunter's Field Guide</h3><p>Le journal des bêtes, capacités et emplacements pour chasseurs.</p><b>Ouvrir la fiche →</b></a>
+          <a href="https://www.curseforge.com/wow/addons/questie" target="_blank" rel="noopener noreferrer" class="essential-card quest"><img class="essential-art" src="/assets/questie-catalog-850c25ef32.webp" alt="Objectifs de quêtes affichés sur la carte avec Questie" width="720" height="405" loading="lazy" decoding="async"><span class="essential-number">01</span><span class="essential-tag">Quêtes</span><h3>Questie</h3><p>Objectifs et quêtes disponibles directement sur la carte.</p><b>Voir sur CurseForge ↗</b></a>
+          <a href="https://www.curseforge.com/wow/addons/lootified" target="_blank" rel="noopener noreferrer" class="essential-card loot"><img class="essential-art" src="/assets/lootified-catalog-0a44925ffc.webp" alt="Journal de butin de Lootified" width="720" height="405" loading="lazy" decoding="async"><span class="essential-number">02</span><span class="essential-tag">Butin</span><h3>Lootified</h3><p>Journal de loot et assistant Best in Slot pour WoW: Forever.</p><b>Voir sur CurseForge ↗</b></a>
+          <a href="/addons/hunters-field-guide" class="essential-card debug"><img class="essential-art" src="/assets/hunters-field-guide-catalog-de3b472544.webp" alt="Journal des bêtes de Hunter’s Field Guide" width="720" height="405" loading="lazy" decoding="async"><span class="essential-number">03</span><span class="essential-tag">Guide chasseur · Bêta</span><h3>Hunter's Field Guide</h3><p>Le journal des bêtes, capacités et emplacements pour chasseurs.</p><b>Ouvrir la fiche →</b></a>
         </div>
       </div>
     </section>
@@ -221,7 +222,7 @@
   </main>
 
   <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site indépendant, non affilié à Blizzard. Lecture seule, sans compte, tracker, publicité ciblée ni cookie marketing.</p><nav aria-label="Informations"><a href="/sources">Sources</a><a href="/confidentialite">Confidentialité</a><a href="/a-propos">À propos</a><a href="/contribuer">Contribuer</a></nav></div></footer>
-  <script src="/data.js?v=9.3.0"></script>
-  <script src="/app.js?v=9.3.0"></script>
+  <script src="/data.js?v=10.0.4"></script>
+  <script src="/app.js?v=10.0.4"></script>
 </body>
 </html>

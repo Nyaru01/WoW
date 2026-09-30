@@ -55,7 +55,7 @@ function renderIndex(request,pathname,page){
   const canonical=`${origin}${pathname==='/'?'':pathname}`;
   const image=`${origin}/assets/azeroth-cosmique.webp`;
   let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-  if(pathname==='/')html=html.replace('</head>','  <link rel="preload" as="image" href="/assets/hero-forever.webp" fetchpriority="high">\n</head>');
+  if(pathname==='/')html=html.replace('</head>','  <link rel="preload" as="image" href="/assets/mont-hyjal.webp" fetchpriority="high">\n</head>');
   html=html.replace(/<title>.*?<\/title>/s,`<title>${escapeHtml(page.title)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${escapeHtml(page.description)}">`)
     .replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${escapeHtml(page.title)}">`)
@@ -120,7 +120,7 @@ Sitemap: ${normalizeOrigin(request)}/sitemap.xml
     const page=pageForPath(pathname);
     if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public, max-age=0, must-revalidate'},renderIndex(request,pathname,page),request.method==='HEAD');
     const requested=pathname.replace(/^\/+/, '');
-    if(!['styles.css','theme.css','app.js','data.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
+    if(!['styles.css','theme.css','art-direction.css','app.js','data.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
       return send(response,404,{'Content-Type':'text/html; charset=utf-8'},'<!doctype html><html lang="fr"><title>Page introuvable | Renaissance</title><body><main><h1>Page introuvable</h1><p><a href="/">Retour au codex</a></p></main></body></html>',request.method==='HEAD');
     }
     const filePath=path.resolve(root,requested);

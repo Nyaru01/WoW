@@ -35,7 +35,7 @@ test('chaque astuce fournit une procédure concrète',()=>{
     assert.ok(tip.note&&tip.image,tip.slug);
   }
   const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
-  assert.match(theme,/hero-forever\.webp/);
+  assert.match(theme,/mont-hyjal\.webp/);
 });
 
 test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
@@ -92,10 +92,10 @@ test('la Torche du guetteur de nuit possède un guide illustré et sourcé',()=>
 });
 
 test('les images actives sont optimisées en WebP',()=>{
-  const files=['index.html','styles.css','theme.css','data.js','server.js'];
+  const files=['index.html','styles.css','theme.css','art-direction.css','data.js','server.js'];
   const source=files.map(file=>fs.readFileSync(path.join(__dirname,file),'utf8')).join('\n');
   assert.doesNotMatch(source,/assets\/[\w-]+\.png/i);
-  for(const file of ['horde-forever.webp','alliance-forever.webp','hero-forever.webp','azeroth-cosmique.webp','torch-rp.webp']){
+  for(const file of ['horde-forever.webp','alliance-forever.webp','mont-hyjal.webp','azeroth-cosmique.webp','torch-rp.webp']){
     const stat=fs.statSync(path.join(__dirname,'assets',file));
     assert.ok(stat.size<350*1024,`${file} est trop lourd`);
   }
@@ -153,10 +153,10 @@ test('le serveur répond aux routes, métadonnées, sitemap et erreurs',async t=
     const response=await fetch(base+route);assert.equal(response.status,200,route);const html=await response.text();assert.match(html,/<link rel="canonical"/);assert.match(html,/property="og:image"/);assert.match(html,/name="twitter:card"/);
     assert.match(html,/href="\/styles\.css\?/);assert.match(html,/href="\/theme\.css\?/);assert.match(html,/src="\/data\.js\?/);assert.match(html,/src="\/app\.js\?/);
   }
-  for(const asset of ['/styles.css','/theme.css','/data.js','/app.js'])assert.equal((await fetch(base+asset)).status,200,asset);
+  for(const asset of ['/styles.css','/theme.css','/art-direction.css','/data.js','/app.js'])assert.equal((await fetch(base+asset)).status,200,asset);
   const sitemap=await fetch(base+'/sitemap.xml');assert.equal(sitemap.status,200);assert.match(await sitemap.text(),/\/addons\/hunters-field-guide/);
   const robots=await fetch(base+'/robots.txt');assert.match(await robots.text(),/Sitemap:/);
-  const home=await fetch(base+'/');assert.match(await home.text(),/rel="preload" as="image" href="\/assets\/hero-forever\.webp"/);
+  const home=await fetch(base+'/');assert.match(await home.text(),/rel="preload" as="image" href="\/assets\/mont-hyjal\.webp"/);
   const presenceController=new AbortController();
   const presence=await fetch(base+'/api/presence',{signal:presenceController.signal});assert.equal(presence.status,200);assert.match(presence.headers.get('content-type'),/text\/event-stream/);
   const firstPresence=await presence.body.getReader().read();assert.match(new TextDecoder().decode(firstPresence.value),/retry:/);presenceController.abort();
