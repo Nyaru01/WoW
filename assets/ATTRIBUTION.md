@@ -40,3 +40,9 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 - forever-field-journal : https://media.forgecdn.net/attachments/1988/287/fj-mob-png.png
 - foreverthreatplate : https://media.forgecdn.net/attachments/1981/724/screenshot_20260927_154836-png.png
 - forever-fishing : https://media.forgecdn.net/attachments/1988/632/fishing1-jpg.jpg
+
+## Accueil Horde / Alliance et logo Forever
+
+- hero-horde-alliance-e4bfd66ec7.webp : fusion réalisée avec l’outil intégré imagegen des deux illustrations Blizzard fournies par l’utilisateur. Horde à gauche, Alliance à droite, paysage central libre pour les titres, sans texte ni logo dans l’image.
+- Sources : https://blz-contentstack-images.akamaized.net/v3/assets/bltf408a0557f4e4998/bltcad7f503e583d5b7/6a91d0db2437ed959cd486b0/WoW_Camelot_AnnounceSupport_Horde_BnetShop_1920x1080_(1).png et https://blz-contentstack-images.akamaized.net/v3/assets/bltf408a0557f4e4998/bltd1d2ec1b4afa617f/6a91d0e7dee8843ceecba8ae/WoW_Camelot_AnnounceSupport_Alliance_BnetShop_ProductAssetGallery_1920x1080.png
+- wow-forever-logo-6e6b3ceaa1.webp : logo officiel Blizzard, transparence originale conservée, conversion WebP. Source : https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt527dd61848a757c7/6aa3316cad92093ee45628fd/camelot-logo-gamepage.png

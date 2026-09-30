@@ -55,7 +55,7 @@ function renderIndex(request,pathname,page){
   const canonical=`${origin}${pathname==='/'?'':pathname}`;
   const image=`${origin}/assets/azeroth-cosmique.webp`;
   let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-  if(pathname==='/')html=html.replace('</head>','  <link rel="preload" as="image" href="/assets/mont-hyjal.webp" fetchpriority="high">\n</head>');
+  if(pathname==='/')html=html.replace('</head>','  <link rel="preload" as="image" href="/assets/hero-horde-alliance-e4bfd66ec7.webp" fetchpriority="high">\n</head>');
   html=html.replace(/<title>.*?<\/title>/s,`<title>${escapeHtml(page.title)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${escapeHtml(page.description)}">`)
     .replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${escapeHtml(page.title)}">`)

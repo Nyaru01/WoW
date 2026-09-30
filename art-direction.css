@@ -41,7 +41,7 @@ html { scroll-padding-top:108px; }
 body[data-route]:not([data-route="/"]) main { padding-top:88px; }
 body[data-route]:not([data-route="/"]) main>section { padding-block:66px 80px; }
 .hero { min-height:820px; height:max(820px,100svh); align-items:center; background:#30261f; border-bottom:1px solid #bc945e; }
-.hero-art { background:linear-gradient(180deg,#18111918 5%,#17101935 35%,#191312ac 72%,#211b19 100%),url('/assets/mont-hyjal.webp') center 42%/cover; transform:none; }
+.hero-art { background:linear-gradient(180deg,#18111918 5%,#17101935 35%,#191312ac 72%,#211b19 100%),url('/assets/hero-horde-alliance-e4bfd66ec7.webp') center 42%/cover; transform:none; }
 .hero-art:after { background:radial-gradient(ellipse at center,#211b1960,transparent 65%); opacity:1; }
 .hero-content { align-items:center; text-align:center; padding:160px 0 195px; }
 .hero-kicker { color:#fff0cf; font:500 .7rem var(--body); letter-spacing:.25em; margin-bottom:22px; text-shadow:0 2px 8px #000; }
@@ -132,7 +132,7 @@ body[data-route]:not([data-route="/"]) main>section { padding-block:66px 80px; }
 .command-block button { background:#632232; color:#f6e5c9; border-color:#b39157; }
 .guide-tab,.guide-summary,.command-index,.command-group { background:#2b211d; border-color:#8d704b70; color:#e8d4b5; }
 .guide-tab.active,.guide-tab:hover { background:#602335; color:#fff1d9; }
-.news-lead { background:linear-gradient(90deg,#271b18e8,#271b18b8),url('/assets/mont-hyjal.webp') center/cover; border-color:#b9955f80; border-radius:0; }
+.news-lead { background:linear-gradient(90deg,#271b18e8,#271b18b8),url('/assets/hero-horde-alliance-e4bfd66ec7.webp') center/cover; border-color:#b9955f80; border-radius:0; }
 footer { background:#1a1312; border-top:1px solid #a5825066; color:#bcaa91; }
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { outline:2px solid #f1d49a; outline-offset:4px; }
 @media(max-width:1200px) {
@@ -216,3 +216,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { 
 .result-counter { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:0; padding:6px; }
 .result-counter strong { font:400 1.8rem/1 var(--head); }.result-counter span { font:500 .55rem/1.6 var(--body); letter-spacing:.08em; }
 @media(max-width:430px) { .result-counter { flex-direction:row; justify-content:flex-start; gap:9px; padding:8px 14px; } }
+
+.brand-logo { display:block; width:74px; height:60px; flex:none; object-fit:contain; }
+@media(max-width:600px) { .brand-logo { width:62px; height:51px; }.brand { gap:9px; } }

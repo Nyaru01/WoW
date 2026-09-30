@@ -156,7 +156,7 @@ test('le serveur répond aux routes, métadonnées, sitemap et erreurs',async t=
   for(const asset of ['/styles.css','/theme.css','/art-direction.css','/data.js','/app.js'])assert.equal((await fetch(base+asset)).status,200,asset);
   const sitemap=await fetch(base+'/sitemap.xml');assert.equal(sitemap.status,200);assert.match(await sitemap.text(),/\/addons\/hunters-field-guide/);
   const robots=await fetch(base+'/robots.txt');assert.match(await robots.text(),/Sitemap:/);
-  const home=await fetch(base+'/');assert.match(await home.text(),/rel="preload" as="image" href="\/assets\/mont-hyjal\.webp"/);
+  const home=await fetch(base+'/');assert.match(await home.text(),/rel="preload" as="image" href="\/assets\/hero-horde-alliance-[a-f0-9]+\.webp"/);
   const presenceController=new AbortController();
   const presence=await fetch(base+'/api/presence',{signal:presenceController.signal});assert.equal(presence.status,200);assert.match(presence.headers.get('content-type'),/text\/event-stream/);
   const firstPresence=await presence.body.getReader().read();assert.match(new TextDecoder().decode(firstPresence.value),/retry:/);presenceController.abort();
