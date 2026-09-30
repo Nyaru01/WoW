@@ -643,7 +643,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -684,7 +684,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -767,7 +767,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -808,7 +808,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -849,7 +849,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -890,7 +890,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -931,7 +931,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -972,7 +972,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1017,7 +1017,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1058,7 +1058,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1104,7 +1104,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1145,7 +1145,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1186,7 +1186,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1227,7 +1227,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1268,7 +1268,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1309,7 +1309,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1351,7 +1351,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1396,7 +1396,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
@@ -1437,7 +1437,7 @@
     "features": [],
     "commands": [],
     "warnings": [
-      "Non testé en jeu par Renaissance. Choisissez le fichier correspondant à votre client."
+      "Non testé en jeu par Nyaru."
     ],
     "sources": [
       {
