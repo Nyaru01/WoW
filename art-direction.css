@@ -130,7 +130,12 @@ body[data-route]:not([data-route="/"]) main>section { padding-block:66px 80px; }
 .detail-header p,.detail-block p,.detail-block li { color:#cebfad; }
 /* Paysage d’Azeroth réservé aux introductions, sous un voile de lecture. */
 .chapter-view .section-intro,.chapter-view .detail-header { position:relative; isolation:isolate; }
-.chapter-view .section-intro:before,.chapter-view .detail-header:before { content:''; position:absolute; z-index:-1; pointer-events:none; left:50%; top:-76px; bottom:-20px; width:100vw; transform:translateX(-50%); background:linear-gradient(180deg,#211b1980 0%,#211b19a8 55%,#211b19 100%),url('/assets/hero-horde-alliance-e4bfd66ec7.webp') center 44%/cover; filter:blur(3px); opacity:.75; }
+.chapter-view .section-intro:before,.chapter-view .detail-header:before { content:''; position:absolute; z-index:-1; pointer-events:none; left:50%; top:-76px; bottom:0; width:100vw; transform:translateX(-50%); background:linear-gradient(180deg,#211b1980 0%,#211b19a8 55%,#211b19 100%),url('/assets/hero-horde-alliance-e4bfd66ec7.webp') center 44%/cover; filter:blur(3px); clip-path:inset(0); opacity:.75; }
+.chapter-view main>section { overflow:clip; }
+.topbar { isolation:isolate; }
+.source-list a { display:inline-flex; flex-wrap:wrap; gap:6px; align-items:center; text-decoration:underline; text-underline-offset:3px; }
+.external-destination { color:#cdb794; font-size:.7rem; text-decoration:none; }
+.guide-links a,.tip-figure figcaption a,.addon-preview figcaption a,.detail-back { text-decoration:underline; text-underline-offset:4px; }
 .chapter-view .section-intro p { color:#e5d8c5; text-shadow:0 1px 5px #16100c; }
 @media(max-width:760px) { .chapter-view .section-intro:before,.chapter-view .detail-header:before { top:-52px; background-position:center,58% center; filter:blur(2px); } }
 .detail-block h2,.content-card h2,.troubleshooting .content-card h2,.rp-copy h2,.rp-secondary h2 { font-family:var(--head); font-weight:400; text-transform:none; }

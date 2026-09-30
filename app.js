@@ -22,7 +22,7 @@
 
   function sourceLinks(sources=[]){
     if(!sources.length)return '<p class="source-note">Aucune source externe nécessaire pour cette fiche pratique.</p>';
-    return `<div class="source-list">${sources.map(source=>`<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.label)} ↗</a>`).join('')}</div>`;
+    return `<div class="source-list">${sources.map(source=>`<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.label)} <small class="external-destination">${escapeHtml(new URL(source.url).hostname.replace(/^www\./,''))} · nouvel onglet ↗</small></a>`).join('')}</div>`;
   }
   function verified(item){
     return `<span class="verified-date">✓ ${escapeHtml(item.verificationStatus||'Vérifié')} · ${escapeHtml(formatDate(item.verifiedDate))}</span>`;
@@ -98,8 +98,8 @@
       <div class="addon-top"><span class="addon-category">${escapeHtml(addon.categories.map(key=>categoryNames[key]).join(' · '))}</span>${favoriteButton(addon)}</div>
       ${addon.status==='beta'?'<div class="status-row"><span class="status-pill beta">Bêta</span></div>':''}
       <h2>${addon.imageKind==='logo'?`<img class="addon-icon" src="${escapeHtml(addon.image)}" alt="" width="40" height="40" loading="lazy">`:''}<a href="/addons/${escapeHtml(addon.slug)}">${escapeHtml(addon.title)}</a></h2><p>${escapeHtml(addon.description)}</p>
-      <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Voir la fiche →</a></div>
-      <a class="addon-download" href="${escapeHtml(addon.curseforgeUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(addon.title)} sur CurseForge">CurseForge <span aria-hidden="true">↗</span></a>
+      <div class="addon-meta"><span>par ${escapeHtml(addon.author)}</span><a href="/addons/${escapeHtml(addon.slug)}">Découvrir cet addon →</a></div>
+      <a class="addon-download" href="${escapeHtml(addon.curseforgeUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(addon.title)} sur CurseForge">Versions sur CurseForge <span aria-hidden="true">↗</span></a>
     </article>`;
   }
   function renderAddons(){
@@ -188,7 +188,7 @@
 
   const tabList=$('.guide-tabs');
   const guide=$('#guide-panel');
-  function tipFigure(tip){return `<figure class="tip-figure"><img src="${escapeHtml(tip.image)}" alt="${escapeHtml(tip.imageAlt)}" width="960" height="540" decoding="async"><figcaption>${escapeHtml(tip.imageCaption)} <a href="${escapeHtml(tip.imagePage)}" target="_blank" rel="noopener noreferrer">Source ↗</a></figcaption></figure>`;}
+  function tipFigure(tip){return `<figure class="tip-figure"><img src="${escapeHtml(tip.image)}" alt="${escapeHtml(tip.imageAlt)}" width="960" height="540" decoding="async"><figcaption>${escapeHtml(tip.imageCaption)} <a href="${escapeHtml(tip.imagePage)}" target="_blank" rel="noopener noreferrer">Voir cette capture sur CurseForge ↗</a></figcaption></figure>`;}
   if(tabList&&guide){
     tabList.innerHTML=data.tips.map((tip,index)=>`<button class="guide-tab ${index===0?'active':''}" role="tab" id="guide-tab-${index}" aria-controls="guide-panel" aria-selected="${index===0}" tabindex="${index===0?'0':'-1'}" data-tip="${index}"><span>${String(index+1).padStart(2,'0')}</span><div><small>${escapeHtml(tip.category)}</small><strong>${escapeHtml(tip.title)}</strong></div><b>→</b></button>`).join('');
     const tipSelect=$('#tip-select');
@@ -196,7 +196,7 @@
     $('.guide-summary').innerHTML=`<span><strong>${data.tips.length}</strong> fiches pratiques</span><span>Installation · exploration · donjons · interface</span><span>Conseils sourcés · bêta Forever</span>`;
     const renderTip=index=>{
       const tip=data.tips[index];guide.setAttribute('aria-labelledby',`guide-tab-${index}`);
-      guide.innerHTML=`<div class="guide-content"><span class="guide-kicker">${escapeHtml(tip.category)} · Fiche ${String(index+1).padStart(2,'0')}</span><h2>${escapeHtml(tip.title)}</h2><p class="guide-intro">${escapeHtml(tip.description)}</p><div class="guide-facts">${tip.facts.map((fact,factIndex)=>`<span><small>${['Prévoir','Quand','Repère utile'][factIndex]}</small><b>${escapeHtml(fact)}</b></span>`).join('')}</div>${tipFigure(tip)}<h3 class="guide-subtitle">En pratique</h3><ol class="guide-steps">${tip.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol><aside class="guide-note"><strong>À retenir</strong><span>${escapeHtml(tip.note)}</span></aside><div class="guide-resources"><h3 class="guide-subtitle">Pour aller plus loin</h3><p class="guide-reviewed">Sources consultées le ${escapeHtml(formatDate(tip.verifiedDate))}. Les conseils de préparation sont des recommandations éditoriales ; les possibilités des addons dépendent du client.</p>${sourceLinks(tip.sources)}<div class="guide-links"><a href="/addons/${escapeHtml(tip.relatedAddon)}">Voir l’addon associé →</a><a class="tip-permalink" href="${typePath(tip)}">Ouvrir cette fiche seule →</a></div></div></div>`;
+      guide.innerHTML=`<div class="guide-content"><span class="guide-kicker">${escapeHtml(tip.category)} · Fiche ${String(index+1).padStart(2,'0')}</span><h2>${escapeHtml(tip.title)}</h2><p class="guide-intro">${escapeHtml(tip.description)}</p><div class="guide-facts">${tip.facts.map((fact,factIndex)=>`<span><small>${['Prévoir','Quand','Repère utile'][factIndex]}</small><b>${escapeHtml(fact)}</b></span>`).join('')}</div>${tipFigure(tip)}<h3 class="guide-subtitle">En pratique</h3><ol class="guide-steps">${tip.steps.map(step=>`<li>${escapeHtml(step)}</li>`).join('')}</ol><aside class="guide-note"><strong>À retenir</strong><span>${escapeHtml(tip.note)}</span></aside><div class="guide-resources"><h3 class="guide-subtitle">Pour aller plus loin</h3><p class="guide-reviewed">Sources consultées le ${escapeHtml(formatDate(tip.verifiedDate))}. Les conseils de préparation sont des recommandations éditoriales ; les possibilités des addons dépendent du client.</p>${sourceLinks(tip.sources)}<div class="guide-links"><a href="/addons/${escapeHtml(tip.relatedAddon)}">Découvrir ${escapeHtml(data.addons.find(addon=>addon.slug===tip.relatedAddon)?.title||'cet addon')} →</a><a class="tip-permalink" href="${typePath(tip)}">Lire le guide complet →</a></div></div></div>`;
       tipSelect.value=String(index);
       $$('[data-tip]',tabList).forEach((button,i)=>{button.classList.toggle('active',i===index);button.setAttribute('aria-selected',String(i===index));button.tabIndex=i===index?0:-1;});
     };
@@ -223,10 +223,10 @@
   function addonPreview(item){
     if(!item.image)return '';
     if(item.imageKind==='logo')return `<p class="source-note"><img class="addon-icon" src="${escapeHtml(item.image)}" alt="Logo de ${escapeHtml(item.title)}" width="40" height="40"> Aucune capture publiée par l’auteur sur CurseForge.</p>`;
-    return `<figure class="addon-preview"><img src="${escapeHtml(item.image)}" alt="Aperçu de ${escapeHtml(item.title)}" width="1000" height="640"><figcaption>${escapeHtml(item.imageCaption||'Capture de la présentation de l’auteur')} · <a href="${escapeHtml(item.imagePage||item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Source ↗</a></figcaption></figure>`;
+    return `<figure class="addon-preview"><img src="${escapeHtml(item.image)}" alt="Aperçu de ${escapeHtml(item.title)}" width="1000" height="640"><figcaption>${escapeHtml(item.imageCaption||'Capture de la présentation de l’auteur')} · <a href="${escapeHtml(item.imagePage||item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Voir cette capture sur CurseForge ↗</a></figcaption></figure>`;
   }
   function renderDetail(item){
-    if(item.type==='addon'&&item.addedDate)return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(item.categories.map(key=>categoryNames[key]).join(' · '))}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${favoriteButton(item)}</header>${addonPreview(item)}<a class="button primary" href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Voir sur CurseForge ↗</a><div class="detail-status">${verified(item)}</div>${item.sourceNote?`<p class="source-note">${escapeHtml(item.sourceNote)}</p>`:''}${listBlock('À savoir',item.warnings)}${sourceLinks(item.sources)}<a class="detail-back" href="/addons">← Tous les addons</a>`;
+    if(item.type==='addon'&&item.addedDate)return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(item.categories.map(key=>categoryNames[key]).join(' · '))}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${favoriteButton(item)}</header>${addonPreview(item)}<a class="button primary" href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Choisir une version sur CurseForge ↗</a><div class="detail-status">${verified(item)}</div>${item.sourceNote?`<p class="source-note">${escapeHtml(item.sourceNote)}</p>`:''}${listBlock('À savoir',item.warnings)}${sourceLinks(item.sources)}<a class="detail-back" href="/addons">← Tous les addons</a>`;
     return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(typeLabels[item.type])}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${['addon','astuce','commande','objet'].includes(item.type)?favoriteButton(item):''}</header>
       ${item.type==='addon'?addonPreview(item):''}
       ${item.type==='astuce'?tipFigure(item):''}
