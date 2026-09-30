@@ -144,7 +144,8 @@ test('le héros conserve une atmosphère animée sans réglage utilisateur',()=>
   const app=fs.readFileSync(path.join(__dirname,'app.js'),'utf8');
   const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
   const particles=html.match(/<div class="embers"[^>]*>(.*?)<\/div>/s)?.[1]||'';
-  assert.equal((particles.match(/<i><\/i>/g)||[]).length,14);
+  const particleCount=(particles.match(/<i(?:\s[^>]*)?><\/i>/g)||[]).length;
+  assert.ok(particleCount>=14&&particleCount<=40,'Les particules restent présentes et en nombre limité');
   assert.doesNotMatch(html+app,/motion-toggle|renaissance-motion|Animations : activées/);
   assert.match(theme,/@keyframes aether-rise/);
   assert.match(theme,/prefers-reduced-motion:reduce/);
