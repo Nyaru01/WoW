@@ -127,12 +127,26 @@
   const empty=$('.empty-state');
   const pagination=$('.catalogue-pagination');
   let activeFilter=new URLSearchParams(location.search).get('categorie')||'all';
+  let activeNeed=data.selections.some(s=>s.slug===new URLSearchParams(location.search).get('besoin'))?new URLSearchParams(location.search).get('besoin'):'';
+  if(activeNeed&&addonSort)addonSort.value='need';
   let favoritesOnly=false;
   let currentPage=1;
   const pageSize=12;
   const categoryOrder=['all','quetes','donjons','combat','interface','confort','support','hunter','map','rp'];
   const categoryNames={all:'Tous',...data.categoryLabels};
   const filterRow=$('.filter-row');
+  function renderNeeds(){
+    const container=$('#need-options');if(!container)return;
+    container.innerHTML=[{slug:'',title:'Tout explorer'},...data.selections].map(s=>`<button type="button" data-need="${s.slug}" aria-pressed="${activeNeed===s.slug}">${escapeHtml(s.title)}${s.addons?`<small>${s.addons.length} fiches</small>`:''}</button>`).join('');
+    const selected=data.selections.find(s=>s.slug===activeNeed);
+    $('#need-description').textContent=selected?`${selected.description} Compatibilité à vérifier avant installation.`:'Choisissez un besoin ou explorez tout le catalogue. Vérifiez la compatibilité avant installation.';
+  }
+  renderNeeds();
+  $('#need-options')?.addEventListener('click',event=>{
+    const button=event.target.closest('[data-need]');if(!button)return;
+    resetAddons();activeNeed=button.dataset.need;if(addonSort)addonSort.value=activeNeed?'need':'newest';renderNeeds();renderAddons();
+    const url=new URL(location.href);if(activeNeed)url.searchParams.set('besoin',activeNeed);else url.searchParams.delete('besoin');url.searchParams.delete('categorie');history.replaceState(null,'',url);
+  });
   if(filterRow){
     filterRow.innerHTML=categoryOrder.map(key=>`<button class="${key===activeFilter?'active':''}" data-addon-filter="${key}" aria-pressed="${key===activeFilter}">${escapeHtml(categoryNames[key])} <span>${key==='all'?data.addons.length:data.addons.filter(addon=>addon.categories.includes(key)).length}</span></button>`).join('');
     filterRow.addEventListener('click',event=>{
@@ -165,8 +179,10 @@
     let matches=data.addons.filter(addon=>{
       const inCategory=activeFilter==='all'||addon.categories.includes(activeFilter);
       const haystack=normalize([addon.title,addon.description,...addon.tags,...addon.categories.map(key=>categoryNames[key])].join(' '));
-      return inCategory&&(!favoritesOnly||isFavorite(addon))&&(!query||haystack.includes(query));
+      const inNeed=!activeNeed||data.selections.find(s=>s.slug===activeNeed)?.addons.includes(addon.slug);
+      return inNeed&&inCategory&&(!favoritesOnly||isFavorite(addon))&&(!query||haystack.includes(query));
     });
+    if(addonSort?.value==='need'&&activeNeed){const selection=data.selections.find(s=>s.slug===activeNeed).addons;matches.sort((a,b)=>selection.indexOf(a.slug)-selection.indexOf(b.slug));}
     if(addonSort?.value==='name')matches.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
     if(addonSort?.value==='newest')matches.sort((a,b)=>String(b.addedDate||'').localeCompare(String(a.addedDate||''))||a.title.localeCompare(b.title,'fr'));
     if(addonSort?.value==='verified')matches.sort((a,b)=>String(b.verifiedDate).localeCompare(String(a.verifiedDate)));
@@ -184,7 +200,7 @@
       $('.page-status',pagination).textContent=`Page ${currentPage} sur ${totalPages}`;
       $('.page-numbers',pagination).innerHTML=Array.from({length:totalPages},(_,i)=>`<button data-page="${i+1}" ${i+1===currentPage?'aria-current="page" class="active"':''}>${String(i+1).padStart(2,'0')}</button>`).join('');
     }
-    const clear=$('#clear-filters');if(clear)clear.hidden=!query&&activeFilter==='all'&&!favoritesOnly;
+    const clear=$('#clear-filters');if(clear)clear.hidden=!query&&activeFilter==='all'&&!favoritesOnly&&!activeNeed;
     refreshFavoriteButtons();
   }
   addonSearch?.addEventListener('input',()=>{currentPage=1;renderAddons();});
@@ -200,7 +216,9 @@
   $('#clear-filters')?.addEventListener('click',resetAddons);
   $('#reset-catalogue')?.addEventListener('click',resetAddons);
   function resetAddons(){
-    if(addonSearch)addonSearch.value='';favoritesOnly=false;activeFilter='all';currentPage=1;
+    if(addonSearch)addonSearch.value='';favoritesOnly=false;activeFilter='all';activeNeed='';currentPage=1;if(addonSort?.value==='need')addonSort.value='newest';renderNeeds();
+    const url=new URL(location.href);url.searchParams.delete('besoin');url.searchParams.delete('categorie');history.replaceState(null,'',url);
+    $('#favorites-filter')?.setAttribute('aria-pressed','false');
     $$('[data-addon-filter]').forEach(button=>{const active=button.dataset.addonFilter==='all';button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
     renderAddons();
   }
@@ -284,9 +302,9 @@
     return `<figure class="addon-preview"><img src="${escapeHtml(item.image)}" alt="Aperçu de ${escapeHtml(item.title)}" width="1000" height="640"><figcaption>${escapeHtml(item.imageCaption||'Capture de la présentation de l’auteur')} · <a href="${escapeHtml(item.imagePage||item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Voir cette capture sur CurseForge ↗</a></figcaption></figure>`;
   }
   function renderDetail(item){
-    if(item.type==='addon'&&item.addedDate)return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(item.categories.map(key=>categoryNames[key]).join(' · '))}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${favoriteButton(item)}</header>${addonPreview(item)}${compatibility(item,true)}${communityPanel(item)}<a class="button primary" href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Choisir une version sur CurseForge ↗</a><div class="detail-status">${verified(item)}</div>${item.sourceNote?`<p class="source-note">${escapeHtml(item.sourceNote)}</p>`:''}${listBlock('À savoir',item.warnings)}${sourceLinks(item.sources)}<a class="detail-back" href="/addons">← Tous les addons</a>`;
+    if(item.type==='addon'&&item.addedDate)return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(item.categories.map(key=>categoryNames[key]).join(' · '))}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${favoriteButton(item)}</header>${addonPreview(item)}${compatibility(item,true)}${communityPanel(item)}${relatedAddons(item)}<a class="button primary" href="${escapeHtml(item.curseforgeUrl)}" target="_blank" rel="noopener noreferrer">Choisir une version sur CurseForge ↗</a><div class="detail-status">${verified(item)}</div>${item.sourceNote?`<p class="source-note">${escapeHtml(item.sourceNote)}</p>`:''}${listBlock('À savoir',item.warnings)}${sourceLinks(item.sources)}<a class="detail-back" href="/addons">← Tous les addons</a>`;
     return `${breadcrumb(item)}<header class="detail-header"><div><span class="chapter">${escapeHtml(typeLabels[item.type])}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.description)}</p></div>${['addon','astuce','commande','objet'].includes(item.type)?favoriteButton(item):''}</header>
-      ${item.type==='addon'?addonPreview(item)+compatibility(item,true)+communityPanel(item):''}
+      ${item.type==='addon'?addonPreview(item)+compatibility(item,true)+communityPanel(item)+relatedAddons(item):''}
       ${item.type==='astuce'?tipFigure(item):''}
       <div class="detail-status">${item.type==='addon'?(item.status==='beta'?'<span class="status-pill beta">Bêta</span>':''):verified(item)}</div>
       ${item.type==='addon'?`<dl class="fact-grid"><div><dt>Auteur</dt><dd>${escapeHtml(item.author)}</dd></div><div><dt>Version</dt><dd>${escapeHtml(item.version||'Non confirmée')}</dd></div><div><dt>Version du jeu</dt><dd>${escapeHtml(item.gameVersion||'Non confirmée')}</dd></div><div><dt>Test</dt><dd>${item.tested?'Testé':'Non présenté comme totalement testé'}</dd></div></dl>`:''}
@@ -303,9 +321,18 @@
   }
   function renderFavorites(){
     const container=$('#route-content');if(!container)return;
-    const items=data.all.filter(item=>favorites.has(favoriteId(item)));
-    container.innerHTML=`<nav class="breadcrumb" aria-label="Fil d’Ariane"><a href="/">Accueil</a><span>›</span><span aria-current="page">Favoris</span></nav><header class="detail-header"><div><span class="chapter">Collection locale</span><h1>Mes favoris</h1><p>Conservés uniquement dans ce navigateur, sans compte.</p></div></header>${items.length?`<div class="content-grid">${items.map(item=>`<article class="content-card"><div class="addon-top"><span>${escapeHtml(typeLabels[item.type])}</span>${favoriteButton(item)}</div><h2><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.description)}</p></article>`).join('')}</div><button id="clear-all-favorites" class="button ghost">Tout effacer</button>`:'<div class="empty-state"><h2>Aucun favori</h2><p>Utilisez l’étoile sur une fiche pour la retrouver ici.</p></div>'}`;
+    const incoming=new URLSearchParams(location.search).get('selection');
+    const shared=incoming!==null;
+    const items=shared?data.parseSelection(incoming):data.all.filter(item=>favorites.has(favoriteId(item)));
+    const shareUrl=new URL('/favoris',location.origin);shareUrl.searchParams.set('selection',items.map(favoriteId).join(','));
+    container.innerHTML=`<nav class="breadcrumb" aria-label="Fil d’Ariane"><a href="/">Accueil</a><span>›</span><span aria-current="page">Favoris</span></nav><header class="detail-header"><div><span class="chapter">${shared?'Sélection partagée':'Collection locale'}</span><h1>${shared?'Une sélection pour vous':'Mes favoris'}</h1><p>${shared?'Parcourez ces fiches ou ajoutez-les à vos favoris. Vos favoris actuels seront conservés.':'Retrouvez vos fiches et partagez votre sélection avec vos amis.'}</p></div></header>${items.length?`<div class="favorites-actions"><button class="button primary" data-copy="${escapeHtml(shareUrl.href)}" aria-label="Copier le lien de cette sélection">Partager cette sélection</button>${shared?'<button id="import-selection" class="button ghost">Ajouter à mes favoris</button>':'<button id="clear-all-favorites" class="button ghost">Tout effacer</button>'}<small>${items.length} fiche${items.length>1?'s':''} · Le lien contient uniquement les fiches choisies.</small></div><div class="content-grid">${items.map(item=>`<article class="content-card"><div class="addon-top"><span>${escapeHtml(typeLabels[item.type])}</span>${favoriteButton(item)}</div><h2><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.description)}</p></article>`).join('')}</div>`:'<div class="empty-state"><h2>Aucune fiche dans cette sélection</h2><p>Utilisez l’étoile sur une fiche pour la retrouver ici.</p><a class="button primary" href="/addons">Explorer les addons →</a></div>'}${shared?'<a class="detail-back" href="/favoris">Voir mes favoris personnels →</a>':''}`;
     $('#clear-all-favorites')?.addEventListener('click',()=>{if(confirm('Effacer tous les favoris de ce navigateur ?')){favorites.clear();persistFavorites();renderFavorites();}});
+    $('#import-selection')?.addEventListener('click',event=>{items.forEach(item=>favorites.add(favoriteId(item)));persistFavorites();refreshFavoriteButtons();event.currentTarget.textContent='Ajouté à mes favoris';event.currentTarget.disabled=true;});
+  }
+  function relatedAddons(item){
+    const related=data.addons.filter(other=>other.slug!==item.slug).map(other=>({item:other,score:other.categories.filter(c=>item.categories.includes(c)).length*3+other.tags.filter(t=>item.tags.includes(t)&&t!=='sélection septembre').length})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.item.title.localeCompare(b.item.title,'fr')).slice(0,3);
+    if(!related.length)return '';
+    return `<section class="detail-block related-addons"><h2>À explorer aussi</h2><p>Des fiches sur des usages proches. Comparez leurs fonctions avant de choisir vos addons.</p><div class="related-grid">${related.map(({item:other})=>`<a href="/addons/${other.slug}"><strong>${escapeHtml(other.title)}</strong><span>${escapeHtml(other.description)}</span><b>Découvrir cet addon →</b></a>`).join('')}</div></section>`;
   }
   function renderStaticPage(pathname){
     const pages={
@@ -323,7 +350,7 @@
     const routeView=$('#route-view');
     const homeOnly=[$('.hero'),$('.discovery'),$('.essentials')].filter(Boolean);
     const sections=$$('main > section[id]:not(#route-view)');
-    routeView.hidden=true;document.body.classList.remove('chapter-view');
+    routeView.hidden=true;document.body.classList.remove('chapter-view','talents-route');
     homeOnly.forEach(section=>section.hidden=pathname!=='/');
     sections.forEach(section=>{if(!homeOnly.includes(section))section.hidden=true;});
     const hashMap={addons:'addons',astuces:'astuces',commandes:'commandes','objets-rp':'objets-rp',nouvelles:'nouvelles',depannage:'depannage'};
@@ -346,6 +373,7 @@
     routeView.hidden=false;document.body.classList.add('chapter-view');
     document.body.classList.add('route-ready');
     if(pathname==='/favoris')return renderFavorites();
+    if(pathname==='/talents'||pathname.startsWith('/talents/'))return globalThis.renderRenaissanceTalents?.($('#route-content'),pathname.split('/')[2]||'warrior');
     if(pathname==='/commandes/presets'){
       $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><a href="/commandes">Commandes</a><span>›</span><span aria-current="page">Presets</span></nav><header class="detail-header"><div><span class="chapter">Réglages groupés</span><h1>Presets graphiques</h1><p>Uniquement des CVars documentées, avec avertissement lorsque la valeur d’origine n’est pas confirmée.</p></div></header><div class="content-grid preset-grid">${data.presets.map(item=>`<article class="content-card" id="${item.slug}"><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.description)}</p>${copyBlock(item.commands.join('\n'),'Copier toutes les commandes')}<small>${escapeHtml(item.restore)}</small></article>`).join('')}</div>`;return;
     }

@@ -1660,7 +1660,18 @@
 
   const all=[...addons,...tips,...commands,...troubleshooting,...items,...news,...presets];
   const routeFor=item=>item.type==='addon'?`/addons/${item.slug}`:item.type==='astuce'?`/astuces/${item.slug}`:item.type==='commande'?`/commandes/${item.slug}`:item.type==='depannage'?`/depannage/${item.slug}`:item.type==='objet'?`/objets/${item.slug}`:item.type==='actualite'?`/actualites/${item.slug}`:`/commandes/presets#${item.slug}`;
-  return {verifiedDate,categoryLabels,addons,tips,commands,troubleshooting,items,news,presets,all,routeFor};
+  const selections=[
+    {slug:'debuter',title:'Je débute',description:'Quêtes, repères et diagnostic : quelques fiches pour commencer sans surcharger votre interface.',addons:['questie','tomtom','bugsack','bug-grabber']},
+    {slug:'donjons',title:'Je pars en donjon',description:'Explorez les cartes, les quêtes et le suivi du butin avant votre prochaine sortie.',addons:['atlas','dungeonjournal','lootified','nova-instance-tracker']},
+    {slug:'interface',title:'Je refais mon interface',description:'Comparez les approches pour organiser vos fenêtres, vos barres et les dialogues.',addons:['ellesmereui','blizzmove','darkmode','immersion']},
+    {slug:'chasseur',title:'Je joue chasseur',description:'Parcourez les fiches consacrées aux familiers et à la portée des tirs.',addons:['hunters-field-guide','shotrange']},
+    {slug:'exploration',title:'J’explore Azeroth',description:'Repères, journal et livres : choisissez les outils qui accompagnent vos découvertes.',addons:['tomtom','forever-field-journal','books-forever','lorewalker']}
+  ];
+  const parseSelection=value=>{
+    const wanted=new Set(String(value||'').slice(0,12000).split(',').slice(0,120));
+    return all.filter(item=>wanted.has(`${item.type}:${item.slug}`));
+  };
+  return {verifiedDate,categoryLabels,addons,tips,commands,troubleshooting,items,news,presets,all,routeFor,selections,parseSelection};
 });
 
 

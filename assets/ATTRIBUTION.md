@@ -52,3 +52,27 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 - wow-forever-logo-6e6b3ceaa1.webp : logo officiel Blizzard, transparence originale conservée, conversion WebP. Source : https://blz-contentstack-images.akamaized.net/v3/assets/blt9c12f249ac15c7ec/blt527dd61848a757c7/6aa3316cad92093ee45628fd/camelot-logo-gamepage.png
 
 - horde-logo.webp et alliance-logo.webp : emblèmes officiels Blizzard, transparence conservée. Source : https://worldofwarcraft.blizzard.com/en-us/game/races ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/bltd8378d5ad5f78490/681cf126103bc68b54c31682/horde-logo.png et https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blt7bef9c5cedb35eed/681cf12d673ad01d24681dae/alliance-logo.png
+
+- talent-art-warrior.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blt54d5579252c664a5/5ee3e475e35f99710ac78ec3/79ERIMWIO8R71457037487361.jpg
+
+- talent-art-hunter.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blt012dc30b425155b5/5ee3e414fc5bec085f1e653f/9FFOWMNEHL4Z1457037542356.jpg
+
+- talent-art-mage.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blta6f57671066f6ebe/5ee3e44f14a7bc718bab5fa4/35VSGIBOT25W1457037534604.jpg
+
+- talent-art-warlock.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blt5aa3a5a6600613cc/5ee3e8c318f34d710497c5cf/MXE8KIC3809W1457037494415.jpg
+
+- talent-art-priest.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blt0bcabea65cd8a994/5ee78c01d217327180733e41/0BRSTFC5K87G1457037515836.jpg
+
+- talent-art-rogue.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/bltb3e0691ee03e03a9/5ee3e4a5a7c560086afc4003/7XKB19HQLEW61457037509128.jpg
+
+- talent-art-druid.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blt798ed5d6f4682ae1/5ee3e39c418a3c077bb23779/7XKZFYFEP0MK1457037549952.jpg
+
+- talent-art-paladin.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blta35617b25001abee/5ee790add217327180733e4d/BP2XEJGR4RCS1457037521611.jpg
+
+- talent-art-shaman.webp : illustration officielle Blizzard de la classe ; https://blz-contentstack-images.akamaized.net/v3/assets/blt3452e3b114fab0cd/blt123e2fe65fcbbb10/5ee79284a9170407eeb4b911/MM7UZ87T6HV71457037502398.jpg
+
+## Calculateur de talents
+
+- talent-icon-*.webp : icônes Blizzard originales, obtenues depuis https://foreverchanges.pro/icon/ (conversion WebP, sans agrandissement).
+- talents-data.js : faits structurés (noms, positions, rangs, prérequis et build client) relevés le 30 septembre 2026 depuis les neuf pages /fr/talents/ de ForeverChanges ; les descriptions éditoriales et textes d’effets ne sont pas reproduits. Chaque talent renvoie à sa source.
+- Les illustrations de classe Blizzard font 2400 × 1400 pixels ; les cadres et liaisons sont dessinés en CSS/SVG.

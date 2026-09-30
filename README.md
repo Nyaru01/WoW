@@ -51,3 +51,9 @@ Les informations incertaines sont affichées comme telles. Une source communauta
 ## Communauté
 
 Votes anonymes modifiables, tri par avis et signalements GitHub préremplis. La compatibilité est affichée indépendamment des votes. Voir [COMMUNITY.md](COMMUNITY.md) pour le volume Railway `/data`, la conservation des votes et le cookie fonctionnel.
+
+## Calculateur et découverte
+
+Le menu Talents propose les neuf classes Forever. `talents-data.js` contient les faits relevés dans les sources client, `talent-engine.js` valide les rangs, budgets et prérequis, et `talents.js` gère les builds locaux et les liens de partage. Les effets détaillés renvoient à ForeverChanges. Les illustrations de classe viennent de Blizzard en 2400 × 1400 ; les icônes restent à leur taille d’origine. Les données de bêta consultées le 30 septembre 2026 peuvent évoluer : actualiser le jeu de données et ses sources lors d’un nouveau build.
+
+Les sélections du catalogue utilisent `?besoin=...`. Les favoris partagés utilisent `?selection=type:slug,...` : seuls des identifiants connus sont reconnus, sans remplacement des favoris du destinataire.

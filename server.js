@@ -2,6 +2,7 @@ const http=require('http');
 const fs=require('fs');
 const path=require('path');
 const data=require('./data.js');
+const talentData=require('./talents-data.js');
 const {createCommunity}=require('./community.js');
 
 const root=__dirname;
@@ -10,6 +11,7 @@ const typeLabels={addon:'Addons',astuce:'Astuces',commande:'Commandes',depannage
 const staticPages={
   '/':{title:'Renaissance — Le codex français pratique de WoW: Forever',description:'Addons, commandes, astuces, dépannage, objets RP et actualités utiles pour WoW: Forever.'},
   '/addons':{title:'Addons pour WoW: Forever | Renaissance',description:'Addons utiles pour WoW: Forever, avec compatibilité et date de vérification.'},
+  '/talents':{title:'Calculateur de talents WoW: Forever | Renaissance',description:'Préparez les talents de votre personnage, enregistrez votre build et partagez-le.'},
   '/astuces':{title:'Astuces WoW: Forever | Renaissance',description:'Guides pratiques et astuces vérifiées pour WoW: Forever.'},
   '/commandes':{title:'Commandes WoW: Forever | Renaissance',description:'Commandes console copiables, impacts et procédures de restauration.'},
   '/commandes/presets':{title:'Presets graphiques WoW: Forever | Renaissance',description:'Presets Immersion, Performance et Cinématique composés de CVars documentées.'},
@@ -38,6 +40,8 @@ function itemForPath(pathname){
 }
 function pageForPath(pathname){
   if(staticPages[pathname])return staticPages[pathname];
+  const talentClass=talentData.classes.find(c=>pathname===`/talents/${c.slug}`);
+  if(talentClass)return {title:`Talents du ${talentClass.name} | WoW: Forever — Renaissance`,description:`Calculateur de talents du ${talentClass.name} : trois arbres, prérequis, points par niveau et lien de build partageable.`};
   const item=itemForPath(pathname);
   if(item)return {
     title:`${item.title} pour WoW Forever | Renaissance`,description:item.description,item,
@@ -77,7 +81,7 @@ function renderIndex(request,pathname,page){
 function sitemap(request){
   const origin=normalizeOrigin(request);
   const excluded=['/favoris'];
-  const paths=[...Object.keys(staticPages).filter(item=>!excluded.includes(item)),...new Set(data.all.map(item=>data.routeFor(item).split('#')[0]))];
+  const paths=[...Object.keys(staticPages).filter(item=>!excluded.includes(item)),...talentData.classes.map(c=>`/talents/${c.slug}`),...new Set(data.all.map(item=>data.routeFor(item).split('#')[0]))];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${[...new Set(paths)].map(item=>`  <url><loc>${escapeHtml(origin+(item==='/'?'':item))}</loc></url>`).join('\n')}
@@ -146,7 +150,7 @@ Sitemap: ${normalizeOrigin(request)}/sitemap.xml
     const page=pageForPath(pathname);
     if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'public, max-age=0, must-revalidate'},renderIndex(request,pathname,page),request.method==='HEAD');
     const requested=pathname.replace(/^\/+/, '');
-    if(!['styles.css','theme.css','art-direction.css','app.js','data.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
+    if(!['styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
       return send(response,404,{'Content-Type':'text/html; charset=utf-8'},'<!doctype html><html lang="fr"><title>Page introuvable | Renaissance</title><body><main><h1>Page introuvable</h1><p><a href="/">Retour au codex</a></p></main></body></html>',request.method==='HEAD');
     }
     const filePath=path.resolve(root,requested);

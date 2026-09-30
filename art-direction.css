@@ -74,7 +74,7 @@ body[data-route]:not([data-route="/"]) main>section { padding-block:66px 80px; }
   background:radial-gradient(ellipse at 50% 0,#684c3426,transparent 70%),#211b19;
   color:var(--parchment); border-top:1px solid #b5945930; padding-block:80px;
 }
-.discovery { background:linear-gradient(#211b19e8,#211b19f7),url('/assets/kaldorei-puits-eternite.webp') center/cover; }
+.discovery { background:linear-gradient(180deg,#211b19b8,#211b19ed 80%,#211b19),url('/assets/horde-forever.webp') center 42%/cover; }
 .section-intro,.discovery .section-intro { display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; gap:18px; border:0; padding:0 0 32px; margin-bottom:28px; }
 .section-intro:after,.section-intro.compact:after { display:block; position:static; content:''; width:80px; height:1px; margin-top:6px; background:linear-gradient(90deg,transparent,#dfbd78,transparent); }
 .section-intro h1,.section-intro h2,.section-intro.compact h2 { font:400 clamp(2rem,3.8vw,3.6rem)/1.2 var(--head); margin:10px 0 0; color:#f8ecd7; }
@@ -380,5 +380,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible { 
 .report-dialog textarea { resize:vertical; }.report-dialog .report-help { font-size:.77rem; line-height:1.6; color:#bfb09b; }
 .report-close { position:absolute; right:15px; top:10px; border:0; background:transparent; color:#e3c28b; font-size:1.8rem; cursor:pointer; }
 .report-dialog .button { letter-spacing:.02em; }
+.need-discovery { padding:22px; border:1px solid #b6915655; border-radius:14px; background:#30251faf; margin:0 0 24px; }
+.need-intro { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }.need-intro h2 { margin:0; font:500 1.35rem Georgia,serif; }.need-intro p { margin:0; font-size:.8rem; color:#c6b59b; }
+#need-options { display:flex; flex-wrap:wrap; gap:8px; margin-top:15px; }#need-options button { border:1px solid #a1815280; border-radius:9px; padding:10px 13px; background:#211a17; color:#dfceb2; font:.8rem var(--body); cursor:pointer; }#need-options button small { margin-left:8px; color:#bca582; font-size:.65rem; }#need-options button[aria-pressed="true"] { background:#6c2331; border-color:#d5ad71; color:#ffe4b4; }
+.need-description { font-size:.76rem; color:#c2b19a; margin:14px 0 0; }
+.favorites-actions { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:0 0 28px; }.favorites-actions small { flex-basis:100%; color:#bcad94; font-size:.78rem; }
+.related-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }.related-grid>a { display:flex; flex-direction:column; gap:12px; padding:20px; border:1px solid #a4814f70; border-radius:12px; background:#30241ecc; text-decoration:none; }.related-grid strong { color:#f3d49b; font:500 1.25rem Georgia,serif; }.related-grid span { font-size:.84rem; color:#c6b8a1; }.related-grid b { color:#d6b57c; font-size:.75rem; margin-top:auto; }.related-grid>a:hover { border-color:#d7b078; background:#463226; }
+@media(max-width:640px) { .need-discovery { padding:17px; }.related-grid { grid-template-columns:1fr; } }
 @media(max-width:640px) { .report-dialog { padding:24px 18px; }.addon-community { padding:20px; } }
 @media(max-width:640px) { .faction-signature { gap:20px; } .faction-signature img { width:37px; height:48px; } }
