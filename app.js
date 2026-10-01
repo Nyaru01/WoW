@@ -75,6 +75,7 @@
     return `<div class="source-list">${sources.map(source=>`<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.label)} <small class="external-destination">${escapeHtml(new URL(source.url).hostname.replace(/^www\./,''))} · nouvel onglet ↗</small></a>`).join('')}</div>`;
   }
   function verified(item){
+    if(item.type==='objet')return '';
     return `<span class="verified-date">✓ ${escapeHtml(item.verificationStatus||'Vérifié')} · ${escapeHtml(formatDate(item.verifiedDate))}</span>`;
   }
   function favoriteButton(item){
