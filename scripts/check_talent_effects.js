@@ -6,7 +6,8 @@ const {chromium} = require('playwright-core');
   try {
     const page = await browser.newPage({viewport:{width:1440,height:1000},hasTouch:true});
     const errors=[];page.on('pageerror',error=>errors.push(error.message));
-    await page.goto('http://localhost:3000/talents/hunter');
+    const base=process.env.SITE_URL||'http://localhost:3000';
+    await page.goto(base+'/talents/hunter');
     const first=page.locator('[data-talent="calc-hunter-beast-mastery-deadly-aspects"]');
     const node=await first.count()?first:page.locator('.talent-node').first();
     await node.hover();
@@ -26,7 +27,7 @@ const {chromium} = require('playwright-core');
     assert.ok(box.x>=0&&box.y>=0&&box.x+box.width<=1440&&box.y+box.height<=1000);
     await page.screenshot({path:'talent-effects-desktop.png'});
     await page.setViewportSize({width:390,height:844});
-    await page.goto('http://localhost:3000/talents/hunter');
+    await page.goto(base+'/talents/hunter');
     await page.locator('.talent-node').first().tap();
     assert.match(await page.locator('#talent-mobile-actions').innerText(),/Aspect du faucon/);
     assert.equal(await page.locator('.talent-node').first().innerText(),'0/5');

@@ -1,11 +1,13 @@
 const http=require('http');
 const fs=require('fs');
 const path=require('path');
+const {createHash}=require('node:crypto');
 const data=require('./data.js');
 const talentData=require('./talents-data.js');
 const {createCommunity}=require('./community.js');
 
 const root=__dirname;
+const assetVersions=new Map(['styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,16)]));
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.avif':'image/avif'};
 const typeLabels={addon:'Addons',astuce:'Astuces',commande:'Commandes',depannage:'Dépannage',objet:'Objets RP',actualite:'Actualités',preset:'Presets'};
 const staticPages={
@@ -60,6 +62,7 @@ function renderIndex(request,pathname,page){
   const canonical=`${origin}${pathname==='/'?'':pathname}`;
   const image=`${origin}/assets/azeroth-cosmique.webp`;
   let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  html=html.replace(/(src|href)="\/([^"?]+\.(?:js|css))(?:\?[^" ]*)?"/g,(match,attribute,file)=>assetVersions.has(file)?`${attribute}="/${file}?v=${assetVersions.get(file)}"`:match);
   if(pathname==='/')html=html.replace('</head>','  <link rel="preload" as="image" href="/assets/hero-horde-alliance-e4bfd66ec7.webp" fetchpriority="high">\n</head>');
   html=html.replace(/<title>.*?<\/title>/s,`<title>${escapeHtml(page.title)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${escapeHtml(page.description)}">`)

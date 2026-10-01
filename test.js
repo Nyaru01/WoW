@@ -2,6 +2,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
+const {createHash}=require('node:crypto');
 const data=require('./data.js');
 const {createServer,pageForPath}=require('./server.js');
 
@@ -166,6 +167,13 @@ test('le serveur répond aux routes, métadonnées, sitemap et erreurs',async t=
     assert.match(html,/href="\/styles\.css\?/);assert.match(html,/href="\/theme\.css\?/);assert.match(html,/src="\/data\.js\?/);assert.match(html,/src="\/app\.js\?/);
   }
   for(const asset of ['/styles.css','/theme.css','/art-direction.css','/data.js','/app.js'])assert.equal((await fetch(base+asset)).status,200,asset);
+  const talentPage=await (await fetch(base+'/talents/druid')).text();
+  for(const asset of ['talents.js','talents.css','talents-data.js']){
+    const version=createHash('sha256').update(fs.readFileSync(path.join(__dirname,asset))).digest('hex').slice(0,16);
+    assert.ok(talentPage.includes(`/${asset}?v=${version}`),asset+' uses its content hash to invalidate cached versions');
+    assert.equal((await fetch(base+`/${asset}?v=${version}`)).status,200);
+  }
+  assert.ok(!talentPage.includes('?v=10.4.4'));
   const sitemap=await fetch(base+'/sitemap.xml');assert.equal(sitemap.status,200);assert.match(await sitemap.text(),/\/addons\/hunters-field-guide/);
   const robots=await fetch(base+'/robots.txt');assert.match(await robots.text(),/Sitemap:/);
   const home=await fetch(base+'/');assert.match(await home.text(),/rel="preload" as="image" href="\/assets\/hero-horde-alliance-[a-f0-9]+\.webp"/);
