@@ -41,7 +41,11 @@ test('chaque astuce fournit une procédure concrète',()=>{
 
 test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
   assert.ok(data.tips.length>=12);
-  assert.ok(data.items.length>=6);
+  assert.ok(data.items.length>=3);
+  for(const slug of ['torche-flamme-eternelle','torche-vindicte','deguisement-voile-hiver','four-en-fer']){
+    assert.ok(!data.items.some(item=>item.slug===slug));
+    assert.equal(pageForPath('/objets/'+slug),null);
+  }
   assert.ok(data.news.length>=9);
   const historical=data.addons.filter(addon=>addon.slug!=='hunters-field-guide'&&!addon.addedDate);
   assert.equal(historical.length,27);
