@@ -16,6 +16,8 @@ test('neuf classes, 27 arbres et structure complète avec assets locaux',()=>{
       const cells=new Set();
       for(const n of tree.talents){
         count++;assert.ok(n.name&&n.id&&n.source&&n.build);
+        assert.equal(n.effects.length,n.max,n.id);
+        assert.ok(n.effects.every(effect=>typeof effect==='string'&&effect.trim().length>0),n.id);
         assert.ok(Number.isInteger(n.max)&&n.max>=1&&n.max<=5,n.id);
         assert.ok(n.tier>=0&&n.tier<=6&&n.col>=0&&n.col<=3,n.id);
         assert.ok(!cells.has(n.tier+':'+n.col),n.id);cells.add(n.tier+':'+n.col);

@@ -19,6 +19,17 @@
 .talent-saves form { margin-top:16px; }.talent-saves label { display:block; margin-bottom:7px; font-size:.78rem; color:#cfb794; }.talent-saves form>div { display:flex; gap:8px; }.talent-saves input { min-width:0; width:100%; background:#1b1511; border:1px solid #a17d48; color:#eed9b8; border-radius:8px; padding:10px; }.talent-saves .button { padding:8px 12px; min-height:42px; letter-spacing:0; font-size:.76rem; }.talent-saves p { font-size:.73rem; color:#baa98d; }#saved-builds>div { display:flex; align-items:center; gap:8px; padding:12px 0; border-top:1px solid #b08c5030; }#saved-builds span { margin-right:auto; color:#e2cda9; font-size:.8rem; }#saved-builds small { display:block; color:#a99677; font-size:.68rem; }#saved-builds button { border:1px solid #ac8a5355; color:#e3c28c; border-radius:6px; background:#201813; padding:6px 9px; cursor:pointer; }
 .talent-instructions { color:#d0b990; font-size:.75rem; margin-top:22px; }.talent-sources { display:flex; flex-wrap:wrap; gap:16px; border-top:1px solid #b6945530; padding-top:18px; }.talent-sources a { font-size:.7rem; color:#bda77d; text-underline-offset:3px; }
 .talent-mobile-actions { display:none; }
+.talent-tooltip { position:fixed; inset:auto; margin:0; z-index:200; box-sizing:border-box; width:340px; max-width:calc(100vw - 24px); max-height:calc(100vh - 24px); overflow-y:auto; padding:16px; border:1px solid #d9b270; border-radius:10px; background:#181310; color:#f3dfbc; box-shadow:0 8px 30px #000b; pointer-events:none; }
+.talent-tooltip[hidden] { display:none; }
+.talent-tooltip h3 { margin:0 0 6px; font:500 1.1rem Georgia,serif; color:#ffe1a1; }
+.talent-tooltip>span,.talent-tooltip small { display:block; color:#bba481; font-size:.75rem; line-height:1.5; }
+.talent-effect { margin:12px 0; }
+.talent-effect>strong { color:#ebcb8b; font-size:.76rem; }
+.talent-effect p,.talent-details .talent-effect p { margin:5px 0 0; color:#f1e3cc; font-size:.84rem; line-height:1.6; white-space:pre-line; }
+.talent-mobile-effect { max-height:25vh; overflow-y:auto; margin-top:8px; }
+.talent-mobile-effect .talent-effect { margin:6px 0; }
+.talent-mobile-effect .talent-effect>strong { font-size:.7rem; }
+.talent-mobile-effect .talent-effect p { font-size:.75rem; line-height:1.5; }
 .talent-swipe { display:none; color:#ccb184; font-size:.72rem; }
 @media(max-width:1050px) { .talent-swipe { display:block; } }
 @media(max-width:900px) { .talent-mobile-actions { display:flex; align-items:center; gap:9px; position:fixed; bottom:12px; left:12px; right:12px; z-index:80; padding:13px; border:1px solid #d9b270; border-radius:12px; background:#2b201bf5; box-shadow:0 8px 35px #000a; }.talent-mobile-actions>div { flex:1; min-width:0; }.talent-mobile-actions strong { display:block; font:.8rem var(--body); color:#f5dcad; }.talent-mobile-actions span { display:block; font:.68rem var(--body); color:#bba481; margin-top:4px; }.talent-mobile-actions button { flex:none; width:42px; height:42px; border:1px solid #d0a65e; border-radius:8px; color:#ffe2a8; background:#543821; font-size:1.5rem; cursor:pointer; }.talent-mobile-actions button:disabled { opacity:.35; }.talent-planner { margin-bottom:80px; } }
