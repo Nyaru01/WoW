@@ -167,7 +167,7 @@ test('le serveur répond aux routes, métadonnées, sitemap et erreurs',async t=
   const server=createServer();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));t.after(()=>server.close());
   const base=`http://127.0.0.1:${server.address().port}`;
   for(const route of ['/','/addons','/addons/hunters-field-guide','/astuces/construire-pack-propre','/commandes/reload','/commandes/presets','/depannage/erreur-lua','/objets/torche-de-veillebois','/actualites/client-1-60-1-69977','/favoris']){
-    const response=await fetch(base+route);assert.equal(response.status,200,route);const html=await response.text();assert.match(html,/<link rel="canonical"/);assert.match(html,/property="og:image"/);assert.match(html,/name="twitter:card"/);
+    const response=await fetch(base+route);assert.equal(response.status,200,route);const html=await response.text();assert.match(html,/<link rel="canonical"/);assert.match(html,/property="og:image"/);assert.match(html,/name="twitter:card"/);assert.match(html,/property="og:image" content="http:\/\/[^"]+\/assets\/share-wow-horde-alliance-[a-f0-9]+\.jpg"/);assert.match(html,/property="og:image:width" content="1200"/);assert.doesNotMatch(html,/content="[^"]*azeroth-cosmique/);
     assert.match(html,/href="\/styles\.css\?/);assert.match(html,/href="\/theme\.css\?/);assert.match(html,/src="\/data\.js\?/);assert.match(html,/src="\/app\.js\?/);
   }
   for(const asset of ['/styles.css','/theme.css','/art-direction.css','/data.js','/app.js'])assert.equal((await fetch(base+asset)).status,200,asset);

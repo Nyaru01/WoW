@@ -78,3 +78,5 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 - Les illustrations de classe Blizzard font 2400 × 1400 pixels ; les cadres et liaisons sont dessinés en CSS/SVG.
 
 - forever-irs-catalog-36621a7381.webp : aperçu publié par wowplayer95 sur la fiche CurseForge de Forever IRS, consultée le 5 octobre 2026 ; https://media.forgecdn.net/attachments/description/1719770/description_3ec01eb9-d2f5-440e-b1ca-661d610a7f43.png ; projet sous licence MIT.
+
+- share-wow-horde-alliance-ec0871d452.jpg : version JPEG 1200 × 675 du visuel d’accueil hero-horde-alliance-e4bfd66ec7.webp, dédiée aux aperçus de partage ; même attribution que le visuel source.

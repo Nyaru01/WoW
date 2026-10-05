@@ -60,7 +60,7 @@ function jsonLd(page,canonical){
 function renderIndex(request,pathname,page){
   const origin=normalizeOrigin(request);
   const canonical=`${origin}${pathname==='/'?'':pathname}`;
-  const image=`${origin}/assets/azeroth-cosmique.webp`;
+  const image=`${origin}/assets/share-wow-horde-alliance-ec0871d452.jpg`;
   let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
   html=html.replace(/(src|href)="\/([^"?]+\.(?:js|css))(?:\?[^" ]*)?"/g,(match,attribute,file)=>assetVersions.has(file)?`${attribute}="/${file}?v=${assetVersions.get(file)}"`:match);
   if(pathname==='/')html=html.replace('</head>','  <link rel="preload" as="image" href="/assets/hero-horde-alliance-e4bfd66ec7.webp" fetchpriority="high">\n</head>');
@@ -71,11 +71,16 @@ function renderIndex(request,pathname,page){
     .replace(/<meta property="og:type" content="[^"]*">/,`<meta property="og:type" content="${page.item?'article':'website'}">`)
     .replace('</head>',`  <link rel="canonical" href="${escapeHtml(canonical)}">
   <meta property="og:image" content="${escapeHtml(image)}">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+  <meta property="og:image:alt" content="La Horde et l’Alliance face aux paysages d’Azeroth — WoW: Forever">
   <meta property="og:url" content="${escapeHtml(canonical)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(page.title)}">
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${escapeHtml(image)}">
+  <meta name="twitter:image:alt" content="La Horde et l’Alliance face aux paysages d’Azeroth — WoW: Forever">
   ${jsonLd(page,canonical)}
 </head>`)
     .replace('<body>','<body data-route="'+escapeHtml(pathname)+'">');
