@@ -1668,6 +1668,56 @@
 };
   addons.forEach(addon=>{if(catalogImages[addon.slug])Object.assign(addon,catalogImages[addon.slug]);});
 
+  addons.push({
+  "type": "addon",
+  "slug": "forever-irs",
+  "title": "Forever IRS",
+  "name": "Forever IRS",
+  "description": "Consultez les statistiques d’or enregistrées par le jeu pour votre personnage ou un joueur proche, et comparez leur évolution dans un historique local.",
+  "author": "wowplayer95",
+  "categories": [
+    "confort"
+  ],
+  "category": "confort",
+  "image": "/assets/forever-irs-catalog-36621a7381.webp",
+  "imageKind": "capture",
+  "imageSource": "https://media.forgecdn.net/attachments/description/1719770/description_3ec01eb9-d2f5-440e-b1ca-661d610a7f43.png",
+  "imageCaption": "Aperçu publié par l’auteur sur CurseForge",
+  "imagePage": "https://www.curseforge.com/wow/addons/forever-irs",
+  "addedDate": "2026-10-05",
+  "verifiedDate": "2026-10-05",
+  "verificationStatus": "Fiche CurseForge consultée",
+  "tested": false,
+  "status": "release",
+  "foreverCompatibility": "native",
+  "wowFlavor": [
+    "Forever"
+  ],
+  "version": "0.5.2",
+  "gameVersion": "1.60.1",
+  "tags": [
+    "or",
+    "économie",
+    "statistiques",
+    "historique",
+    "forever"
+  ],
+  "features": [],
+  "commands": [],
+  "warnings": [
+    "Non testé en jeu par Nyaru.",
+    "Les revenus cumulés et le record d’or ne sont pas le solde actuel d’un autre joueur. Les compteurs peuvent être incomplets ou anciens."
+  ],
+  "sourceNote": "Ouvrez le registre avec /irs ; /irs me affiche vos statistiques et /irs history ouvre l’historique local. Une version Forever 1.60.1 est publiée sur CurseForge.",
+  "sources": [
+    {
+      "label": "CurseForge",
+      "url": "https://www.curseforge.com/wow/addons/forever-irs"
+    }
+  ],
+  "curseforgeUrl": "https://www.curseforge.com/wow/addons/forever-irs"
+});
+
   const all=[...addons,...tips,...commands,...troubleshooting,...items,...news,...presets];
   const routeFor=item=>item.type==='addon'?`/addons/${item.slug}`:item.type==='astuce'?`/astuces/${item.slug}`:item.type==='commande'?`/commandes/${item.slug}`:item.type==='depannage'?`/depannage/${item.slug}`:item.type==='objet'?`/objets/${item.slug}`:item.type==='actualite'?`/actualites/${item.slug}`:`/commandes/presets#${item.slug}`;
   const selections=[

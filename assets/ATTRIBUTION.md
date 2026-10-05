@@ -76,3 +76,5 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 - talent-icon-*.webp : icônes Blizzard originales, obtenues depuis https://foreverchanges.pro/icon/ (conversion WebP, sans agrandissement).
 - talents-data.js : faits structurés (noms, positions, rangs, prérequis et build client) relevés le 30 septembre 2026 depuis les neuf pages /fr/talents/ de ForeverChanges ; les descriptions éditoriales et textes d’effets ne sont pas reproduits. Chaque talent renvoie à sa source.
 - Les illustrations de classe Blizzard font 2400 × 1400 pixels ; les cadres et liaisons sont dessinés en CSS/SVG.
+
+- forever-irs-catalog-36621a7381.webp : aperçu publié par wowplayer95 sur la fiche CurseForge de Forever IRS, consultée le 5 octobre 2026 ; https://media.forgecdn.net/attachments/description/1719770/description_3ec01eb9-d2f5-440e-b1ca-661d610a7f43.png ; projet sous licence MIT.
