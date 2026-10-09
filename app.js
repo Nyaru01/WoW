@@ -229,25 +229,40 @@
   }));
   if(readPreference('night-agency-view','cards')==='list')$('[data-view="list"]')?.click();
   renderAddons();
-  const meter=$('.hero-meter strong');if(meter)meter.textContent=data.addons.length;
+  $$('[data-resource-count]').forEach(el=>{const key=el.dataset.resourceCount;el.textContent=`${data[key].length} ${key==='addons'?'addons':key==='tips'?'guides':'objets à découvrir'}`;});
 
   const globalInput=$('#home-search');
   const globalResults=$('#global-search-results');
   function renderGlobalSearch(){
     if(!globalInput||!globalResults)return;
-    const query=normalize(globalInput.value.trim());
+    const query=normalize(globalInput.value.trim()); globalInput.setAttribute('aria-expanded',String(Boolean(query)));
     if(!query){globalResults.hidden=true;return;}
-    const matches=data.all.filter(item=>normalize([item.title,item.description,...(item.tags||[]),item.command||'',item.verificationStatus||''].join(' ')).includes(query)).slice(0,10);
-    globalResults.innerHTML=matches.length?matches.map(item=>`<a class="search-result" href="${escapeHtml(typePath(item))}"><span>${escapeHtml(typeLabels[item.type])}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small><em>${escapeHtml((item.tags||[]).slice(0,3).join(' · '))}${item.type==='addon'?'':` · ${escapeHtml(item.verificationStatus||'')} · ${escapeHtml(formatDate(item.verifiedDate))}`}</em></a>`).join(''):'<p>Aucun résultat. Essayez un terme plus court.</p>';
+    const talentEntries=(globalThis.RenaissanceTalents?.classes||[]).map(c=>({type:'talent',title:`Talents ${c.name}`,description:'Calculateur, répartition des points et partage de build.',tags:[c.slug,c.name],slug:c.slug}));
+    const matches=[...data.all,...talentEntries].filter(item=>normalize([item.title,item.description,...(item.tags||[]),item.command||'',item.verificationStatus||''].join(' ')).includes(query)).slice(0,10);
+    matches.sort((a,b)=>a.type.localeCompare(b.type));
+    globalResults.innerHTML=matches.length?matches.map(item=>`<a class="search-result" href="${escapeHtml(item.type==='talent'?'/talents/'+item.slug:typePath(item))}"><span>${escapeHtml(typeLabels[item.type]||'Talents')}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)}</small><em>${escapeHtml((item.tags||[]).slice(0,3).join(' · '))}${item.type==='addon'?'':` · ${escapeHtml(item.verificationStatus||'')} · ${escapeHtml(formatDate(item.verifiedDate))}`}</em></a>`).join(''):'<p>Aucun résultat. Essayez un terme plus court.</p>';
     globalResults.hidden=false;
   }
+  globalInput?.setAttribute('aria-expanded','false');
   globalInput?.addEventListener('input',renderGlobalSearch);
+  const searchNavigation=event=>{
+    if(event.key==='Escape'){globalResults.hidden=true;globalInput.setAttribute('aria-expanded','false');globalInput.focus();return;}
+    if(!['ArrowDown','ArrowUp'].includes(event.key)||globalResults.hidden)return;
+    const links=$$('a',globalResults);if(!links.length)return;event.preventDefault();
+    const index=links.indexOf(document.activeElement);links[index<0?(event.key==='ArrowDown'?0:links.length-1):(index+(event.key==='ArrowDown'?1:-1)+links.length)%links.length].focus();
+  };
+  globalInput?.addEventListener('keydown',searchNavigation);globalResults?.addEventListener('keydown',searchNavigation);
+
   $('.hero-search')?.addEventListener('submit',event=>{event.preventDefault();renderGlobalSearch();globalResults?.querySelector('a')?.focus();});
   document.addEventListener('click',event=>{if(globalResults&&!event.target.closest('.hero-search')&&!event.target.closest('#global-search-results'))globalResults.hidden=true;});
 
   const troubleGrid=$('#troubleshooting-grid');
   if(troubleGrid)troubleGrid.innerHTML=data.troubleshooting.map((item,index)=>`<article class="content-card troubleshooting-card"><div class="troubleshooting-card-top"><span>Guide ${String(index+1).padStart(2,'0')}</span><b>${item.steps.length} étapes</b></div><h2><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.description)}</p>${tagList(item.tags)}<div class="troubleshooting-card-foot">${verified(item)}<a class="text-link" href="${typePath(item)}">Ouvrir la checklist →</a></div></article>`).join('');
 
+  if(troubleGrid){
+    const search=document.createElement('div');search.className='trouble-search';search.innerHTML='<label for="trouble-query">Quel problème rencontrez-vous ?</label><input id="trouble-query" type="search" placeholder="Erreur Lua, installation, interface…"><p id="trouble-status" role="status"></p>';troubleGrid.before(search);
+    $('#trouble-query').addEventListener('input',event=>{const query=normalize(event.target.value);let count=0;$$('.troubleshooting-card',troubleGrid).forEach(card=>{card.hidden=!normalize(card.textContent).includes(query);if(!card.hidden)count++;});$('#trouble-status').textContent=query?`${count} solution${count>1?'s':''} trouvée${count>1?'s':''}`:'';});
+  }
   const commandShell=$('#commandes .section-shell');
   if(commandShell){
     const directory=document.createElement('section');directory.className='content-directory';directory.innerHTML=`<div class="section-intro"><div><span class="chapter">Fiches partageables</span><h2>Toutes les commandes</h2></div><p>Une URL stable par réglage, avec impact et restauration documentés.</p></div><div class="content-grid">${data.commands.map(item=>`<article class="content-card"><div class="addon-top"><span>Commande</span>${favoriteButton(item)}</div><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3>${copyBlock(item.command)}${verified(item)}</article>`).join('')}<article class="content-card"><span>Presets</span><h3><a href="/commandes/presets">Immersion, Performance et Cinématique</a></h3><p>Copiez un ensemble cohérent de CVars documentées.</p><a class="text-link" href="/commandes/presets">Voir les presets →</a></article></div>`;commandShell.append(directory);
@@ -353,8 +368,8 @@
   function showRoute(){
     const pathname=location.pathname.replace(/\/$/,'')||'/';
     const routeView=$('#route-view');
-    const homeOnly=[$('.hero'),$('.discovery'),$('.essentials')].filter(Boolean);
-    const sections=$$('main > section[id]:not(#route-view)');
+    const homeOnly=[$('.hero'),$('.guild-resources'),$('.guild-identity'),$('.discovery'),$('.essentials')].filter(Boolean);
+    const sections=$$('main > section[id]:not(#route-view):not(#guild-resources)');
     routeView.hidden=true;document.body.classList.remove('chapter-view','talents-route');
     homeOnly.forEach(section=>section.hidden=pathname!=='/');
     sections.forEach(section=>{if(!homeOnly.includes(section))section.hidden=true;});
@@ -394,11 +409,13 @@
   menuToggle?.addEventListener('click',()=>{const open=menuToggle.getAttribute('aria-expanded')!=='true';menuToggle.setAttribute('aria-expanded',String(open));topbar.classList.toggle('menu-open',open);});
   mainNavigation?.addEventListener('click',closeMenu);
   document.addEventListener('keydown',event=>{
-    if(event.key==='Escape'){closeMenu();if(globalResults)globalResults.hidden=true;}
+    if(event.key==='Escape'){const menuWasOpen=menuToggle?.getAttribute('aria-expanded')==='true';closeMenu();if(menuWasOpen)menuToggle.focus();if(globalResults)globalResults.hidden=true;globalInput?.setAttribute('aria-expanded','false');}
+    if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(location.pathname!=='/'){location.href='/?recherche=1';return;}globalInput?.focus();}
     if(event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.target.closest('input,textarea,select,[contenteditable]')){
       event.preventDefault();(location.pathname==='/'?globalInput:addonSearch)?.focus();
     }
   });
+  if(new URLSearchParams(location.search).has('recherche'))globalInput?.focus();
   const progress=$('.scroll-progress i');
   addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;if(progress)progress.style.width=`${max?scrollY/max*100:0}%`;topbar?.classList.toggle('scrolled',scrollY>30);},{passive:true});
   const motionMedia=matchMedia('(prefers-reduced-motion: reduce)');
@@ -408,7 +425,7 @@
     presence.onmessage=event=>{try{const count=JSON.parse(event.data).count;presenceCount.textContent=String(count);presenceCount.parentElement.setAttribute('aria-label',`${count} visiteur${count>1?'s':''} en ligne`);}catch{}};
     presence.onerror=()=>{presenceCount.textContent='—';};
   }
-  const revealSelector='.discovery-card,.essential-card,.addon-card,.content-card,.command-card,.news-card,.rp-feature,.rp-secondary';
+  const revealSelector='.discovery-card,.essential-card,.addon-card,.content-card,.command-card,.news-card,.rp-feature,.rp-secondary,.rpg-card,.guild-identity';
   if(!motionMedia.matches&&'IntersectionObserver' in window){
     const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}}),{rootMargin:'0px 0px -8%'});
     const observeReveals=root=>{

@@ -1,9 +1,12 @@
-# Night Agency ó Codex WoW Forever
+# Night Agency ‚Äî Codex WoW Forever
+
+Version d√©di√©e √† la guilde Alliance Night Agency, bas√©e sur la branche Addon du codex de Nyaru. Catalogue de 49 addons, favoris locaux, guides, talents et liens sources conserv√©s. Identit√© visuelle bleu nuit, argent et or, embl√®me de guilde et d√©cor original sans texte.
+
+## Local
+Node 22.19 ou ult√©rieur : `npm start`. V√©rification : `node --test test.js`.
+
+## Railway
+D√©ployer la branche `night-agency`, d√©marrage `npm start`, contr√¥le `/`. PORT est fourni automatiquement. Pour conserver les votes, monter un volume sur `/data` et d√©finir COMMUNITY_DATA_DIR=/data. Sans volume, les votes sont d√©sactiv√©s sur Railway. Aucune cl√© Discord n‚Äôest n√©cessaire pour ce site.
 
-Version dÈdiÈe ‡ la guilde Alliance Night Agency, basÈe sur la branche Addon du codex de Nyaru. Catalogue de 49 addons, favoris locaux, guides, talents et liens sources conservÈs. IdentitÈ visuelle bleu nuit, argent et or, emblËme de guilde et dÈcor original sans texte.
-
-## Local
-Node 22.19 ou ultÈrieur : `npm start`. VÈrification : `node --test test.js`.
-
-## Railway
-DÈployer la branche `night-agency`, dÈmarrage `npm start`, contrÙle `/`. PORT est fourni automatiquement. Pour conserver les votes, monter un volume sur `/data` et dÈfinir COMMUNITY_DATA_DIR=/data. Sans volume, les votes sont dÈsactivÈs sur Railway. Aucune clÈ Discord níest nÈcessaire pour ce site.
+## Refonte UI/UX
+Hero asym√©trique, cartes RPG avec compteurs issus des donn√©es, section de guilde, recherche transversale incluant les classes, navigation au clavier, raccourci Ctrl+K et recherche de d√©pannage. Palette et tokens dans night-agency.css. Police Marcellus auto-h√©berg√©e (Google Fonts), interface en police syst√®me. Respect de prefers-reduced-motion.

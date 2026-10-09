@@ -144,16 +144,11 @@ test('les parcours utilisent les glyphes SVG du codex sans emoji',()=>{
   assert.doesNotMatch(html,/🗺️|⚔️|🖥️|🐞|🚀|🎭/u);
 });
 
-test('le héros conserve une atmosphère animée sans réglage utilisateur',()=>{
+test('le héros respecte la sobriété et les préférences de mouvement',()=>{
   const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
-  const app=fs.readFileSync(path.join(__dirname,'app.js'),'utf8');
-  const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
-  const particles=html.match(/<div class="embers"[^>]*>(.*?)<\/div>/s)?.[1]||'';
-  const particleCount=(particles.match(/<i(?:\s[^>]*)?><\/i>/g)||[]).length;
-  assert.ok(particleCount>=14&&particleCount<=40,'Les particules restent présentes et en nombre limité');
-  assert.doesNotMatch(html+app,/motion-toggle|night-agency-motion|Animations : activées/);
-  assert.match(theme,/@keyframes aether-rise/);
-  assert.match(theme,/prefers-reduced-motion:reduce/);
+  const style=fs.readFileSync(path.join(__dirname,'night-agency.css'),'utf8');
+  assert.doesNotMatch(html,/class="embers"/);
+  assert.match(style,/prefers-reduced-motion:reduce/);
 });
 
 test('aucun tracker ou cookie marketing n’est présent',()=>{

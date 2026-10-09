@@ -8,7 +8,7 @@ const {createCommunity}=require('./community.js');
 
 const root=__dirname;
 const assetVersions=new Map(['night-agency.css','styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,16)]));
-const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.avif':'image/avif'};
+const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.avif':'image/avif','.woff2':'font/woff2','.ttf':'font/ttf'};
 const typeLabels={addon:'Addons',astuce:'Astuces',commande:'Commandes',depannage:'Dépannage',objet:'Objets RP',actualite:'Actualités',preset:'Presets'};
 const staticPages={
   '/':{title:'Night Agency — Le codex français pratique de WoW: Forever',description:'Addons, commandes, astuces, dépannage, objets RP et actualités utiles pour WoW: Forever.'},
@@ -165,7 +165,7 @@ Sitemap: ${normalizeOrigin(request)}/sitemap.xml
     const page=pageForPath(pathname);
     if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, max-age=0, must-revalidate',...(request.method==='GET'?presenceIdentity(request).headers:{})},renderIndex(request,pathname,page),request.method==='HEAD');
     const requested=pathname.replace(/^\/+/, '');
-    if(!['night-agency.css','styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
+    if(!['night-agency.css','styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif|woff2|ttf)$/i.test(requested)){
       return send(response,404,{'Content-Type':'text/html; charset=utf-8'},'<!doctype html><html lang="fr"><title>Page introuvable | Night Agency</title><body><main><h1>Page introuvable</h1><p><a href="/">Retour au codex</a></p></main></body></html>',request.method==='HEAD');
     }
     const filePath=path.resolve(root,requested);
