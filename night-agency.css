@@ -18,3 +18,7 @@ body[data-route="/addons"] .addons{position:relative}body[data-route="/addons"] 
 @media(max-width:700px){.hero h1{font-size:clamp(3rem,12vw,4.6rem)}.hero-art{background-position:68% center}.brand-logo{width:42px;height:42px}.brand strong{font-size:.95rem}.brand small{font-size:.54rem}.faction-signature{flex-wrap:wrap}.faction-signature small{width:100%}.need-picker{padding:18px}.addon-card{border-radius:8px}}
 
 .hero .button.primary{color:#101526!important}.hero .hero-content{padding-top:130px}.hero .faction-signature{justify-content:center}
+body.chapter-view,body.chapter-view main,body.chapter-view main>section{background:#080d1c!important}
+.chapter-view .section-intro:before,.chapter-view .detail-header:before{background:linear-gradient(180deg,#080d1c66,#080d1ce8),url('/assets/night-city.webp') center 40%/cover;filter:none;opacity:.65}
+.need-discovery{background:#121d33;border-color:#718ab955}.need-intro p,.need-description{color:#b5bfd3}#need-options button{background:#0c1529;color:#c8d5ed;border-color:#718ab955}#need-options button[aria-pressed="true"],.filter-row button.active{background:#2a3c60;color:#f1d9a4;border-color:#c5a66a}.filter-row button,.collection-toolbar button{background:#111d33;color:#c8d5ed;border-color:#718ab955}
+.search-box,.result-counter{background:#0c1529;border-color:#718ab955}.chapter-view .section-intro p{color:#b9c8df}.addon-card{background:linear-gradient(145deg,#16213a,#0d1528)!important}.hero-meter strong{min-width:2ch;flex-shrink:0}.hero-meter a{overflow:visible;gap:18px}
