@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Le codex Renaissance : addons, astuces de terrain, objets RP et nouvelles vérifiées pour WoW: Forever.">
-  <meta name="theme-color" content="#571725">
-  <meta property="og:title" content="Renaissance — Le Codex de WoW: Forever">
+  <meta name="description" content="Le codex Night Agency : addons, astuces de terrain, objets RP et nouvelles vérifiées pour WoW: Forever.">
+  <meta name="theme-color" content="#080d1c">
+  <meta property="og:title" content="Night Agency — Le Codex de WoW: Forever">
   <meta property="og:description" content="Addons, guides pratiques, objets RP à dénicher et dernières nouvelles officielles de WoW: Forever.">
   <meta property="og:type" content="website">
-  <title>Renaissance — Addons & astuces WoW: Forever</title>
-  <link rel="icon" type="image/webp" href="/assets/wow-forever-logo-6e6b3ceaa1.webp">
+  <title>Night Agency — Addons & astuces WoW: Forever</title>
+  <link rel="icon" type="image/webp" href="/assets/night-emblem.webp">
   <link rel="stylesheet" href="/styles.css?v=10.4.6">
   <link rel="stylesheet" href="/theme.css?v=10.4.6">
   <link rel="stylesheet" href="/art-direction.css?v=10.4.6">
   <link rel="stylesheet" href="/talents.css?v=10.4.6">
+  <link rel="stylesheet" href="/night-agency.css?v=1">
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
@@ -27,7 +28,7 @@
   <a class="skip-link" href="#addons">Aller aux addons</a>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <header class="topbar">
-    <a class="brand" href="/" aria-label="Renaissance — accueil"><img class="brand-logo" src="/assets/wow-forever-logo-6e6b3ceaa1.webp" alt="WoW Forever" width="74" height="60"><span><strong>Renaissance</strong><small>Codex communautaire</small></span></a>
+    <a class="brand" href="/" aria-label="Night Agency — accueil"><img class="brand-logo" src="/assets/night-emblem.webp" alt="Emblème Night Agency" width="74" height="60"><span><strong>Night Agency</strong><small>Guilde Alliance · WoW Forever</small></span></a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation"><span aria-hidden="true">☰</span> Menu</button>
     <nav id="main-navigation" aria-label="Navigation principale"><a href="/">Accueil</a><a href="/addons">Addons</a><a href="/talents">Talents</a>
         <a href="/astuces">Astuces</a><a href="/commandes">Commandes</a><a href="/depannage">Dépannage</a><a href="/objets">Objets RP</a><a href="/actualites">Actualités</a><a href="/favoris">Favoris</a></nav>
@@ -39,14 +40,14 @@
       <div class="hero-art" aria-hidden="true"></div>
       <div class="embers" aria-hidden="true"><i style="--x:7%;--duration:14s;--delay:-2s;--drift:20px"></i><i style="--x:44%;--duration:15s;--delay:-2.91s;--drift:-32px"></i><i style="--x:81%;--duration:16s;--delay:-3.8200000000000003s;--drift:44px"></i><i style="--x:18%;--duration:17s;--delay:-4.73s;--drift:-56px"></i><i style="--x:55%;--duration:18s;--delay:-5.640000000000001s;--drift:68px"></i><i style="--x:92%;--duration:19s;--delay:-6.55s;--drift:-20px"></i><i style="--x:29%;--duration:20s;--delay:-7.46s;--drift:32px"></i><i style="--x:66%;--duration:21s;--delay:-8.370000000000001s;--drift:-44px"></i><i style="--x:3%;--duration:14s;--delay:-9.280000000000001s;--drift:56px"></i><i style="--x:40%;--duration:15s;--delay:-10.19s;--drift:-68px"></i><i style="--x:77%;--duration:16s;--delay:-11.1s;--drift:20px"></i><i style="--x:14%;--duration:17s;--delay:-12.01s;--drift:-32px"></i><i style="--x:51%;--duration:18s;--delay:-12.92s;--drift:44px"></i><i style="--x:88%;--duration:19s;--delay:-13.83s;--drift:-56px"></i><i style="--x:25%;--duration:20s;--delay:-14.74s;--drift:68px"></i><i style="--x:62%;--duration:21s;--delay:-15.65s;--drift:-20px"></i><i style="--x:99%;--duration:14s;--delay:-16.560000000000002s;--drift:32px"></i><i style="--x:36%;--duration:15s;--delay:-17.47s;--drift:-44px"></i><i style="--x:73%;--duration:16s;--delay:-18.38s;--drift:56px"></i><i style="--x:10%;--duration:17s;--delay:-19.29s;--drift:-68px"></i><i style="--x:47%;--duration:18s;--delay:-20.2s;--drift:20px"></i><i style="--x:84%;--duration:19s;--delay:-21.11s;--drift:-32px"></i><i style="--x:21%;--duration:20s;--delay:-22.02s;--drift:44px"></i><i style="--x:58%;--duration:21s;--delay:-22.93s;--drift:-56px"></i><i style="--x:95%;--duration:14s;--delay:-23.84s;--drift:68px"></i><i style="--x:32%;--duration:15s;--delay:-24.75s;--drift:-20px"></i><i style="--x:69%;--duration:16s;--delay:-25.66s;--drift:32px"></i><i style="--x:6%;--duration:17s;--delay:-26.57s;--drift:-44px"></i></div>
       <div class="hero-content">
-        <span class="hero-kicker">Le guide communautaire de WoW: Forever</span>
-        <h1 id="hero-title">Vos addons.<em>Votre aventure.</em></h1>
-        <p class="hero-copy">Trouvez les addons qui vous conviennent, préparez vos sorties<br>et profitez des astuces de la communauté WoW: Forever.</p>
-        <div class="faction-signature" aria-label="Horde à gauche, Alliance à droite"><img src="/assets/horde-logo.webp" alt="Horde" width="465" height="600"><span aria-hidden="true">◆</span><img src="/assets/alliance-logo.webp" alt="Alliance" width="465" height="600"></div>
-        <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="#nouvelles">Voir les patch notes <span>→</span></a></div>
+        <span class="hero-kicker">Le codex de la guilde · Alliance</span>
+        <h1 id="hero-title">Sous la lune.<em>Ensemble.</em></h1>
+        <p class="hero-copy">L’arsenal de Night Agency : vos addons, vos guides et vos talents.<br>Préparez votre prochaine aventure aux côtés de la guilde.</p>
+        <div class="faction-signature" aria-label="Guilde Alliance"><span class="night-insignia">✦</span><span>Alliance</span><small>Une guilde. Mille aventures.</small></div>
+        <div class="hero-actions"><a class="button primary" href="#addons">Explorer les addons <span>↓</span></a><a class="button ghost" href="https://discord.gg/2NeFq6yUG" target="_blank" rel="noopener noreferrer">Rejoindre la guilde <span>→</span></a></div>
         <div class="hero-search-wrap"><form class="hero-search" role="search" aria-label="Recherche globale"><label for="home-search" class="sr-only">Rechercher dans tout le codex</label><span aria-hidden="true">⌕</span><input id="home-search" type="search" placeholder="Addon, commande, astuce, objet…" autocomplete="off" aria-controls="global-search-results"><button type="submit" aria-label="Rechercher dans le codex">→</button></form>
         <div id="global-search-results" class="global-search-results" role="region" aria-label="Résultats de recherche" hidden></div></div>
-        <span class="hero-credit">Un codex indépendant, créé par <strong>Nyaru</strong></span>
+        <span class="hero-credit">Le rendez-vous des aventuriers de <strong>Night Agency</strong></span>
       </div>
       <nav class="hero-meter" aria-label="Accès rapides"><a href="#addons"><strong>49</strong><span><b>Trouver un addon</b><small>Recherche et filtres</small></span><i>→</i></a><a href="#astuces"><strong>12</strong><span><b>Bien démarrer</b><small>Guides pratiques</small></span><i>→</i></a><a href="#objets-rp"><strong>02</strong><span><b>Partir en quête</b><small>Objets à dénicher</small></span><i>→</i></a></nav>
     </section>
@@ -224,7 +225,7 @@
     <section id="route-view" class="route-view" aria-live="polite" hidden><div class="section-shell"><article id="route-content"></article></div></section>
   </main>
 
-  <footer><div class="section-shell footer-inner"><div><strong>Renaissance</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site indépendant, non affilié à Blizzard. Votes anonymes, sans compte, tracker, publicité ciblée ni cookie marketing.</p><nav aria-label="Informations"><a href="/sources">Sources</a><a href="/confidentialite">Confidentialité</a><a href="/a-propos">À propos</a><a href="/contribuer">Contribuer</a></nav></div></footer>
+  <footer><div class="section-shell footer-inner"><div><strong>Night Agency</strong><span>Le Codex WoW: Forever · Créé par Nyaru</span></div><p>Site indépendant, non affilié à Blizzard. Votes anonymes, sans compte, tracker, publicité ciblée ni cookie marketing.</p><nav aria-label="Informations"><a href="/sources">Sources</a><a href="/confidentialite">Confidentialité</a><a href="/a-propos">À propos</a><a href="/contribuer">Contribuer</a></nav></div></footer>
   <script src="/data.js?v=10.4.6"></script>
   <script src="/talents-data.js?v=10.4.6"></script>
   <script src="/talent-engine.js?v=10.4.6"></script>

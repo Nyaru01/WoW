@@ -1,0 +1,20 @@
+/* Night Agency: moonlit blue, silver and restrained gilding. */
+:root{--night:#080d1c;--stone:#080d1c;--stone-raised:#121b30;--panel:#121b30;--gold:#c5a66a;--gold2:#f1d9a4;--sky:#9cbdf4;--parchment:#edf0f8;--muted:#b5bfd3;--quiet:#b5bfd3;--line:#9cbdf42e;--gilding:#f1d9a4;--frame:#344666}
+body{background:radial-gradient(ellipse at 90% 0,#21345655,transparent 50%),#080d1c;color:#edf0f8}
+.topbar,.topbar.scrolled{background:#080e20ee;border-bottom:1px solid #c5a66a55;box-shadow:0 8px 32px #0004}
+.brand-logo{width:54px;height:54px;object-fit:cover;border-radius:50%;border:1px solid #c5a66a99;box-shadow:0 0 22px #8baaf433}
+.brand strong{color:#f1d9a4;letter-spacing:.12em}.brand small{color:#acbcd9;letter-spacing:.1em}.topbar nav a{letter-spacing:.05em}.topbar nav a[aria-current]{color:#f1d9a4;background:#9cbdf411}
+.hero{background:#080d1c}.hero-art{background:linear-gradient(90deg,#080d1cf5 0%,#080d1ce8 34%,#080d1c66 65%,#080d1c33),linear-gradient(0deg,#080d1c,transparent 45%),url('/assets/night-city.webp') 65% center/cover no-repeat;filter:saturate(.85)}
+.hero h1{font-size:clamp(3.5rem,7.3vw,7.5rem);line-height:.97;letter-spacing:.01em;max-width:800px}.hero h1 em{display:block;color:#f1d9a4}.hero-copy{color:#c7d2e7}.hero-kicker{color:#a9c5f5;letter-spacing:.22em}.hero-credit{color:#b9c8df}
+.faction-signature{display:flex;justify-content:flex-start;gap:14px;color:#d6e5ff;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}.faction-signature small{color:#acbcd9;letter-spacing:.04em}.night-insignia{color:#f1d9a4;font-size:1.6rem}
+.hero-meter{background:#0b1329e8;border-color:#9cbdf433}.hero-search{background:#0c152be8;border-color:#718ab955}.button.primary{background:linear-gradient(135deg,#edcf93,#ba9556);border-color:#edcf93}.button.ghost{background:#0b142bb8;border-color:#9cbdf477}
+.discovery,.essentials,.addons,.tips,.commands,.news,.roleplay{background:transparent}.section-shell{max-width:1500px}.chapter{color:#a9c5f5}.section-intro h2{color:#f0e8d7}
+.addon-card,.content-card,.command-card,.news-card,.need-picker,.detail-panel,.detail-header{background:linear-gradient(145deg,#16213a,#0d1528);border-color:#748fc43f;border-radius:10px;box-shadow:0 12px 32px #0002}
+.addon-card:hover,.content-card:hover{border-color:#c5a66aaa;box-shadow:0 12px 32px #0004,0 0 24px #9cbdf40c}.addon-card h2,.addon-card h3{color:#f4e4bf}.addon-card p{color:#b9c6dc}
+.search-box,.sort-control select,.filter,.filters button,.view-toggle{background:#101a30;border-color:#687da755;color:#c8d5ed}.filters [aria-pressed="true"],.filter[aria-pressed="true"]{background:#233554;color:#f1d9a4;border-color:#c5a66a}
+.need-picker{padding:24px}.need-options button{border-radius:6px}.need-options button[aria-pressed="true"]{background:#253755;color:#f1d9a4;border-color:#c5a66a}.pagination button{border-radius:6px}.pagination button[aria-current]{background:#c5a66a;color:#101526}
+footer{background:#060b18;border-top:1px solid #9cbdf42e}.footer-inner strong{color:#f1d9a4}.scroll-progress i{background:linear-gradient(90deg,#c5a66a,#9cbdf4)}
+body[data-route="/addons"] .addons{position:relative}body[data-route="/addons"] .addons:before{content:'';position:absolute;inset:0 0 auto;height:250px;background:radial-gradient(ellipse at 80% 0,#6485cd22,transparent 65%);pointer-events:none}
+@media(max-width:700px){.hero h1{font-size:clamp(3rem,12vw,4.6rem)}.hero-art{background-position:68% center}.brand-logo{width:42px;height:42px}.brand strong{font-size:.95rem}.brand small{font-size:.54rem}.faction-signature{flex-wrap:wrap}.faction-signature small{width:100%}.need-picker{padding:18px}.addon-card{border-radius:8px}}
+
+.hero .button.primary{color:#101526!important}.hero .hero-content{padding-top:130px}.hero .faction-signature{justify-content:center}

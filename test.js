@@ -132,7 +132,7 @@ test('toutes les routes publiques ont une page de métadonnées',()=>{
 
 test('le client conserve les mécanismes de recherche, copie et migration des favoris',()=>{
   const app=fs.readFileSync(path.join(__dirname,'app.js'),'utf8');
-  for(const marker of ['renaissance-favorites-v2','renaissance-favorites','navigator.clipboard','renderGlobalSearch','clear-all-favorites'])assert.match(app,new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+  for(const marker of ['night-agency-favorites-v2','night-agency-favorites','navigator.clipboard','renderGlobalSearch','clear-all-favorites'])assert.match(app,new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
   assert.doesNotMatch(app,/compatibilityLabels|compatibility-filter/);
   const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
   assert.doesNotMatch(html,/Natif Forever|À retester/);
@@ -151,7 +151,7 @@ test('le héros conserve une atmosphère animée sans réglage utilisateur',()=>
   const particles=html.match(/<div class="embers"[^>]*>(.*?)<\/div>/s)?.[1]||'';
   const particleCount=(particles.match(/<i(?:\s[^>]*)?><\/i>/g)||[]).length;
   assert.ok(particleCount>=14&&particleCount<=40,'Les particules restent présentes et en nombre limité');
-  assert.doesNotMatch(html+app,/motion-toggle|renaissance-motion|Animations : activées/);
+  assert.doesNotMatch(html+app,/motion-toggle|night-agency-motion|Animations : activées/);
   assert.match(theme,/@keyframes aether-rise/);
   assert.match(theme,/prefers-reduced-motion:reduce/);
 });

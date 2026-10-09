@@ -7,24 +7,24 @@ const talentData=require('./talents-data.js');
 const {createCommunity}=require('./community.js');
 
 const root=__dirname;
-const assetVersions=new Map(['styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,16)]));
+const assetVersions=new Map(['night-agency.css','styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,16)]));
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.avif':'image/avif'};
 const typeLabels={addon:'Addons',astuce:'Astuces',commande:'Commandes',depannage:'Dépannage',objet:'Objets RP',actualite:'Actualités',preset:'Presets'};
 const staticPages={
-  '/':{title:'Renaissance — Le codex français pratique de WoW: Forever',description:'Addons, commandes, astuces, dépannage, objets RP et actualités utiles pour WoW: Forever.'},
-  '/addons':{title:'Addons pour WoW: Forever | Renaissance',description:'Addons utiles pour WoW: Forever, avec compatibilité et date de vérification.'},
-  '/talents':{title:'Calculateur de talents WoW: Forever | Renaissance',description:'Préparez les talents de votre personnage, enregistrez votre build et partagez-le.'},
-  '/astuces':{title:'Astuces WoW: Forever | Renaissance',description:'Guides pratiques et astuces vérifiées pour WoW: Forever.'},
-  '/commandes':{title:'Commandes WoW: Forever | Renaissance',description:'Commandes console copiables, impacts et procédures de restauration.'},
-  '/commandes/presets':{title:'Presets graphiques WoW: Forever | Renaissance',description:'Presets Immersion, Performance et Cinématique composés de CVars documentées.'},
-  '/depannage':{title:'Dépannage WoW: Forever | Renaissance',description:'Résoudre les erreurs Lua, addons non chargés et problèmes d’interface.'},
-  '/objets':{title:'Objets RP WoW: Forever | Renaissance',description:'Objets RP, trouvailles et commandes de waypoint documentées.'},
-  '/actualites':{title:'Actualités WoW: Forever | Renaissance',description:'Ce que les mises à jour changent concrètement pour les joueurs de WoW: Forever.'},
-  '/favoris':{title:'Mes favoris | Renaissance',description:'Vos addons, astuces, commandes et objets WoW: Forever enregistrés localement.'},
-  '/sources':{title:'Sources | Renaissance',description:'Sources officielles et communautaires utilisées par le codex Renaissance.'},
-  '/confidentialite':{title:'Confidentialité | Renaissance',description:'Renaissance ne contient ni compte, ni publicité ciblée, ni tracker, ni cookie marketing.'},
-  '/a-propos':{title:'À propos | Renaissance',description:'Renaissance est un codex français indépendant consacré à WoW: Forever.'},
-  '/contribuer':{title:'Contribuer | Renaissance',description:'Proposer une correction ou signaler une information à vérifier sur GitHub.'}
+  '/':{title:'Night Agency — Le codex français pratique de WoW: Forever',description:'Addons, commandes, astuces, dépannage, objets RP et actualités utiles pour WoW: Forever.'},
+  '/addons':{title:'Addons pour WoW: Forever | Night Agency',description:'Addons utiles pour WoW: Forever, avec compatibilité et date de vérification.'},
+  '/talents':{title:'Calculateur de talents WoW: Forever | Night Agency',description:'Préparez les talents de votre personnage, enregistrez votre build et partagez-le.'},
+  '/astuces':{title:'Astuces WoW: Forever | Night Agency',description:'Guides pratiques et astuces vérifiées pour WoW: Forever.'},
+  '/commandes':{title:'Commandes WoW: Forever | Night Agency',description:'Commandes console copiables, impacts et procédures de restauration.'},
+  '/commandes/presets':{title:'Presets graphiques WoW: Forever | Night Agency',description:'Presets Immersion, Performance et Cinématique composés de CVars documentées.'},
+  '/depannage':{title:'Dépannage WoW: Forever | Night Agency',description:'Résoudre les erreurs Lua, addons non chargés et problèmes d’interface.'},
+  '/objets':{title:'Objets RP WoW: Forever | Night Agency',description:'Objets RP, trouvailles et commandes de waypoint documentées.'},
+  '/actualites':{title:'Actualités WoW: Forever | Night Agency',description:'Ce que les mises à jour changent concrètement pour les joueurs de WoW: Forever.'},
+  '/favoris':{title:'Mes favoris | Night Agency',description:'Vos addons, astuces, commandes et objets WoW: Forever enregistrés localement.'},
+  '/sources':{title:'Sources | Night Agency',description:'Sources officielles et communautaires utilisées par le codex Night Agency.'},
+  '/confidentialite':{title:'Confidentialité | Night Agency',description:'Night Agency ne contient ni compte, ni publicité ciblée, ni tracker, ni cookie marketing.'},
+  '/a-propos':{title:'À propos | Night Agency',description:'Night Agency est un codex français indépendant consacré à WoW: Forever.'},
+  '/contribuer':{title:'Contribuer | Night Agency',description:'Proposer une correction ou signaler une information à vérifier sur GitHub.'}
 };
 
 function escapeHtml(value=''){
@@ -43,17 +43,17 @@ function itemForPath(pathname){
 function pageForPath(pathname){
   if(staticPages[pathname])return staticPages[pathname];
   const talentClass=talentData.classes.find(c=>pathname===`/talents/${c.slug}`);
-  if(talentClass)return {title:`Talents du ${talentClass.name} | WoW: Forever — Renaissance`,description:`Calculateur de talents du ${talentClass.name} : trois arbres, prérequis, points par niveau et lien de build partageable.`};
+  if(talentClass)return {title:`Talents du ${talentClass.name} | WoW: Forever — Night Agency`,description:`Calculateur de talents du ${talentClass.name} : trois arbres, prérequis, points par niveau et lien de build partageable.`};
   const item=itemForPath(pathname);
   if(item)return {
-    title:`${item.title} pour WoW Forever | Renaissance`,description:item.description,item,
+    title:`${item.title} pour WoW Forever | Night Agency`,description:item.description,item,
     breadcrumbs:[{name:'Accueil',path:'/'},{name:typeLabels[item.type],path:`/${item.type==='objet'?'objets':item.type==='actualite'?'actualites':item.type==='astuce'?'astuces':item.type==='commande'||item.type==='preset'?'commandes':item.type==='depannage'?'depannage':'addons'}`},{name:item.title,path:pathname}]
   };
   return null;
 }
 function jsonLd(page,canonical){
   const blocks=[];
-  if(page.item)blocks.push({'@context':'https://schema.org','@type':'Article',headline:page.item.title,description:page.item.description,dateModified:page.item.verifiedDate,url:canonical,author:{'@type':'Organization',name:'Renaissance'}});
+  if(page.item)blocks.push({'@context':'https://schema.org','@type':'Article',headline:page.item.title,description:page.item.description,dateModified:page.item.verifiedDate,url:canonical,author:{'@type':'Organization',name:'Night Agency'}});
   if(page.breadcrumbs)blocks.push({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:page.breadcrumbs.map((crumb,index)=>({'@type':'ListItem',position:index+1,name:crumb.name,item:new URL(crumb.path,canonical).href}))});
   return blocks.map(block=>`<script type="application/ld+json">${JSON.stringify(block).replace(/</g,'\\u003c')}</script>`).join('\n  ');
 }
@@ -165,8 +165,8 @@ Sitemap: ${normalizeOrigin(request)}/sitemap.xml
     const page=pageForPath(pathname);
     if(page)return send(response,200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, max-age=0, must-revalidate',...(request.method==='GET'?presenceIdentity(request).headers:{})},renderIndex(request,pathname,page),request.method==='HEAD');
     const requested=pathname.replace(/^\/+/, '');
-    if(!['styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
-      return send(response,404,{'Content-Type':'text/html; charset=utf-8'},'<!doctype html><html lang="fr"><title>Page introuvable | Renaissance</title><body><main><h1>Page introuvable</h1><p><a href="/">Retour au codex</a></p></main></body></html>',request.method==='HEAD');
+    if(!['night-agency.css','styles.css','theme.css','art-direction.css','app.js','data.js','talents.css','talents.js','talents-data.js','talent-engine.js'].includes(requested)&&!/^assets\/[a-z0-9_-]+\.(png|svg|jpg|jpeg|webp|avif)$/i.test(requested)){
+      return send(response,404,{'Content-Type':'text/html; charset=utf-8'},'<!doctype html><html lang="fr"><title>Page introuvable | Night Agency</title><body><main><h1>Page introuvable</h1><p><a href="/">Retour au codex</a></p></main></body></html>',request.method==='HEAD');
     }
     const filePath=path.resolve(root,requested);
     if(!filePath.startsWith(root+path.sep))return send(response,403,{'Content-Type':'text/plain; charset=utf-8'},'Forbidden',request.method==='HEAD');
@@ -182,6 +182,6 @@ Sitemap: ${normalizeOrigin(request)}/sitemap.xml
 }
 if(require.main===module){
   const port=Number(process.env.PORT)||3000;
-  createServer().listen(port,'0.0.0.0',()=>console.log(`Renaissance écoute sur le port ${port}`));
+  createServer().listen(port,'0.0.0.0',()=>console.log(`Night Agency écoute sur le port ${port}`));
 }
 module.exports={createServer,pageForPath,itemForPath,staticPages};

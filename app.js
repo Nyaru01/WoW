@@ -11,8 +11,8 @@
   const typeLabels={addon:'Addon',astuce:'Astuce',commande:'Commande',depannage:'Dépannage',objet:'Objet RP',actualite:'Actualité',preset:'Preset'};
   function readPreference(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}}
   function savePreference(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
-  const favoriteKey='renaissance-favorites-v2';
-  const legacyFavorites=readPreference('renaissance-favorites',[]);
+  const favoriteKey='night-agency-favorites-v2';
+  const legacyFavorites=readPreference('night-agency-favorites',[]);
   const migrated=Array.isArray(legacyFavorites)?legacyFavorites.map(url=>data.addons.find(addon=>addon.curseforgeUrl===url)).filter(Boolean).map(addon=>`addon:${addon.slug}`):[];
   const favorites=new Set([...readPreference(favoriteKey,[]),...migrated]);
   if(migrated.length)savePreference(favoriteKey,[...favorites]);
@@ -224,10 +224,10 @@
     renderAddons();
   }
   $$('[data-view]').forEach(button=>button.addEventListener('click',()=>{
-    const view=button.dataset.view;addonGrid?.classList.toggle('list-view',view==='list');savePreference('renaissance-view',view);
+    const view=button.dataset.view;addonGrid?.classList.toggle('list-view',view==='list');savePreference('night-agency-view',view);
     $$('[data-view]').forEach(candidate=>candidate.setAttribute('aria-pressed',String(candidate===button)));
   }));
-  if(readPreference('renaissance-view','cards')==='list')$('[data-view="list"]')?.click();
+  if(readPreference('night-agency-view','cards')==='list')$('[data-view="list"]')?.click();
   renderAddons();
   const meter=$('.hero-meter strong');if(meter)meter.textContent=data.addons.length;
 
@@ -342,12 +342,12 @@
   function renderStaticPage(pathname){
     const pages={
       '/sources':['Sources','Chaque fiche technique affiche ses sources. Les données officielles, CurseForge et les observations communautaires sont clairement distinguées.'],
-      '/confidentialite':['Confidentialité','Renaissance ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur. Un cookie fonctionnel anonyme, codex-voter, valable un an, permet de modifier ou annuler vos votes. Le serveur conserve uniquement son empreinte, l’addon, le choix du vote et sa date ; les adresses IP ne sont pas enregistrées dans la base des votes. Effacer ce cookie fait perdre l’accès à vos anciens votes. Le compteur en ligne utilise un cookie de session anonyme, codex-presence, partagé entre les onglets. Il conserve les connexions en mémoire seulement, sans historique de navigation ni enregistrement en base. Un navigateur connecté compte une seule fois, même avec plusieurs onglets. Les signalements publiés sur GitHub sont publics et soumis aux règles de GitHub.'],
-      '/a-propos':['À propos','Renaissance est un codex français indépendant tenu pour aider les joueurs de WoW: Forever. Il n’est ni affilié à Blizzard Entertainment ni à CurseForge.'],
+      '/confidentialite':['Confidentialité','Night Agency ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur. Un cookie fonctionnel anonyme, codex-voter, valable un an, permet de modifier ou annuler vos votes. Le serveur conserve uniquement son empreinte, l’addon, le choix du vote et sa date ; les adresses IP ne sont pas enregistrées dans la base des votes. Effacer ce cookie fait perdre l’accès à vos anciens votes. Le compteur en ligne utilise un cookie de session anonyme, codex-presence, partagé entre les onglets. Il conserve les connexions en mémoire seulement, sans historique de navigation ni enregistrement en base. Un navigateur connecté compte une seule fois, même avec plusieurs onglets. Les signalements publiés sur GitHub sont publics et soumis aux règles de GitHub.'],
+      '/a-propos':['À propos','Night Agency est un codex français indépendant tenu pour aider les joueurs de WoW: Forever. Il n’est ni affilié à Blizzard Entertainment ni à CurseForge.'],
       '/contribuer':['Contribuer','Vous pouvez signaler un addon cassé, proposer une commande ou corriger une information avec une issue GitHub préremplie.']
     };
     const page=pages[pathname];if(!page)return false;
-    $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><span aria-current="page">${page[0]}</span></nav><header class="detail-header"><div><span class="chapter">Renaissance</span><h1>${page[0]}</h1><p>${page[1]}</p></div></header>${pathname==='/contribuer'?'<a class="button primary" href="https://github.com/Nyaru01/WoW/issues/new?title=%5BRenaissance%5D%20Proposition" target="_blank" rel="noopener noreferrer">Ouvrir une issue GitHub ↗</a>':''}`;
+    $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><span aria-current="page">${page[0]}</span></nav><header class="detail-header"><div><span class="chapter">Night Agency</span><h1>${page[0]}</h1><p>${page[1]}</p></div></header>${pathname==='/contribuer'?'<a class="button primary" href="https://github.com/Nyaru01/WoW/issues/new?title=%5BNight Agency%5D%20Proposition" target="_blank" rel="noopener noreferrer">Ouvrir une issue GitHub ↗</a>':''}`;
     return true;
   }
   function showRoute(){
