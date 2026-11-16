@@ -47,8 +47,8 @@ test('le catalogue a été enrichi sans masquer les incertitudes',()=>{
     assert.equal(pageForPath('/objets/'+slug),null);
   }
   assert.ok(data.news.length>=9);
-  const historical=data.addons.filter(addon=>addon.slug!=='hunters-field-guide'&&!addon.addedDate);
-  assert.equal(historical.length,27);
+  const historical=data.addons.filter(addon=>!['hunters-field-guide','questie'].includes(addon.slug)&&!addon.addedDate);
+  assert.equal(historical.length,26);
   for(const addon of historical){
     assert.ok(addon.bestFor&&addon.setupAdvice,addon.slug);
     assert.ok(addon.features.length>=3,addon.slug);

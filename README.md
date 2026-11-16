@@ -1,6 +1,6 @@
-# Eclipe — Le codex français pratique de WoW: Forever
+# Eclipse — Le codex français pratique de WoW: Forever
 
-Eclipe est un site indépendant, sans compte, publicité ciblée, tracker ni cookie marketing. Il rassemble des addons, astuces, commandes, procédures de dépannage, objets RP et actualités utiles pour WoW: Forever.
+Eclipse est un site indépendant, sans compte, publicité ciblée, tracker ni cookie marketing. Il rassemble des addons, astuces, commandes, procédures de dépannage, objets RP et actualités utiles pour WoW: Forever.
 
 ## Fonctionnalités
 

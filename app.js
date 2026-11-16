@@ -30,8 +30,8 @@
   }
   function compatibility(item,detail=false){
     const status=item.testedBy==='Nyaru'?'tested':item.foreverCompatibility==='native'?'announced':'unknown';
-    const label={tested:'Testé par Nyaru',announced:'Conçu pour Forever · non testé',unknown:'Compatibilité à vérifier'}[status];
-    return `<div class="compatibility-status ${status}"><span class="compatibility-dot" aria-hidden="true"></span><span>${label}</span></div>${detail?`<p class="compatibility-explanation">${status==='tested'?'Test en jeu réalisé par Nyaru.':status==='announced'?'L’auteur présente cet addon comme conçu pour WoW: Forever. Cela ne vaut pas un test en jeu par Nyaru.':'La présence dans le catalogue ne garantit pas le fonctionnement sur votre client. Vérifiez le fichier proposé par l’auteur ; cet addon n’a pas été testé en jeu par Nyaru.'}</p><p class="verified-date">Fiche consultée le ${escapeHtml(formatDate(item.verifiedDate))}</p>`:''}`;
+    const label={tested:'Testé par Nyaru',announced:'Version Forever disponible · non testée',unknown:'Compatibilité à vérifier'}[status];
+    return `<div class="compatibility-status ${status}"><span class="compatibility-dot" aria-hidden="true"></span><span>${label}</span></div>${detail?`<p class="compatibility-explanation">${status==='tested'?'Test en jeu réalisé par Nyaru.':status==='announced'?'L’auteur propose une version pour WoW: Forever. Nyaru n’a pas testé cet addon en jeu.':'La présence dans le catalogue ne garantit pas le fonctionnement sur votre client. Vérifiez le fichier proposé par l’auteur ; cet addon n’a pas été testé en jeu par Nyaru.'}</p><p class="verified-date">Fiche consultée le ${escapeHtml(formatDate(item.verifiedDate))}</p>`:''}`;
   }
   function communityPanel(item){return `<section class="addon-community detail-block"><h2>L’avis de la communauté</h2><p>Ces votes reflètent l’utilité de l’addon pour les joueurs. Ils ne certifient pas sa compatibilité.</p>${voteControls(item)}<button class="report-link" type="button" data-report-slug="${escapeHtml(item.slug)}">Signaler un problème avec cet addon →</button></section>`;}
   function refreshVotes(){
@@ -258,9 +258,17 @@
     const renderItems=filter=>{$('.item-directory',directory).innerHTML=data.items.filter(item=>filter==='all'||item.category===filter).map(item=>`<article class="content-card"><div class="addon-top"><span>${escapeHtml(item.category)}</span>${favoriteButton(item)}</div><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${item.way?copyBlock(item.way,'Copier /way'):''}${verified(item)}</article>`).join('')||'<p>Aucune trouvaille documentée dans cette catégorie pour le moment.</p>';refreshFavoriteButtons();};
     $('.item-filters',directory).addEventListener('click',event=>{const button=event.target.closest('[data-item-filter]');if(!button)return;$$('[data-item-filter]',directory).forEach(item=>item.classList.toggle('active',item===button));renderItems(button.dataset.itemFilter);});renderItems('all');
   }
+  const featured=data.news[0];
   const newsShell=$('#nouvelles .section-shell');
-  if(newsShell){
-    const directory=document.createElement('section');directory.className='content-directory';directory.innerHTML=`<div class="section-intro"><div><span class="chapter">Impacts documentés</span><h2>Fiches d’actualité</h2></div><p>Ce qui change réellement, pour qui, et la source officielle.</p></div><div class="content-grid">${data.news.map(item=>`<article class="content-card"><span>Actualité</span><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${tagList(item.tags)}${verified(item)}</article>`).join('')}</div>`;newsShell.append(directory);
+  if(newsShell&&featured){
+    const date=featured.publishedDate||featured.verifiedDate;
+    const lead=document.createElement('div');
+    lead.className='news-lead';
+    lead.innerHTML=`<div><span class="news-date">Dernier correctif · <time datetime="${date}">${escapeHtml(formatDate(date))}</time></span><h2>${escapeHtml(featured.title)}</h2><p>${escapeHtml(featured.description)}</p></div><a href="${typePath(featured)}">Lire le résumé <span>→</span></a>`;
+    const directory=document.createElement('section');
+    directory.className='content-directory';
+    directory.innerHTML=`<div class="section-intro"><div><h2>Toutes les actualités</h2></div></div><div class="content-grid">${data.news.slice(1).map(item=>`<article class="content-card"><span>Actualité</span><h3><a href="${typePath(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.description)}</p>${tagList(item.tags)}${verified(item)}</article>`).join('')}</div>`;
+    newsShell.append(lead,directory);
   }
 
   const tabList=$('.guide-tabs');
@@ -345,12 +353,12 @@
   function renderStaticPage(pathname){
     const pages={
       '/sources':['Sources','Chaque fiche technique affiche ses sources. Les données officielles, CurseForge et les observations communautaires sont clairement distinguées.'],
-      '/confidentialite':['Confidentialité','Eclipe ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur. Un cookie fonctionnel anonyme, codex-voter, valable un an, permet de modifier ou annuler vos votes. Le serveur conserve uniquement son empreinte, l’addon, le choix du vote et sa date ; les adresses IP ne sont pas enregistrées dans la base des votes. Effacer ce cookie fait perdre l’accès à vos anciens votes. Le compteur en ligne utilise un cookie de session anonyme, codex-presence, partagé entre les onglets. Il conserve les connexions en mémoire seulement, sans historique de navigation ni enregistrement en base. Un navigateur connecté compte une seule fois, même avec plusieurs onglets. Les signalements publiés sur GitHub sont publics et soumis aux règles de GitHub.'],
-      '/a-propos':['À propos','Eclipe est un codex français indépendant tenu pour aider les joueurs de WoW: Forever. Il n’est ni affilié à Blizzard Entertainment ni à CurseForge.'],
+      '/confidentialite':['Confidentialité','Eclipse ne crée aucun compte, n’ajoute aucun tracker, aucune publicité ciblée et aucun cookie marketing. Les favoris et préférences restent dans votre navigateur. Un cookie fonctionnel anonyme, codex-voter, valable un an, permet de modifier ou annuler vos votes. Le serveur conserve uniquement son empreinte, l’addon, le choix du vote et sa date ; les adresses IP ne sont pas enregistrées dans la base des votes. Effacer ce cookie fait perdre l’accès à vos anciens votes. Le compteur en ligne utilise un cookie de session anonyme, codex-presence, partagé entre les onglets. Il conserve les connexions en mémoire seulement, sans historique de navigation ni enregistrement en base. Un navigateur connecté compte une seule fois, même avec plusieurs onglets. Les signalements publiés sur GitHub sont publics et soumis aux règles de GitHub.'],
+      '/a-propos':['À propos','Eclipse est un codex français indépendant tenu pour aider les joueurs de WoW: Forever. Il n’est ni affilié à Blizzard Entertainment ni à CurseForge.'],
       '/contribuer':['Contribuer','Vous pouvez signaler un addon cassé, proposer une commande ou corriger une information avec une issue GitHub préremplie.']
     };
     const page=pages[pathname];if(!page)return false;
-    $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><span aria-current="page">${page[0]}</span></nav><header class="detail-header"><div><span class="chapter">Eclipe</span><h1>${page[0]}</h1><p>${page[1]}</p></div></header>${pathname==='/contribuer'?'<a class="button primary" href="https://github.com/Nyaru01/WoW/issues/new?title=%5BEclipe%5D%20Proposition" target="_blank" rel="noopener noreferrer">Ouvrir une issue GitHub ↗</a>':''}`;
+    $('#route-content').innerHTML=`<nav class="breadcrumb"><a href="/">Accueil</a><span>›</span><span aria-current="page">${page[0]}</span></nav><header class="detail-header"><div><span class="chapter">Eclipse</span><h1>${page[0]}</h1><p>${page[1]}</p></div></header>${pathname==='/contribuer'?'<a class="button primary" href="https://github.com/Nyaru01/WoW/issues/new?title=%5BEclipse%5D%20Proposition" target="_blank" rel="noopener noreferrer">Ouvrir une issue GitHub ↗</a>':''}`;
     return true;
   }
   function showRoute(){
@@ -423,8 +431,7 @@
     observeReveals(document);
     new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)observeReveals(node);}))).observe($('main'),{childList:true,subtree:true});
   }
-  const featured=data.news[0];
-  if(featured){const title=$('#featured-patch-title'),summary=$('#featured-patch-summary'),date=$('#featured-patch-date');if(title)title.textContent=featured.title;if(summary)summary.textContent=featured.description;if(date){date.textContent=formatDate(featured.verifiedDate);date.dateTime=featured.verifiedDate;}}
+  if(featured){const title=$('#featured-patch-title'),summary=$('#featured-patch-summary'),date=$('#featured-patch-date');if(title)title.textContent=featured.title;if(summary)summary.textContent=featured.description;if(date){date.dateTime=featured.publishedDate||featured.verifiedDate;date.textContent=formatDate(date.dateTime);}}
   fetch('/api/community',{signal:AbortSignal.timeout(10000)}).then(async response=>{const result=await response.json();community=response.ok?result:{enabled:false,addons:{}};}).catch(()=>{community={enabled:false,addons:{}};}).finally(()=>{communityLoaded=true;refreshVotes();if(addonSort?.value==='rating')renderAddons();});
   refreshFavoriteButtons();
 })();

@@ -602,7 +602,42 @@
     {type:'objet',slug:'torche-de-grayson',title:'Torche de Grayson',description:'Objet de main gauche obtenu auprès du capitaine Grayson au Phare de l’Ouest.',category:'Torches',zone:'Marche de l’Ouest',coordinates:null,way:null,prerequisites:'Quête « Menace sur la côte » au Phare de l’Ouest',duration:'Équipée',cooldown:'Aucun confirmé',combat:'Objet équipable',indoors:'Oui',accountBound:'Non confirmé',notes:'Récompense de quête de niveau 21.',tags:['torche','lumière','rp','grayson'],verifiedDate,verificationStatus:'Récompense de quête vérifiée',image:null,sources:[{label:'Quête Menace sur la côte',url:'https://www.wowhead.com/forever/fr/quest=104/menace-sur-la-c%C3%B4te'}]},
   ];
 
+  const blizzardHotfixes={label:'Correctifs officiels Blizzard',url:'https://news.blizzard.com/en-us/article/24315281/wow-forever-hotfixes-november-13-2026'};
+  const dungeonXpUpdate={label:'Précision de Blizzard sur le forum',url:'https://us.forums.blizzard.com/en/wow/t/player-level-dungeon-xp-adjustment-november-14/2416343/1'};
+  const novemberNews=[
+    {
+      slug:'xp-donjon-ecart-12-niveaux', title:'XP en donjon : le seuil passe à plus de 12 niveaux',
+      description:'Un ennemi ne rapporte plus d’XP au groupe si un membre a plus de 12 niveaux d’avance sur lui.',
+      publishedDate:'2026-11-15', tags:['donjons','xp','progression'], sources:[dungeonXpUpdate,blizzardHotfixes],
+      impact:['Le seuil compare le niveau du joueur le plus haut à celui de chaque ennemi tué.','Un écart de 12 niveaux pile ne déclenche pas cette restriction.','Le correctif ne s’appliquait pas aux instances déjà en cours lors de son déploiement.']
+    },
+    {
+      slug:'correctifs-13-novembre-2026', title:'13 novembre : correctifs de classes, quêtes et donjons',
+      description:'Blizzard ajuste la Croissance sauvage, corrige Sneed et prolonge le délai de réapparition des ennemis de la Cité engloutie.',
+      publishedDate:'2026-11-13', tags:['classes','donjons','quêtes'], sources:[blizzardHotfixes,dungeonXpUpdate],
+      impact:['Pour le druide Restauration, le coefficient de soin de Croissance sauvage passe de 3,3 % à 6,6 %. Le sort ne se lance plus en mouvement.','Aux Mortemines, Sneed s’éjecte correctement si son déchiqueteur est étourdi quand il tombe à 0 % de vie.','Les ennemis hors boss de la Cité engloutie réapparaissent après deux heures au lieu d’une.','La règle d’XP en donjon annoncée le 13 a été ajustée ensuite : le seuil est désormais de plus de 12 niveaux.']
+    },
+    {
+      slug:'correctifs-12-novembre-2026', title:'12 novembre : concours de pêche et barres d’action',
+      description:'Le concours de pêche de Strangleronce admet davantage de gagnants et les talents secondaires conservent leurs réglages de barres.',
+      publishedDate:'2026-11-12', tags:['pêche','interface','talents'], sources:[blizzardHotfixes],
+      impact:['Blizzard augmente le nombre de gagnants par ensemble de règles pour le concours de pêche hebdomadaire.','Le correctif vise la réinitialisation des réglages des barres d’action à la déconnexion chez les joueurs ayant acquis les talents secondaires.']
+    },
+    {
+      slug:'correctifs-11-novembre-2026', title:'11 novembre : sacs de couture et ennemis des Riverglades',
+      description:'Cinq sacs de couture gagnent des emplacements et plusieurs ennemis des Riverglades infligent moins de dégâts.',
+      publishedDate:'2026-11-11', tags:['couture','sacs','monde'], sources:[blizzardHotfixes],
+      impact:['Le sac rouge en tisse-mage passe à 14 emplacements. Les sacs en soie vert et noir passent à 12, et les sacs en laine vert et rouge à 10.','Ces cinq recettes demandent chacune un rouleau de tissu supplémentaire.','Blizzard réduit les dégâts du Twilight Enforcer et d’Executioner Morg dans les Riverglades.']
+    },
+    {
+      slug:'correctifs-10-novembre-2026', title:'10 novembre : plus d’or en quête et ajustements de classes',
+      description:'La plupart des quêtes de niveau 48 et plus rapportent désormais aussi de l’or. Plusieurs classes reçoivent des ajustements.',
+      publishedDate:'2026-11-10', tags:['quêtes','or','classes'], sources:[blizzardHotfixes],
+      impact:['Le seuil de 48 concerne le niveau de la quête. Certaines quêtes, notamment répétables, sont exclues.','Le chaman Amélioration reçoit des changements qui favorisent une approche centrée sur Furie-des-vents.','Les points de vie de base de plusieurs familiers du démoniste augmentent d’environ 15 %. Les quatre premiers rangs d’Éclair de feu du diablotin gagnent aussi des dégâts de base.']
+    }
+  ].map(item=>({...item,type:'actualite',verifiedDate:'2026-11-16',verificationStatus:'Source officielle'}));
   const news=[
+    ...novemberNews,
     {type:'actualite',slug:'notes-developpement-24-septembre-2026',title:'Notes de développement du 24 septembre 2026',description:'Équilibrage des classes, gestionnaire de temps de recharge et améliorations de la manette.',impact:['Ajustements de classes','Premiers tests du gestionnaire de temps de recharge','Améliorations de la navigation à la manette'],tags:['classes','ui','addons'],verifiedDate:'2026-09-28',verificationStatus:'Source officielle',sources:[{label:'Notes officielles Blizzard',url:'https://eu.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-24-september/631316'}]},
     {type:'actualite',slug:'client-1-60-1-69977',title:'Client 1.60.1.69977 : Mac et manette',description:'Correctifs d’affichage et de stabilité sur Mac et navigation améliorée à la manette.',impact:['Stabilité Mac','Sélection des personnages à la manette','Interaction avec les objets de quête'],tags:['client','mac','manette'],verifiedDate:'2026-09-28',verificationStatus:'Source officielle',sources:[{label:'Note Blizzard',url:'https://eu.forums.blizzard.com/en/wow/t/beta-client-update-23-september/630815'}]},
     {type:'actualite',slug:'systeme-heritage',title:'Le système d’héritage dévoilé',description:'65 défis, des points liés au compte et trois arbres d’avantages à spécialiser par personnage.',impact:['Nouvelle progression liée au compte','Choix d’avantages par personnage'],tags:['progression','héritage'],verifiedDate:'2026-09-28',verificationStatus:'Source officielle',sources:[{label:'Annonce Blizzard',url:'https://worldofwarcraft.blizzard.com/fr-fr/news/24307383'}]},
@@ -1750,6 +1785,66 @@
     });
   }
 
+  const popularAddons=[
+    {
+      slug:'naowhforever',title:'Naowh Forever',author:'Naowh',category:'donjons',categories:['donjons','confort'],
+      description:'Consultez les cartes, quêtes et butins des donjons de Forever et préparez votre liste d’équipement.',
+      version:'1.3.0',tags:['donjon','butin','équipement','bis'],
+      sourceNote:'Plus de 860 000 téléchargements sur CurseForge pour ce projet dédié à Forever, relevés le 16 novembre.',
+      commands:[
+        {label:'Ouvrir les réglages',value:'/nf'},
+        {label:'Ouvrir le journal de donjons',value:'/nfjournal'},
+        {label:'Ouvrir les listes d’équipement',value:'/nfbis'}
+      ],
+      filePath:'/files/9642225'
+    },
+    {
+      slug:'leatrix-plus',title:'Leatrix Plus',author:'Leatrix',category:'confort',categories:['confort','interface'],
+      description:'Personnalisez l’interface, la minicarte et le chat, avec des options pour vendre les objets gris et réparer votre équipement.',
+      version:'1.60.30-forever',tags:['interface','minicarte','chat','réparation'],
+      sourceNote:'Environ 798 000 téléchargements pour le fichier Forever publié le 11 novembre, relevés le 16 novembre. Les modules s’activent à la carte.',
+      commands:[{label:'Ouvrir les réglages',value:'/ltp'}],
+      filePath:'/files/all?gameVersionTypeId=88568'
+    },
+    {
+      slug:'leatrix-maps',title:'Leatrix Maps',author:'Leatrix',category:'map',categories:['map','quetes'],
+      description:'Affichez les zones inexplorées, les trajets aériens et les coordonnées sur une carte redimensionnable.',
+      version:'1.60.31-forever',tags:['carte','coordonnées','exploration','trajets aériens'],
+      sourceNote:'Environ 721 000 téléchargements pour le fichier Forever publié le 12 novembre, relevés le 16 novembre.',
+      commands:[{label:'Ouvrir les réglages',value:'/ltm'}],
+      filePath:'/files/all?gameVersionTypeId=88568'
+    }
+  ];
+  for(const {filePath,...addon} of popularAddons){
+    const source=curseforge(addon.slug);
+    addons.push({
+      ...addon,name:addon.title,type:'addon',image:`/assets/addon-${addon.slug}.webp`,imageKind:'capture',
+      imageSource:({
+        'naowhforever':'https://media.forgecdn.net/attachments/2023/132/qol-png.png',
+        'leatrix-plus':'https://media.forgecdn.net/attachments/2117/940/leatrix-plus-hero-png.png',
+        'leatrix-maps':'https://media.forgecdn.net/attachments/2118/10/leatrix-maps-reveal-png.png'
+      })[addon.slug],
+      addedDate:'2026-11-16',verifiedDate:'2026-11-16',verificationStatus:'Version Forever publiée sur CurseForge',
+      tested:false,status:'release',foreverCompatibility:'native',wowFlavor:['Forever'],gameVersion:'1.60.1',
+      warnings:['Compatibilité documentée pour Forever 1.60.1. Fiche vérifiée sur CurseForge.'],
+      sources:[source,{label:`Version Forever ${addon.version}`,url:source.url+filePath}],curseforgeUrl:source.url
+    });
+  }
+
+  const questie=addons.find(addon=>addon.slug==='questie');
+  Object.assign(questie,{
+    author:'TheCrux_BB',version:'12.9.0',gameVersion:'1.60.1',status:'release',foreverCompatibility:'native',
+    verifiedDate:'2026-11-16',verificationStatus:'Version Forever publiée sur CurseForge',
+    setupAdvice:'Si vous installez Questie à la main depuis CurseForge, installez aussi QuestieDB dans sa version Forever.',
+    warnings:['QuestieDB est requis. Vérifiez que les deux addons sont activés sur votre client Forever.'],
+    sources:[
+      ...questie.sources,
+      {label:'Questie 12.9.0',url:'https://www.curseforge.com/wow/addons/questie/files/9602663'},
+      {label:'QuestieDB pour Forever',url:'https://www.curseforge.com/wow/addons/questiedb/files/all?gameVersionTypeId=88568'},
+      {label:'Instructions d’installation de l’équipe Questie',url:'https://github.com/Questie/Questie#questie-db'}
+    ]
+  });
+
   const all=[...addons,...tips,...commands,...troubleshooting,...items,...news,...presets];
   const routeFor=item=>item.type==='addon'?`/addons/${item.slug}`:item.type==='astuce'?`/astuces/${item.slug}`:item.type==='commande'?`/commandes/${item.slug}`:item.type==='depannage'?`/depannage/${item.slug}`:item.type==='objet'?`/objets/${item.slug}`:item.type==='actualite'?`/actualites/${item.slug}`:`/commandes/presets#${item.slug}`;
   const selections=[
@@ -1757,6 +1852,7 @@
     {slug:'donjons',title:'Je pars en donjon',description:'Explorez les cartes, les quêtes et le suivi du butin avant votre prochaine sortie.',addons:['atlas','dungeonjournal','lootified','nova-instance-tracker']},
     {slug:'interface',title:'Je refais mon interface',description:'Comparez les approches pour organiser vos fenêtres, vos barres et les dialogues.',addons:['ellesmereui','blizzmove','darkmode','immersion']},
     {slug:'chasseur',title:'Je joue chasseur',description:'Parcourez les fiches consacrées aux familiers et à la portée des tirs.',addons:['hunters-field-guide','shotrange']},
+    {slug:'populaires',title:'Addons populaires',description:'Quatre addons largement téléchargés avec une version compatible Forever publiée sur CurseForge.',addons:['questie','naowhforever','leatrix-plus','leatrix-maps']},
     {slug:'demoniste',title:'Je joue démo',description:'Comptez vos fragments d’âme et nettoyez le surplus avec un clic ou une macro.',addons:['ezshards','xnshards']},
     {slug:'exploration',title:'J’explore Azeroth',description:'Repères, journal et livres : choisissez les outils qui accompagnent vos découvertes.',addons:['tomtom','forever-field-journal','books-forever','lorewalker']}
   ];

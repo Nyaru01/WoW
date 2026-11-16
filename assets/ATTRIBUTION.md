@@ -81,3 +81,7 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 
 - share-wow-horde-alliance-ec0871d452.jpg : version JPEG 1200 × 675 du visuel d’accueil hero-horde-alliance-e4bfd66ec7.webp, dédiée aux aperçus de partage ; même attribution que le visuel source.
  - addon-ezshards.webp : capture publiée par Soul404 sur https://www.curseforge.com/wow/addons/ezshards, convertie en WebP.
+
+- addon-naowhforever.webp : aperçu publié sur CurseForge, converti en WebP — https://media.forgecdn.net/attachments/2023/132/qol-png.png
+- addon-leatrix-plus.webp : aperçu publié sur CurseForge, converti en WebP — https://media.forgecdn.net/attachments/2117/940/leatrix-plus-hero-png.png
+- addon-leatrix-maps.webp : aperçu publié sur CurseForge, converti en WebP — https://media.forgecdn.net/attachments/2118/10/leatrix-maps-reveal-png.png
