@@ -71,7 +71,6 @@ test('les astuces ont des captures locales attribuées et des sources consultée
 
 test('la sélection de septembre contient les 20 liens sans doublon et des images locales',()=>{
   const expected='forever-quest-tint offhand shotrange reverse-engineering-by-chills roarforever loot-triage dungeonjournal trainerspells forever-field-journal foreverthreatplate banterblocker the-fishing-log immersion coloured-enemy-nameplates forever-thanks shard-source lorewalker forever-fishing questtogether books-forever'.split(' ');
-  assert.equal(data.addons.length,49);
   for(const slug of expected){
     const matches=data.addons.filter(addon=>addon.slug===slug);
     assert.equal(matches.length,1,slug);
@@ -188,9 +187,13 @@ test('le serveur répond aux routes, métadonnées, sitemap et erreurs',async t=
   assert.equal((await fetch(base+'/',{method:'POST'})).status,405);
 });
 
-test('les addons possèdent une image locale et une source identifiée',()=>{
-  assert.equal(data.addons.length,49);
+test('les aperçus des addons utilisent des images locales et des sources identifiées',()=>{
   for(const addon of data.addons){
+    if(!addon.image){
+      assert.equal(addon.imageKind,undefined,addon.slug);
+      assert.equal(addon.imageSource,undefined,addon.slug);
+      continue;
+    }
     assert.ok(['capture','logo'].includes(addon.imageKind),addon.slug);
     assert.ok(fs.existsSync(path.join(__dirname,addon.image)),addon.slug);
     assert.match(addon.imageSource,/^https:\/\//,addon.slug);

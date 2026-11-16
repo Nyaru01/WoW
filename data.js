@@ -1718,6 +1718,38 @@
   "curseforgeUrl": "https://www.curseforge.com/wow/addons/forever-irs"
 });
 
+  const shardAddons=[
+    {
+      slug:'ezshards', title:'EzShards', author:'Soul404', version:'1.0.0',
+      description:'Affiche les fragments d’âme du démoniste et supprime le surplus un par un, au clic ou avec une macro.',
+      image:'/assets/addon-ezshards.webp', imageKind:'capture',
+      imageSource:'https://media.forgecdn.net/attachments/description/null/description_d36f24c7-0d29-4019-b722-2318e19eee01.png',
+      sourceNote:'Réglez le nombre de fragments à conserver dans les options de l’addon. Vous pouvez ajouter /shardclean à une macro.',
+      commands:[{label:'Supprimer un fragment en trop',value:'/shardclean'}],
+      warnings:['Le nettoyage se fait hors combat, un fragment par clic ou pression.']
+    },
+    {
+      slug:'xnshards', title:'XNShards', author:'ascalontv', version:'1.1',
+      description:'Supprime les fragments d’âme en trop en une fois, à la demande ou lors de la prochaine pression d’une touche hors combat.',
+      sourceNote:'Le seuil par défaut est de deux fragments. Réglez le nombre à conserver avant de lancer le nettoyage.',
+      commands:[
+        {label:'Conserver cinq fragments',value:'/shards keep 5'},
+        {label:'Supprimer les fragments en trop',value:'/shards'},
+        {label:'Basculer le nettoyage automatique',value:'/shards auto'}
+      ],
+      warnings:['Le nettoyage se fait hors combat. En mode automatique, une touche de déplacement peut déclencher la suppression.']
+    }
+  ];
+  for(const addon of shardAddons){
+    const source=curseforge(addon.slug);
+    addons.push({
+      ...addon, name:addon.title, type:'addon', category:'confort', categories:['confort'],
+      addedDate:'2026-11-16', verifiedDate:'2026-11-16', verificationStatus:'Fiche CurseForge consultée',
+      tested:false, status:'release', foreverCompatibility:'native', wowFlavor:['Forever'], gameVersion:'1.60.1',
+      tags:['démoniste','démo','shards','fragments d’âme'], sources:[source], curseforgeUrl:source.url
+    });
+  }
+
   const all=[...addons,...tips,...commands,...troubleshooting,...items,...news,...presets];
   const routeFor=item=>item.type==='addon'?`/addons/${item.slug}`:item.type==='astuce'?`/astuces/${item.slug}`:item.type==='commande'?`/commandes/${item.slug}`:item.type==='depannage'?`/depannage/${item.slug}`:item.type==='objet'?`/objets/${item.slug}`:item.type==='actualite'?`/actualites/${item.slug}`:`/commandes/presets#${item.slug}`;
   const selections=[
@@ -1725,6 +1757,7 @@
     {slug:'donjons',title:'Je pars en donjon',description:'Explorez les cartes, les quêtes et le suivi du butin avant votre prochaine sortie.',addons:['atlas','dungeonjournal','lootified','nova-instance-tracker']},
     {slug:'interface',title:'Je refais mon interface',description:'Comparez les approches pour organiser vos fenêtres, vos barres et les dialogues.',addons:['ellesmereui','blizzmove','darkmode','immersion']},
     {slug:'chasseur',title:'Je joue chasseur',description:'Parcourez les fiches consacrées aux familiers et à la portée des tirs.',addons:['hunters-field-guide','shotrange']},
+    {slug:'demoniste',title:'Je joue démo',description:'Comptez vos fragments d’âme et nettoyez le surplus avec un clic ou une macro.',addons:['ezshards','xnshards']},
     {slug:'exploration',title:'J’explore Azeroth',description:'Repères, journal et livres : choisissez les outils qui accompagnent vos découvertes.',addons:['tomtom','forever-field-journal','books-forever','lorewalker']}
   ];
   const parseSelection=value=>{
