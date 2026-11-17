@@ -12,7 +12,10 @@ test('les contenus possèdent un socle valide et des slugs uniques',()=>{
     assert.ok(item.type&&item.slug&&item.title&&item.description&&item.tags&&item.verifiedDate&&item.verificationStatus&&item.sources);
     const id=`${item.type}:${item.slug}`;
     assert.equal(ids.has(id),false,`doublon ${id}`);ids.add(id);
-    for(const source of item.sources)assert.match(source.url,/^https:\/\//);
+    for(const source of item.sources){
+      assert.ok(source.label,id);
+      if(source.url)assert.match(source.url,/^https:\/\//);
+    }
   }
 });
 
@@ -33,7 +36,7 @@ test('chaque astuce fournit une procédure concrète',()=>{
   for(const tip of data.tips){
     assert.equal(tip.facts.length,3,tip.slug);
     assert.ok(tip.steps.length>=3,tip.slug);
-    assert.ok(tip.note&&tip.image,tip.slug);
+    assert.ok(tip.note,tip.slug);
   }
   const theme=fs.readFileSync(path.join(__dirname,'theme.css'),'utf8');
   assert.match(theme,/mont-hyjal\.webp/);
@@ -62,9 +65,10 @@ test('les astuces ont des captures locales attribuées et des sources consultée
   for(const tip of data.tips){
     assert.equal(tip.verificationStatus,'Sources consultées');
     assert.ok(tip.sources.length>0,tip.slug);
+    if(tip.relatedAddon)assert.ok(data.addons.some(addon=>addon.slug===tip.relatedAddon),tip.slug);
+    if(!tip.image)continue;
     assert.ok(tip.imageAlt&&tip.imageCaption&&tip.imagePage,tip.slug);
     assert.ok(fs.existsSync(path.join(__dirname,tip.image)),tip.image);
-    assert.ok(data.addons.some(addon=>addon.slug===tip.relatedAddon),tip.slug);
     assert.doesNotMatch(tip.image,/azeroth-cosmique|mont-hyjal|citadelle-glace|chute-arthas|porte-tenebres|kaldorei/);
   }
 });

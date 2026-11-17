@@ -95,6 +95,24 @@
   });
 
   const tips=[
+    {
+      type:'astuce',slug:'destrier-epique-paladin-reprouve',title:'Le destrier épique du paladin réprouvé',
+      category:'Montures', description:'Préparez les composants et suivez la quête du niveau 60, de Bandarion jusqu’à Scholomance.',
+      facts:['Deux donjons à prévoir','Paladin réprouvé niveau 60','350 po de frais, hors achats'],
+      steps:[
+        'Préparez 40 étoffes runiques, 6 barres d’arcanite, 10 larmes d’Arthas et 5 eaux sacrées de Stratholme pour Ott, 20 biscuits enrichis en manne pour Nathanos, puis un diamant d’Azeroth et un diamant noir parfait pour Danitha. Les intendants de l’Aube d’argent vendent les biscuits à partir du rang Amical.',
+        'Aux Pitons-du-Tonnerre, prenez A Worthy Endeavor auprès d’Alodan the Hopeful (25.3, 14.6). Retrouvez ensuite Danitha Morr à la forteresse de Bandarion, dans les clairières de Tirisfal (22.1, 44.7).',
+        'Achetez l’encensoir au grand prêtre Zayus à Orgrimmar pour 150 po et rapportez-le à Danitha. Quand Exorcising Terrordale apparaît dans votre journal, utilisez l’encensoir près des lueurs vertes de Val-Terreur, au sud-ouest de Stratholme. Éliminez 25 esprits et retournez à Bandarion.',
+        'Pour Collection of Goods, apportez les matériaux et 150 po à Ott au Moulin-de-Tarren (60.5, 26.2). Ramenez le caparaçon à Danitha.',
+        'Une fois An Offering of Vengeance disponible, échangez les biscuits et 50 po contre du fourrage chez Nathanos, à la ferme des Marris. Entrez en groupe à Hache-Tripes Ouest avec le fourrage et le caparaçon. Prévoyez la Clé en croissant ou quelqu’un pour ouvrir. Après avoir vaincu Tendris Crochebois, donnez le fourrage à l’Ancien esprit équin et faites bénir le caparaçon.',
+        'Rapportez le caparaçon béni à Danitha. Remettez-lui ensuite les deux diamants pour obtenir le Clairvoyant de divination et acceptez Justice and Retribution.',
+        'À Scholomance, ouvrez la sacoche de Danitha et activez le Clairvoyant au sous-sol du Grand Ossuaire avec votre groupe. Après les vagues, battez Ravassombre, transformez l’âme récupérée en Esprit de vindicte, puis remettez-le avec le caparaçon béni au destrier déchu.'
+      ],
+      factLabels:['Parcours','Prérequis','Budget'],
+      note:'Les conditions de déblocage de l’exorcisme, l’ordre des quêtes autour d’Ott et les sceaux à employer contre les vagues à Scholomance restent à confirmer.',
+      tags:['paladin','réprouvé','monture','destrier','scholomance'],verifiedDate:'2026-11-17',
+      verificationStatus:'Sources consultées',sources:[{label:'JudgeHype · guide du destrier épique du paladin réprouvé (16 novembre 2026)'}]
+    },
   {
     "type": "astuce",
     "slug": "construire-pack-propre",
@@ -608,8 +626,8 @@
     {
       slug:'xp-donjon-ecart-12-niveaux', title:'XP en donjon : le seuil passe à plus de 12 niveaux',
       description:'Un ennemi ne rapporte plus d’XP au groupe si un membre a plus de 12 niveaux d’avance sur lui.',
-      publishedDate:'2026-11-15', tags:['donjons','xp','progression'], sources:[dungeonXpUpdate,blizzardHotfixes],
-      impact:['Le seuil compare le niveau du joueur le plus haut à celui de chaque ennemi tué.','Un écart de 12 niveaux pile ne déclenche pas cette restriction.','Le correctif ne s’appliquait pas aux instances déjà en cours lors de son déploiement.']
+      publishedDate:'2026-11-15', tags:['donjons','xp','progression'], sources:[dungeonXpUpdate,blizzardHotfixes,{label:'JudgeHype · ajustement de l’expérience en donjon (15 novembre 2026)'}],
+      impact:['Le seuil compare le niveau du joueur le plus haut à celui de chaque ennemi tué.','Par exemple, contre un ennemi de niveau 20, un joueur de niveau 32 ne déclenche pas la restriction. Avec un joueur de niveau 33, le groupe ne reçoit aucune XP pour cet ennemi.','Le correctif ne s’appliquait pas aux instances déjà en cours lors de son déploiement.']
     },
     {
       slug:'correctifs-13-novembre-2026', title:'13 novembre : correctifs de classes, quêtes et donjons',
@@ -1755,6 +1773,20 @@
 
   const shardAddons=[
     {
+      slug:'soul-shards-forever-ssf', title:'Soul Shards Forever (SSF)', author:'msromike', version:'1.15.1',
+      description:'Comptez vos fragments d’âme, rangez-les dans votre sac d’âme et supprimez le surplus un par un.',
+      image:'/assets/addon-soul-shards-forever-ssf.webp', imageKind:'capture',
+      imageSource:'https://media.forgecdn.net/attachments/2159/274/04_minimap_and_broker-png.png',
+      addedDate:'2026-11-17',verifiedDate:'2026-11-17',verificationStatus:'Testé en jeu par Nyaru',tested:true,testedBy:'Nyaru',
+      sourceNote:'Retour de Nyaru sur WoW Forever : l’addon fonctionne très bien. CurseForge affichait environ 39 000 téléchargements le 17 novembre. Réglez le nombre de fragments à conserver dans /ssf.',
+      commands:[
+        {label:'Ouvrir les réglages',value:'/ssf'},
+        {label:'Supprimer un fragment en trop (ligne à placer dans une macro)',value:'/ssf delete'},
+        {label:'Afficher l’aide',value:'/ssf help'}
+      ],
+      warnings:['Le nettoyage se fait hors combat, un fragment par pression. Vous pouvez le mettre en pause depuis les réglages.']
+    },
+    {
       slug:'ezshards', title:'EzShards', author:'Soul404', version:'1.0.0',
       description:'Affiche les fragments d’âme du démoniste et supprime le surplus un par un, au clic ou avec une macro.',
       image:'/assets/addon-ezshards.webp', imageKind:'capture',
@@ -1778,10 +1810,11 @@
   for(const addon of shardAddons){
     const source=curseforge(addon.slug);
     addons.push({
-      ...addon, name:addon.title, type:'addon', category:'confort', categories:['confort'],
+      name:addon.title, type:'addon', category:'confort', categories:['confort'],
       addedDate:'2026-11-16', verifiedDate:'2026-11-16', verificationStatus:'Fiche CurseForge consultée',
       tested:false, status:'release', foreverCompatibility:'native', wowFlavor:['Forever'], gameVersion:'1.60.1',
-      tags:['démoniste','démo','shards','fragments d’âme'], sources:[source], curseforgeUrl:source.url
+      tags:['démoniste','démo','shards','fragments d’âme'], sources:[source], curseforgeUrl:source.url,
+      ...addon
     });
   }
 
@@ -1853,7 +1886,7 @@
     {slug:'interface',title:'Je refais mon interface',description:'Comparez les approches pour organiser vos fenêtres, vos barres et les dialogues.',addons:['ellesmereui','blizzmove','darkmode','immersion']},
     {slug:'chasseur',title:'Je joue chasseur',description:'Parcourez les fiches consacrées aux familiers et à la portée des tirs.',addons:['hunters-field-guide','shotrange']},
     {slug:'populaires',title:'Addons populaires',description:'Quatre addons largement téléchargés avec une version compatible Forever publiée sur CurseForge.',addons:['questie','naowhforever','leatrix-plus','leatrix-maps']},
-    {slug:'demoniste',title:'Je joue démo',description:'Comptez vos fragments d’âme et nettoyez le surplus avec un clic ou une macro.',addons:['ezshards','xnshards']},
+    {slug:'demoniste',title:'Je joue démo',description:'Comptez vos fragments d’âme et nettoyez le surplus avec un clic ou une macro.',addons:['soul-shards-forever-ssf','ezshards','xnshards']},
     {slug:'exploration',title:'J’explore Azeroth',description:'Repères, journal et livres : choisissez les outils qui accompagnent vos découvertes.',addons:['tomtom','forever-field-journal','books-forever','lorewalker']}
   ];
   const parseSelection=value=>{

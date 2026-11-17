@@ -85,3 +85,5 @@ Métadonnées récupérées via CFWidget ; fichiers originaux provenant du CDN C
 - addon-naowhforever.webp : aperçu publié sur CurseForge, converti en WebP — https://media.forgecdn.net/attachments/2023/132/qol-png.png
 - addon-leatrix-plus.webp : aperçu publié sur CurseForge, converti en WebP — https://media.forgecdn.net/attachments/2117/940/leatrix-plus-hero-png.png
 - addon-leatrix-maps.webp : aperçu publié sur CurseForge, converti en WebP — https://media.forgecdn.net/attachments/2118/10/leatrix-maps-reveal-png.png
+
+- addon-soul-shards-forever-ssf.webp : capture publiée par msromike sur CurseForge, convertie en WebP — https://media.forgecdn.net/attachments/2159/274/04_minimap_and_broker-png.png
